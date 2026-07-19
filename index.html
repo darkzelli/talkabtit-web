@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>talkabtit — Add a comment section to any streaming service</title>
+<meta name="description" content="No one to watch with? No problem. talkabtit adds a live comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
+<style>
+  @font-face {
+    font-family: 'Handjet';
+    src: url('Handjet.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  :root {
+    --bg: #090A0D;
+    --bg-elevated: #121319;
+    --text: #F2F4F8;
+    --text-dim: #9198A6;
+    --red: #ED3D23;
+    --red-deep: #C42D12;
+    --gold: #FFB91F;
+    --hairline: rgba(255, 255, 255, 0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  .display { font-family: 'Handjet', monospace; font-weight: 700; line-height: 1.05; }
+
+  a { color: inherit; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- ambient brand wash (mirrors the app's onboarding backdrop) ---- */
+  .glow {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(600px 420px at 85% 78%, rgba(255, 185, 31, 0.10), transparent 70%),
+      linear-gradient(135deg, rgba(237, 61, 35, 0.55) 0%, rgba(185, 42, 21, 0.30) 22%, rgba(87, 21, 9, 0.16) 45%, transparent 68%);
+  }
+
+  /* ---- nav ---- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    background: rgba(9, 10, 13, 0.65);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1080px; margin: 0 auto; }
+  .nav-logo img { height: 34px; display: block; }
+
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 16px;
+    padding: 12px 26px; border-radius: 999px; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-white { background: #fff; color: #000; }
+  .btn-white:hover { box-shadow: 0 6px 24px rgba(255, 255, 255, 0.18); }
+  .btn-brand {
+    background: linear-gradient(120deg, var(--red), var(--red-deep));
+    color: #fff; box-shadow: 0 8px 28px rgba(237, 61, 35, 0.35);
+  }
+  .btn-brand:hover { box-shadow: 0 10px 34px rgba(237, 61, 35, 0.5); }
+  .btn-sm { padding: 9px 20px; font-size: 14px; }
+
+  /* ---- hero ---- */
+  .hero { padding: 84px 0 72px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+  .hero h1 { font-size: clamp(46px, 7vw, 76px); letter-spacing: 0.5px; }
+  .hero h1 .accent { color: var(--gold); }
+  .hero p.sub { color: var(--text-dim); font-size: 19px; margin: 22px 0 34px; max-width: 460px; }
+  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .hero .fineprint { margin-top: 16px; font-size: 13px; color: var(--text-dim); opacity: 0.8; }
+
+  /* ---- phone demo (page 1 of onboarding: video + crawling comments) ---- */
+  .phone {
+    width: 320px; margin: 0 auto; border-radius: 34px; padding: 16px 14px 20px;
+    background: linear-gradient(160deg, #14151b, #0c0d11);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(237, 61, 35, 0.12);
+  }
+  .video {
+    position: relative; aspect-ratio: 16 / 9; border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .play {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10); border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .play::after {
+    content: ''; margin-left: 4px;
+    border-left: 14px solid var(--text); border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+  }
+  .video .track { position: absolute; left: 14px; right: 14px; bottom: 12px; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.18); }
+  .video .track::before { content: ''; position: absolute; inset: 0 70% 0 0; border-radius: 3px; background: var(--gold); }
+
+  .feed {
+    height: 300px; overflow: hidden; margin-top: 14px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 75%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 75%, transparent 100%);
+  }
+  .feed-inner { display: flex; flex-direction: column; gap: 8px; animation: crawl 16s linear infinite; }
+  @keyframes crawl { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+
+  .comment {
+    background: rgba(237, 61, 35, 0.20); border: 1px solid rgba(237, 61, 35, 0.32);
+    border-radius: 12px; padding: 9px 12px; flex-shrink: 0;
+  }
+  .comment .who { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; }
+  .comment .ts {
+    font-weight: 400; font-size: 10.5px; font-variant-numeric: tabular-nums;
+    background: rgba(255, 255, 255, 0.16); border-radius: 999px; padding: 1px 6px; color: rgba(255, 255, 255, 0.9);
+  }
+  .comment .body { font-size: 12px; color: rgba(255, 255, 255, 0.65); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ---- sections ---- */
+  section { padding: 88px 0; }
+  section h2 { font-size: clamp(36px, 5vw, 54px); letter-spacing: 0.5px; }
+  section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-width: 520px; }
+  .section-divider { border: none; border-top: 1px solid var(--hairline); max-width: 1080px; margin: 0 auto; }
+
+  /* ---- services ---- */
+  .services { text-align: center; }
+  .services .lede { margin-left: auto; margin-right: auto; }
+  .service-grid {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin-top: 48px;
+  }
+  .service {
+    width: 108px; height: 108px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 17px; letter-spacing: 0.3px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease;
+  }
+  .service:hover { transform: scale(1.07); }
+  .service span { display: block; }
+  .service-label { display: block; margin-top: 10px; font-size: 13px; color: var(--text-dim); }
+  .service-cell { display: flex; flex-direction: column; align-items: center; }
+
+  .disclaimer {
+    margin: 56px auto 0; max-width: 640px; text-align: left;
+    display: flex; gap: 12px; align-items: flex-start;
+    background: rgba(0, 0, 0, 0.22); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 14px 16px;
+    font-size: 13px; color: var(--text-dim);
+  }
+  .disclaimer svg { flex-shrink: 0; margin-top: 2px; opacity: 0.7; }
+
+  /* ---- second screen ---- */
+  .second-screen { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .or { font-family: 'Handjet', monospace; font-weight: 500; font-size: 30px; margin-top: 26px; }
+  .second-screen .lede { margin-top: 10px; }
+
+  .tv-card-wrap { max-width: 360px; margin: 0 auto; width: 100%; }
+  .tv-card {
+    background: linear-gradient(to bottom, var(--red), var(--red-deep));
+    border-radius: 14px; padding: 26px 20px; text-align: center;
+    box-shadow: 0 18px 44px rgba(237, 61, 35, 0.35);
+  }
+  .tv-card svg { display: block; margin: 0 auto 10px; }
+  .tv-card .label { font-size: 14px; font-weight: 600; }
+  .progress { margin-top: 14px; }
+  .progress .bar { position: relative; height: 6px; }
+  .progress .bar::before { content: ''; position: absolute; inset: 1.5px 0; border-radius: 3px; background: rgba(255, 255, 255, 0.18); }
+  .progress .bar::after {
+    content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 34%;
+    border-radius: 6px; background: var(--gold);
+    animation: playhead 24s linear infinite alternate;
+  }
+  @keyframes playhead { from { width: 4%; } to { width: 96%; } }
+  .progress .times { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+  /* ---- how it works ---- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+  .step {
+    background: rgba(255, 255, 255, 0.04); border: 1px solid var(--hairline);
+    border-radius: 16px; padding: 28px 24px;
+  }
+  .step .num {
+    font-family: 'Handjet', monospace; font-weight: 700; font-size: 40px;
+    background: linear-gradient(120deg, var(--red), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .step h3 { font-size: 18px; margin: 10px 0 8px; }
+  .step p { font-size: 14.5px; color: var(--text-dim); }
+
+  /* ---- closing CTA ---- */
+  .closing { text-align: center; padding: 100px 0 110px; }
+  .closing img { width: min(380px, 72vw); margin-bottom: 36px; }
+  .closing p { color: var(--text-dim); font-size: 18px; margin-bottom: 32px; }
+
+  footer { border-top: 1px solid var(--hairline); padding: 34px 0 44px; font-size: 13px; color: var(--text-dim); }
+  .footer-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-top: 56px; gap: 48px; }
+    .second-screen { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    section { padding: 64px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" aria-label="talkabtit home"><img src="logo.svg" alt="talkabtit"></a>
+    <a class="btn btn-white btn-sm" href="#get">Get the app</a>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div>
+    <h1 class="display">Add a <span class="accent">comment section</span> to any streaming service.</h1>
+    <p class="sub">No one to watch with? No problem. Join the conversation and talk about your favorite shows — with comments synced to every second of the video.</p>
+    <div class="ctas">
+      <a class="btn btn-brand" href="#get">Download for iPhone</a>
+      <a class="btn btn-white" href="#how">See how it works</a>
+    </div>
+    <p class="fineprint">Free to use with your existing streaming subscriptions.</p>
+  </div>
+
+  <div class="phone" aria-hidden="true">
+    <div class="video"><div class="play"></div><div class="track"></div></div>
+    <div class="feed">
+      <div class="feed-inner">
+        <!-- list is duplicated so the crawl loops seamlessly -->
+        <div class="comment"><div class="who">Jake <span class="ts">0:43</span></div><div class="body">We shouldn't have opened the door</div></div>
+        <div class="comment"><div class="who">Michael <span class="ts">1:07</span></div><div class="body">no way that just happened</div></div>
+        <div class="comment"><div class="who">Ashley <span class="ts">1:15</span></div><div class="body">THE MUSIC. turn it up</div></div>
+        <div class="comment"><div class="who">June <span class="ts">1:43</span></div><div class="body">watch the window on the left…</div></div>
+        <div class="comment"><div class="who">Sam <span class="ts">2:08</span></div><div class="body">this scene lives rent free in my head</div></div>
+        <div class="comment"><div class="who">Priya <span class="ts">2:31</span></div><div class="body">called it from the first episode</div></div>
+        <div class="comment"><div class="who">Jake <span class="ts">0:43</span></div><div class="body">We shouldn't have opened the door</div></div>
+        <div class="comment"><div class="who">Michael <span class="ts">1:07</span></div><div class="body">no way that just happened</div></div>
+        <div class="comment"><div class="who">Ashley <span class="ts">1:15</span></div><div class="body">THE MUSIC. turn it up</div></div>
+        <div class="comment"><div class="who">June <span class="ts">1:43</span></div><div class="body">watch the window on the left…</div></div>
+        <div class="comment"><div class="who">Sam <span class="ts">2:08</span></div><div class="body">this scene lives rent free in my head</div></div>
+        <div class="comment"><div class="who">Priya <span class="ts">2:31</span></div><div class="body">called it from the first episode</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<hr class="section-divider">
+
+<section class="services wrap">
+  <h2 class="display">Watch content from your favorite streaming sites.</h2>
+  <p class="lede">Sign in with the accounts you already pay for. talkabtit wraps the player and brings the crowd.</p>
+
+  <div class="service-grid">
+    <div class="service-cell">
+      <div class="service" style="background:#000"><span style="color:#E50914; font-size:34px; font-family:Georgia, serif;">N</span></div>
+      <span class="service-label">Netflix</span>
+    </div>
+    <div class="service-cell">
+      <div class="service" style="background:#1CE783; color:#0A0F14; text-transform:lowercase; font-size:24px;">hulu</div>
+      <span class="service-label">Hulu</span>
+    </div>
+    <div class="service-cell">
+      <div class="service" style="background:#0A1A5C; font-size:24px;">D+</div>
+      <span class="service-label">Disney+</span>
+    </div>
+    <div class="service-cell">
+      <div class="service" style="background:#0033C7; font-size:22px;">MAX</div>
+      <span class="service-label">Max</span>
+    </div>
+    <div class="service-cell">
+      <div class="service" style="background:#1399FF; font-size:19px;">prime</div>
+      <span class="service-label">Prime Video</span>
+    </div>
+    <div class="service-cell">
+      <div class="service" style="background:#F47521; font-size:26px;">CR</div>
+      <span class="service-label">Crunchyroll</span>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    <span>Subscriptions not included — you'll need your own account with each service. talkabtit isn't a piracy app: we don't stream, host, or unlock any content. You sign in directly with the service, and your login details never pass through us.</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="wrap">
+  <div class="second-screen">
+    <div>
+      <h2 class="display">Watch in the app.</h2>
+      <p class="or">Or.</p>
+      <p class="lede">View the comments while watching on another device. Playing on your TV? Keep the conversation on your phone, synced to the runtime.</p>
+    </div>
+    <div class="tv-card-wrap" aria-hidden="true">
+      <div class="tv-card">
+        <svg width="42" height="35" viewBox="0 0 42 35" fill="none" stroke="#fff" stroke-width="2.5"><rect x="2" y="2" width="38" height="24"/><path d="M14 32h14M21 26v6"/></svg>
+        <div class="label">Playing on another device</div>
+      </div>
+      <div class="progress">
+        <div class="bar"></div>
+        <div class="times"><span>8:10</span><span>24:00</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section id="how" class="wrap">
+  <h2 class="display">How it works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h3>Get the app &amp; pick a username</h3>
+      <p>It's the name everyone sees with your comments. Sign up takes seconds with your Apple ID.</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h3>Open your streaming service</h3>
+      <p>Log in to Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll — right inside the app, or keep playing on your TV.</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h3>Join the conversation</h3>
+      <p>Comments are pinned to the exact moment in the show. Read reactions as they land, and drop your own.</p>
+    </div>
+  </div>
+</section>
+
+<section id="get" class="closing">
+  <img src="logo.svg" alt="talkabtit">
+  <p>No one to watch with. No problem.</p>
+  <a class="btn btn-brand" href="#">Download for iPhone</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 talkabtit</span>
+    <span>Not affiliated with Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll.</span>
+  </div>
+</footer>
+
+</body>
+</html>
