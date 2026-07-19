@@ -10,9 +10,9 @@ const handjet = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "talkabtit — Add a comment section to any streaming service",
+  title: "TalkAbtit — Add a comment section to any streaming service",
   description:
-    "No one to watch with? No problem. talkabtit adds a live comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
+    "No one to watch with? No problem. TalkAbtit adds a live comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
   icons: { icon: { url: "/mark.svg", type: "image/svg+xml" } },
 };
 

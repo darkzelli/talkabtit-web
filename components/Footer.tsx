@@ -1,41 +1,38 @@
-export default function Footer() {
+export default function Footer({ sub = false }: { sub?: boolean }) {
+  // on sub-pages the section anchors have to jump back to the homepage first
+  const base = sub ? "/" : "";
   return (
     <footer>
       <div className="footer-grid">
         <div className="footer-brand">
-          <img src="/logo.svg" alt="talkabtit" />
-          <p>
-            A live comment section for everything you stream. No one to watch
-            with? No problem.
-          </p>
+          <img src="/logo.svg" alt="TalkAbtit" />
+          <p>A comment section for your favorite streaming service.</p>
+          <p className="footer-copy">© 2026 TalkAbtit</p>
         </div>
         <div className="footer-col">
           <h4>Explore</h4>
           <ul>
             <li>
-              <a href="#services">Services</a>
+              <a href={`${base}#customize`}>Customize</a>
             </li>
             <li>
-              <a href="#how">How it works</a>
+              <a href={`${base}#how`}>How it works</a>
             </li>
             <li>
-              <a href="#get">Get the app</a>
+              <a href="/faq">FAQ</a>
             </li>
           </ul>
         </div>
         <div className="footer-col">
-          <h4>Fine print</h4>
-          <p>
-            Not affiliated with Netflix, Hulu, Disney+, Max, Prime Video, or
-            Crunchyroll. Subscriptions to each service are required and are not
-            included.
-          </p>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <div className="footer-bottom-inner">
-          <span>© 2026 talkabtit</span>
-          <span>Made for people who talk during the movie.</span>
+          <h4>Legal</h4>
+          <ul>
+            <li>
+              <a href="/privacy">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="/terms">Terms of Service</a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>

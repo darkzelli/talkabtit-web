@@ -15,17 +15,19 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section id="how" className="wrap">
-      <span className="kicker">Getting started</span>
-      <h2 className="display">How it works</h2>
-      <div className="steps">
-        {STEPS.map((step, i) => (
-          <div className="step" key={step.title}>
-            <div className="num">{i + 1}</div>
-            <h3>{step.title}</h3>
-            <p>{step.body}</p>
-          </div>
-        ))}
+    <section id="how" className="band band-gold">
+      <div className="wrap">
+        <span className="kicker">Getting started</span>
+        <h2 className="display">How it works</h2>
+        <div className="steps">
+          {STEPS.map((step, i) => (
+            <div className="step" key={step.title}>
+              <div className="num">{i + 1}</div>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

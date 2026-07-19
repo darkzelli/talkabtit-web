@@ -5,10 +5,6 @@ function PlayerCard() {
         <div className="play" />
         <div className="track" />
       </div>
-      <div className="row">
-        <span className="dot" />
-        <span>Now playing — synced with the crowd</span>
-      </div>
     </div>
   );
 }
@@ -17,18 +13,19 @@ function TvCard() {
   return (
     <div className="tv-card-wrap" aria-hidden="true">
       <div className="tv-card">
+        {/* SecondScreenShape from the app: two overlapping screens, brand red */}
         <svg
-          width="42"
-          height="35"
-          viewBox="0 0 42 35"
+          width="54"
+          height="45"
+          viewBox="0 0 274 230"
           fill="none"
-          stroke="#fff"
-          strokeWidth="2.5"
+          stroke="var(--red)"
+          strokeWidth="15"
         >
-          <rect x="2" y="2" width="38" height="24" />
-          <path d="M14 32h14M21 26v6" />
+          <path d="M222 66.5V5H5v203h176M222 66.5h46.5v158H181V208M222 66.5h-41V208" />
         </svg>
         <div className="label">Playing on another device</div>
+        <div className="sublabel">Join the discussion while you watch</div>
       </div>
       <div className="progress">
         <div className="bar" />
@@ -41,68 +38,36 @@ function TvCard() {
   );
 }
 
-const AVATARS = [
-  { letter: "J", bg: "linear-gradient(135deg, #ED3D23, #C42D12)" },
-  { letter: "A", bg: "linear-gradient(135deg, #FFB91F, #E08900)", selected: true },
-  { letter: "S", bg: "linear-gradient(135deg, #3A3F4C, #22252E)" },
-  { letter: "P", bg: "linear-gradient(135deg, #7A1F12, #4A130A)" },
-];
-
-function ProfileCard() {
-  return (
-    <div className="profile-card" aria-hidden="true">
-      <div className="avatar-row">
-        {AVATARS.map((a) => (
-          <div
-            key={a.letter}
-            className={a.selected ? "avatar selected" : "avatar"}
-            style={{ background: a.bg }}
-          >
-            {a.letter}
-          </div>
-        ))}
-      </div>
-      <div className="username-pill">
-        <span className="at">@</span>ashley_watches
-      </div>
-    </div>
-  );
-}
-
 const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
     title: "Watch right in the app",
-    body: "Sign in with the accounts you already pay for. talkabtit wraps the player and brings the crowd — open Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll without leaving the app.",
+    body: "Sign in with the accounts you already pay for. TalkAbtit wraps the player and brings the crowd — open Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll without leaving the app.",
     visual: <PlayerCard />,
   },
   {
     kicker: "Watching on your TV?",
     title: "Keep the conversation on your phone",
-    body: "View the comments while watching on another device. Playing on your TV? Keep the conversation on your phone, synced to the runtime.",
+    body: "View the comments on your phone while you watch — synced to the show's runtime.",
     visual: <TvCard />,
-  },
-  {
-    kicker: "Make it yours",
-    title: "Pick your username and avatar",
-    body: "Your username is the name everyone sees with your comments. Choose an avatar, customize your look, and make the experience yours.",
-    visual: <ProfileCard />,
   },
 ];
 
 export default function Features() {
   return (
-    <section className="features wrap">
-      {FEATURES.map((f, i) => (
-        <div className={i % 2 === 1 ? "feature reverse" : "feature"} key={f.title}>
-          <div className="feature-copy">
-            <span className="kicker">{f.kicker}</span>
-            <h2 className="display">{f.title}</h2>
-            <p className="lede">{f.body}</p>
+    <section className="features band band-elevated">
+      <div className="wrap">
+        {FEATURES.map((f, i) => (
+          <div className={i % 2 === 1 ? "feature reverse" : "feature"} key={f.title}>
+            <div className="feature-copy">
+              <span className="kicker">{f.kicker}</span>
+              <h2 className="display">{f.title}</h2>
+              <p className="lede">{f.body}</p>
+            </div>
+            <div className="feature-visual">{f.visual}</div>
           </div>
-          <div className="feature-visual">{f.visual}</div>
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   );
 }
