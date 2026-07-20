@@ -4,8 +4,7 @@ export default function Closing() {
       <div className="banner">
         <h2 className="display">No one to watch with. No problem.</h2>
         <p>
-          Join the conversation and talk about your favorite shows — free with
-          the subscriptions you already have.
+          Join the conversation and talk about your favorite shows.
         </p>
         <a className="btn btn-white btn-lg btn-icon" href="#">
           <svg

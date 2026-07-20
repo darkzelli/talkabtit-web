@@ -3,9 +3,10 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — TalkAbtIT",
+  title: "Privacy Policy",
   description:
     "How TalkAbtIT collects, uses, and protects your information — and why your streaming service passwords never pass through us.",
+  alternates: { canonical: "/privacy/" },
 };
 
 export default function PrivacyPage() {

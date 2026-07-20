@@ -11,11 +11,13 @@ export default function Home() {
     <>
       <div className="glow" />
       <Nav />
-      <Hero />
-      <Features />
-      <Premium />
-      <HowItWorks />
-      <Closing />
+      <main>
+        <Hero />
+        <Features />
+        <Premium />
+        <HowItWorks />
+        <Closing />
+      </main>
       <Footer />
     </>
   );
