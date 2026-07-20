@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+// Only weight 700 (`.display` headings) is ever used, so the variable font is
+// instanced to 700 and subset to Latin + punctuation — 284KB TTF -> 15KB WOFF2.
 const handjet = localFont({
-  src: "./fonts/Handjet.ttf",
-  weight: "100 900",
+  src: "./fonts/Handjet-700.woff2",
+  weight: "700",
   display: "swap",
   variable: "--font-handjet",
 });

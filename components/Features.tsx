@@ -2,7 +2,7 @@ function PlayerCard() {
   return (
     <div className="player-card" aria-hidden="true">
       <div className="video">
-        <img className="video-img" src="/talkbt.webp" alt="" />
+        <img className="video-img" src="/talkbt.webp" alt="" loading="lazy" decoding="async" />
         <div className="play" />
         <div className="track" />
       </div>

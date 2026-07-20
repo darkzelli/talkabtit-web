@@ -56,7 +56,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
       <>
         No. You log in directly with each streaming service, and those
         credentials never pass through our servers. See our{" "}
-        <a href="/privacy">Privacy Policy</a> for the details on what we do and
+        <a href="/privacy/">Privacy Policy</a> for the details on what we do and
         don&apos;t collect.
       </>
     ),
@@ -117,7 +117,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
       <>
         Every comment can be reported from the app, and you can block users you
         don&apos;t want to hear from. We review reports and remove content that
-        breaks our <a href="/terms">community guidelines</a>.
+        breaks our <a href="/terms/">community guidelines</a>.
       </>
     ),
   },
@@ -131,7 +131,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
       <>
         You can delete your account from within the app at any time, which
         removes your profile and associated data. See our{" "}
-        <a href="/privacy">Privacy Policy</a> for what happens to your
+        <a href="/privacy/">Privacy Policy</a> for what happens to your
         information when you do.
       </>
     ),

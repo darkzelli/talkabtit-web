@@ -85,7 +85,7 @@ export default function PrivacyPage() {
                 </li>
                 <li>
                   To enforce our{" "}
-                  <a href="/terms">Terms of Service</a> and respond to reports of
+                  <a href="/terms/">Terms of Service</a> and respond to reports of
                   abuse.
                 </li>
                 <li>To comply with legal obligations.</li>

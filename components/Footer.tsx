@@ -5,7 +5,7 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
     <footer>
       <div className="footer-grid">
         <div className="footer-brand">
-          <img src="/logo.svg" alt="TalkAbtIT" />
+          <img src="/logo.svg" alt="TalkAbtIT" loading="lazy" decoding="async" />
           <p>A comment section for your favorite streaming service.</p>
           <p className="footer-copy">© 2026 TalkAbtIT</p>
         </div>
@@ -19,7 +19,7 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
               <a href={`${base}#how`}>How it works</a>
             </li>
             <li>
-              <a href="/faq">FAQ</a>
+              <a href="/faq/">FAQ</a>
             </li>
           </ul>
         </div>
@@ -27,10 +27,10 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
           <h4>Legal</h4>
           <ul>
             <li>
-              <a href="/privacy">Privacy Policy</a>
+              <a href="/privacy/">Privacy Policy</a>
             </li>
             <li>
-              <a href="/terms">Terms of Service</a>
+              <a href="/terms/">Terms of Service</a>
             </li>
           </ul>
         </div>
