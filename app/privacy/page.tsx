@@ -3,9 +3,9 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — TalkAbtit",
+  title: "Privacy Policy — TalkAbtIT",
   description:
-    "How TalkAbtit collects, uses, and protects your information — and why your streaming service passwords never pass through us.",
+    "How TalkAbtIT collects, uses, and protects your information — and why your streaming service passwords never pass through us.",
 };
 
 export default function PrivacyPage() {
@@ -26,16 +26,16 @@ export default function PrivacyPage() {
           <div className="wrap">
             <div className="prose">
               <p>
-                This Privacy Policy explains how TalkAbtit (&quot;TalkAbtit,&quot;
+                This Privacy Policy explains how TalkAbtIT (&quot;TalkAbtIT,&quot;
                 &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) collects, uses,
-                and protects your information when you use the TalkAbtit app and
+                and protects your information when you use the TalkAbtIT app and
                 related services (the &quot;Service&quot;). By using the Service,
                 you agree to the practices described here.
               </p>
 
               <h2>The short version</h2>
               <p>
-                TalkAbtit adds a comment section on top of the streaming services
+                TalkAbtIT adds a comment section on top of the streaming services
                 you already use. <strong>You sign in directly with each streaming
                 service, and those passwords never pass through our servers.</strong>{" "}
                 We collect only what we need to run your account and the
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
                 We do <strong>not</strong> collect or receive your streaming
                 service passwords or login credentials. You authenticate directly
                 with each service, and that sign-in does not pass through
-                TalkAbtit. We also don&apos;t stream, host, or store the video
+                TalkAbtIT. We also don&apos;t stream, host, or store the video
                 content you watch.
               </p>
 

@@ -3,9 +3,9 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — TalkAbtit",
+  title: "Terms of Service — TalkAbtIT",
   description:
-    "The terms that govern your use of TalkAbtit, the app that adds a live comment section to your favorite streaming services.",
+    "The terms that govern your use of TalkAbtIT, the app that adds a live comment section to your favorite streaming services.",
 };
 
 export default function TermsPage() {
@@ -26,26 +26,26 @@ export default function TermsPage() {
           <div className="wrap">
             <div className="prose">
               <p>
-                Welcome to TalkAbtit. These Terms of Service (&quot;Terms&quot;)
-                are an agreement between you and TalkAbtit (&quot;TalkAbtit,&quot;
+                Welcome to TalkAbtIT. These Terms of Service (&quot;Terms&quot;)
+                are an agreement between you and TalkAbtIT (&quot;TalkAbtIT,&quot;
                 &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) and govern your
-                use of the TalkAbtit app and related services (the
+                use of the TalkAbtIT app and related services (the
                 &quot;Service&quot;). By downloading, accessing, or using the
                 Service, you agree to be bound by these Terms. If you don&apos;t
                 agree, please don&apos;t use the Service.
               </p>
 
-              <h2>1. What TalkAbtit is</h2>
+              <h2>1. What TalkAbtIT is</h2>
               <p>
-                TalkAbtit adds a live, time-stamped comment section on top of
+                TalkAbtIT adds a live, time-stamped comment section on top of
                 third-party streaming services so you can talk about shows and
-                movies with other viewers. TalkAbtit does not stream, host,
+                movies with other viewers. TalkAbtIT does not stream, host,
                 download, or unlock any video content. All content plays through
                 your own account with the applicable streaming service.
               </p>
               <p>
                 <strong>
-                  TalkAbtit is an independent product and is not affiliated with,
+                  TalkAbtIT is an independent product and is not affiliated with,
                   endorsed by, or sponsored by Netflix, Hulu, Disney+, Max, Prime
                   Video, Crunchyroll, or any other streaming service.
                 </strong>{" "}
@@ -85,7 +85,7 @@ export default function TermsPage() {
               <p>
                 &quot;User Content&quot; means the comments, usernames, and other
                 material you submit through the Service. You retain ownership of
-                your User Content. By submitting it, you grant TalkAbtit a
+                your User Content. By submitting it, you grant TalkAbtIT a
                 worldwide, non-exclusive, royalty-free license to host, store,
                 reproduce, and display that content for the purpose of operating
                 and improving the Service.
@@ -131,7 +131,7 @@ export default function TermsPage() {
               <h2>7. Intellectual property</h2>
               <p>
                 The Service, including its software, design, logos, and content
-                we create, is owned by TalkAbtit and protected by intellectual
+                we create, is owned by TalkAbtIT and protected by intellectual
                 property laws. We grant you a limited, personal, non-transferable,
                 non-exclusive license to use the Service for its intended
                 purpose. You may not copy, modify, distribute, or create
@@ -151,7 +151,7 @@ export default function TermsPage() {
 
               <h2>9. Limitation of liability</h2>
               <p>
-                To the fullest extent permitted by law, TalkAbtit will not be
+                To the fullest extent permitted by law, TalkAbtIT will not be
                 liable for any indirect, incidental, special, consequential, or
                 punitive damages, or any loss of data, profits, or goodwill,
                 arising out of or related to your use of the Service. Our total
@@ -180,7 +180,7 @@ export default function TermsPage() {
               <h2>12. Governing law</h2>
               <p>
                 These Terms are governed by the laws of the United States and the
-                state in which TalkAbtit operates, without regard to conflict of
+                state in which TalkAbtIT operates, without regard to conflict of
                 law principles. Any disputes will be resolved in the courts
                 located there, unless applicable law requires otherwise.
               </p>

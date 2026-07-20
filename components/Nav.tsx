@@ -4,11 +4,11 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
   return (
     <nav>
       <div className="nav-inner">
-        <a className="nav-logo" href={sub ? "/" : "#"} aria-label="TalkAbtit home">
-          <img src="/logo.svg" alt="TalkAbtit" />
+        <a className="nav-logo" href={sub ? "/" : "#"} aria-label="TalkAbtIT home">
+          <img src="/logo.svg" alt="TalkAbtIT" />
         </a>
         <div className="nav-links">
-          <a href={`${base}#customize`}>Customize</a>
+          <a href={`${base}#premium`}>Customize</a>
           <a href={`${base}#how`}>How it works</a>
           <a href="/faq">FAQ</a>
         </div>

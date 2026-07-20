@@ -4,17 +4,17 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "FAQ — TalkAbtit",
+  title: "FAQ — TalkAbtIT",
   description:
-    "Answers to common questions about TalkAbtit — the app that adds a live, time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
+    "Answers to common questions about TalkAbtIT — the app that adds a live, time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
 };
 
 const FAQS: { q: string; a: ReactNode }[] = [
   {
-    q: "What is TalkAbtit?",
+    q: "What is TalkAbtIT?",
     a: (
       <>
-        TalkAbtit adds a live comment section to the streaming services you
+        TalkAbtIT adds a live comment section to the streaming services you
         already use. Every comment is pinned to the exact moment in the show, so
         you can react together — even when you&apos;re watching on your own time.
       </>
@@ -34,7 +34,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
     q: "Do I need my own subscriptions?",
     a: (
       <>
-        Yes. TalkAbtit doesn&apos;t include or replace any subscription —
+        Yes. TalkAbtIT doesn&apos;t include or replace any subscription —
         you&apos;ll need your own account with each service. You sign in directly
         with the service, so your login details never pass through us.
       </>
@@ -44,14 +44,14 @@ const FAQS: { q: string; a: ReactNode }[] = [
     q: "Is this legal? Is it a piracy app?",
     a: (
       <>
-        No, it&apos;s not piracy. TalkAbtit doesn&apos;t stream, host, download,
+        No, it&apos;s not piracy. TalkAbtIT doesn&apos;t stream, host, download,
         or unlock any content. All video plays through your own account with the
         streaming service. We simply add a conversation layer on top.
       </>
     ),
   },
   {
-    q: "Does TalkAbtit see my streaming passwords?",
+    q: "Does TalkAbtIT see my streaming passwords?",
     a: (
       <>
         No. You log in directly with each streaming service, and those
@@ -75,7 +75,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
     q: "Can I watch on my TV and still see the comments?",
     a: (
       <>
-        Yes. Keep playing on your TV and use TalkAbtit as a second screen — the
+        Yes. Keep playing on your TV and use TalkAbtIT as a second screen — the
         comments stay synced to the show&apos;s runtime while you watch on the
         big screen.
       </>
@@ -123,7 +123,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
   },
   {
     q: "Which devices are supported?",
-    a: <>TalkAbtit is available on iPhone. Support for more devices is on the way.</>,
+    a: <>TalkAbtIT is available on iPhone. Support for more devices is on the way.</>,
   },
   {
     q: "How do I delete my account and data?",
@@ -168,7 +168,7 @@ export default function FAQPage() {
             <span className="kicker">Questions &amp; answers</span>
             <h1 className="display">Frequently asked questions</h1>
             <p className="lede">
-              Everything about how TalkAbtit works — the comment section for your
+              Everything about how TalkAbtIT works — the comment section for your
               favorite streaming service.
             </p>
           </div>

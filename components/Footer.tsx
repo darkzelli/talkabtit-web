@@ -5,15 +5,15 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
     <footer>
       <div className="footer-grid">
         <div className="footer-brand">
-          <img src="/logo.svg" alt="TalkAbtit" />
+          <img src="/logo.svg" alt="TalkAbtIT" />
           <p>A comment section for your favorite streaming service.</p>
-          <p className="footer-copy">© 2026 TalkAbtit</p>
+          <p className="footer-copy">© 2026 TalkAbtIT</p>
         </div>
         <div className="footer-col">
           <h4>Explore</h4>
           <ul>
             <li>
-              <a href={`${base}#customize`}>Customize</a>
+              <a href={`${base}#premium`}>Customize</a>
             </li>
             <li>
               <a href={`${base}#how`}>How it works</a>

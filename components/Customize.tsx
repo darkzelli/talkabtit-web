@@ -79,7 +79,7 @@ function SliderRow({
   );
 }
 
-function CustomizeCard() {
+export function CustomizeCard() {
   return (
     <div className="customize-card" aria-hidden="true">
       <div className="cz-head">
@@ -174,29 +174,5 @@ function CustomizeCard() {
 
       <span className="cz-save">Save</span>
     </div>
-  );
-}
-
-export default function Customize() {
-  return (
-    <section id="customize" className="band band-red">
-      <div className="wrap">
-        <div className="feature">
-          <div className="feature-copy">
-            <span className="kicker">Make it yours</span>
-            <h2 className="display">Your name, your look</h2>
-            <p className="lede">
-              Pick your avatar, tint your popup, and slide to the exact color
-              your name shows up in — with a live preview of your popup and
-              comment before you save. Unlock exclusive avatars and looks as
-              you go.
-            </p>
-          </div>
-          <div className="feature-visual">
-            <CustomizeCard />
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

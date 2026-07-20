@@ -2,8 +2,20 @@ function PlayerCard() {
   return (
     <div className="player-card" aria-hidden="true">
       <div className="video">
+        <img className="video-img" src="/talkbt.webp" alt="" />
         <div className="play" />
         <div className="track" />
+      </div>
+      <div className="skel-comments">
+        {[0, 1, 2].map((i) => (
+          <div className="skel-comment" key={i}>
+            <div className="skel-avatar" />
+            <div className="skel-lines">
+              <div className="skel-line skel-name" />
+              <div className="skel-line skel-body" />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -42,7 +54,7 @@ const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
     title: "Watch right in the app",
-    body: "Sign in with the accounts you already pay for. TalkAbtit wraps the player and brings the crowd — open Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll without leaving the app.",
+    body: "Sign in with the accounts you already pay for. TalkAbtIT wraps the player and brings the crowd — open Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll without leaving the app.",
     visual: <PlayerCard />,
   },
   {

@@ -11,7 +11,9 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* overflow-x on body alone doesn't stop sideways panning in iOS Safari —
+   clip at the root so bleed layers (plans aurora) can't wiggle the page */
+html { scroll-behavior: smooth; overflow-x: clip; }
 
 body {
   background: var(--bg);
@@ -81,7 +83,12 @@ nav {
 .btn-appstore {
   display: inline-flex; align-items: center; gap: 10px;
   color: #fff; text-decoration: none;
+  background: linear-gradient(120deg, var(--red), var(--red-deep));
+  padding: 12px 22px; border-radius: 999px;
+  box-shadow: 0 8px 28px rgba(237, 61, 35, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+.btn-appstore:hover { transform: translateY(-1px); box-shadow: 0 10px 34px rgba(237, 61, 35, 0.5); }
 .btn-appstore svg { flex-shrink: 0; margin-top: -2px; }
 .btn-appstore-text { display: flex; flex-direction: column; line-height: 1.15; font-weight: 600; font-size: 19px; letter-spacing: 0.01em; }
 .btn-appstore-text small { font-size: 10.5px; font-weight: 500; opacity: 0.85; }
@@ -141,8 +148,7 @@ nav {
   width: 0.65em; height: 0.65em; border-radius: 50%; z-index: 3;
   background: #000; border: 1px solid rgba(255, 255, 255, 0.22);
 }
-/* real clip playing in the video area — drop a file at public/hero-clip.mp4
-   (optional still frame at public/hero-poster.jpg shown before it loads) */
+/* real clip playing in the video area — public/talkabtitvidmin.webm */
 .screen-video {
   position: absolute; inset: 0; z-index: 0;
   width: 100%; height: 100%; object-fit: cover;
@@ -161,32 +167,28 @@ nav {
   content: ''; margin-left: 0.3em;
   border-left: 1em solid var(--text); border-top: 0.65em solid transparent; border-bottom: 0.65em solid transparent;
 }
-.screen-track {
-  position: absolute; left: 1.3em; right: calc(46% + 1.6em); bottom: 1em;
-  height: 0.22em; border-radius: 0.22em; background: rgba(255, 255, 255, 0.18);
-}
-.screen-track::before { content: ''; position: absolute; inset: 0 70% 0 0; border-radius: 0.22em; background: var(--gold); }
-
-/* comments popup pinned to the right of the fullscreen video */
+/* comments overlaid directly on the fullscreen video — transparent so the show
+   stays visible underneath */
 .comments-popup {
-  position: absolute; top: 0.7em; right: 0.7em; bottom: 0.7em; width: 46%;
+  position: absolute; top: 0.7em; right: 0.7em; bottom: 0.7em; width: 46%; z-index: 2;
   display: flex; flex-direction: column;
-  background: rgba(9, 10, 13, 0.72);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 1.15em; padding: 0.7em 0.7em 0.45em;
+  background: transparent; border: none; padding: 0;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 }
-.popup-head {
-  font-size: 0.72em; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-dim); padding: 0 0.2em 0.8em;
-}
+/* slid off the video, then slid back to re-add the comments */
+.comments-popup.is-hidden { transform: translateX(118%); opacity: 0; }
 .video {
-  position: relative; aspect-ratio: 16 / 9; border-radius: 14px;
+  position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
   border: 1.5px solid rgba(255, 255, 255, 0.45);
   display: flex; align-items: center; justify-content: center;
 }
+.video-img {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
 .play {
+  position: relative; z-index: 1;
   width: 52px; height: 52px; border-radius: 50%;
   background: rgba(255, 255, 255, 0.10); border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(6px);
@@ -201,15 +203,21 @@ nav {
 
 .feed {
   flex: 1; overflow: hidden; min-height: 0;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 90%, transparent 100%);
 }
-.feed-inner { display: flex; flex-direction: column; gap: 0.5em; animation: crawl 16s linear infinite; }
-@keyframes crawl { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+.feed-inner { display: flex; flex-direction: column; gap: 0.85em; }
 
 .comment {
   background: rgba(237, 61, 35, 0.20); border: 1px solid rgba(237, 61, 35, 0.32);
   border-radius: 0.75em; padding: 0.5em 0.75em; flex-shrink: 0;
+  transform-origin: top left;
+  animation: comment-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* each comment eases in as it is "sent" */
+@keyframes comment-in {
+  from { opacity: 0; transform: translateY(0.7em) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .comment .who { display: flex; align-items: center; gap: 0.45em; font-size: 0.82em; font-weight: 700; }
 .comment .ts {
@@ -226,7 +234,6 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* full-width color bands so each section reads as its own block */
 .band { border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
 .band + .band { border-top: 0; }
-.band-red { background: linear-gradient(180deg, #170C09, #0D0708); }
 .band-elevated { background: linear-gradient(180deg, #11141D, #0B0D12); }
 .band-gold { background: linear-gradient(180deg, #16110A, #0E0B07); }
 
@@ -245,6 +252,9 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
   padding: 44px 0;
 }
+/* min-width: auto lets wide fixed-size content (e.g. the customize card's
+   avatar carousel) prop the column open past the viewport on phones */
+.feature > *, .feature-visual > * { min-width: 0; }
 .feature .lede { margin-top: 14px; }
 .feature-visual { display: flex; justify-content: center; }
 .feature.reverse .feature-copy { order: 2; }
@@ -262,6 +272,30 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   font-size: 12px; color: var(--text-dim);
 }
 .player-card .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+
+/* skeleton comment section below the player */
+.skel-comments {
+  margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.skel-comment { display: flex; align-items: flex-start; gap: 10px; }
+.skel-avatar {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+}
+.skel-lines { flex: 1; display: flex; flex-direction: column; gap: 7px; padding-top: 3px; }
+.skel-line { height: 9px; border-radius: 5px; background: rgba(255, 255, 255, 0.09); }
+.skel-name { width: 30%; }
+.skel-body { width: 85%; }
+.skel-comment:nth-child(2) .skel-body { width: 62%; }
+.skel-comment:nth-child(3) .skel-body { width: 74%; }
+.skel-avatar, .skel-line { animation: skelPulse 1.6s ease-in-out infinite; }
+.skel-comment:nth-child(2) .skel-avatar,
+.skel-comment:nth-child(2) .skel-line { animation-delay: 0.2s; }
+.skel-comment:nth-child(3) .skel-avatar,
+.skel-comment:nth-child(3) .skel-line { animation-delay: 0.4s; }
+@keyframes skelPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
 
 /* feature visual: TV second-screen card (mirrors the app's watch-outside banner) */
 .tv-card-wrap { max-width: 360px; margin: 0 auto; width: 100%; }
@@ -304,8 +338,11 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
    the row itself is the fixed viewport (overflow clip) — the slots slide inside it */
 .cz-carousel {
   display: flex; align-items: center; justify-content: center; gap: 15px;
-  margin: 21px 0 4px; padding: 9px 0; overflow: hidden;
+  margin: 21px 17px 4px; padding: 9px 0; overflow: hidden;
   height: 84px; /* fixed: slot sizes animate, card height must not breathe */
+  /* the 17px side insets put the clip edge mid-circle (22px into a 44px slot)
+     in every phase, so the strip always ends in a half-cut avatar — clipping
+     the edge only 5px deep read as a whole circle followed by a gap */
 }
 .cz-slot {
   width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
@@ -502,6 +539,127 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   .customize-card, .customize-card * { animation: none; }
 }
 
+/* ---- premium (free-first pitch: "stay free forever" + free card, an "or"
+   divider, then the premium feature row — glass plan cards over the brand
+   aurora glow, gold Best-value badge, live perk previews) ---- */
+.band-premium { background: linear-gradient(180deg, #1A0B06, #0E0B07); }
+.band-premium .accent-gold { color: var(--gold); }
+
+.premium-head { text-align: center; }
+.premium-head .lede { margin-left: auto; margin-right: auto; }
+
+/* the free card stands alone: calm glass, no aurora — premium gets the glow */
+.plan-free { max-width: 560px; margin: 40px auto 0; padding: 18px 22px; }
+.plan-free .plan-title { font-size: 17px; }
+.plan-free .plan-price { font-size: 18px; }
+.plan-free .plan-features { grid-template-columns: 1fr 1fr; gap: 7px 20px; margin-top: 12px; }
+
+.plans-divider {
+  display: flex; align-items: center; gap: 16px;
+  max-width: 560px; margin: 34px auto;
+}
+.plans-divider::before,
+.plans-divider::after { content: ''; flex: 1; height: 1px; background: var(--hairline); }
+.plans-divider span {
+  font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--hairline); border-radius: 999px; padding: 4px 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* centered premium intro: "Go <wordmark> Premium" with the logo inline */
+.premium-intro { text-align: center; }
+.premium-intro .lede { margin-left: auto; margin-right: auto; max-width: none; padding: 0 72px; }
+.premium-title {
+  display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap;
+  gap: 0.3em; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: 0.5px;
+}
+/* wordmark letters fill the lower ~60% of the svg (crown on top) and end flush
+   at the viewBox bottom, so baseline-align the img: its bottom edge sits on the
+   text baseline, putting the letters on the same line as "Get … Premium" */
+.premium-logo { height: 1.55em; }
+
+/* plans column and customize panel side by side, vertically centered;
+   equal-height cards so the stack's edges line up with the panel */
+.premium-feature { padding-top: 12px; padding-bottom: 12px; }
+.premium-feature .plans { margin-top: 0; width: 100%; justify-self: center; align-self: stretch; grid-auto-rows: 1fr; }
+
+/* compact plan stack tucked under the section lede, beside the customize card */
+.plans {
+  position: relative;
+  display: grid; gap: 12px; margin-top: 28px; max-width: 460px;
+}
+/* aurora blobs glowing behind the glass, like the app's BrandGlassBackground */
+.plans::before {
+  content: ''; position: absolute; inset: -30px -26px; pointer-events: none;
+  background:
+    radial-gradient(240px 200px at 15% 20%, rgba(237, 61, 35, 0.34), transparent 70%),
+    radial-gradient(250px 220px at 60% 85%, rgba(249, 115, 22, 0.26), transparent 70%),
+    radial-gradient(220px 190px at 90% 40%, rgba(255, 185, 31, 0.24), transparent 70%);
+  filter: blur(30px);
+}
+.plan {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px; padding: 14px 16px;
+  display: flex; flex-direction: column;
+}
+.plan-featured { border-color: rgba(255, 185, 31, 0.55); box-shadow: 0 10px 32px rgba(237, 61, 35, 0.22); }
+.plan-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.plan-title { display: inline-flex; align-items: center; gap: 7px; font-size: 15.5px; font-weight: 800; }
+.plan-badge {
+  font-size: 9.5px; font-weight: 800; color: #000;
+  background: var(--gold); border-radius: 999px; padding: 1px 8px 2px;
+}
+.plan-price { font-size: 16px; font-weight: 800; }
+.plan-per { font-size: 11px; font-weight: 500; color: var(--text-dim); margin-left: 2px; }
+.plan-features { list-style: none; margin: 9px 0 0; display: grid; gap: 5px; }
+.plan-features li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; text-align: left; }
+.plan-features svg { flex-shrink: 0; width: 14px; height: 14px; color: rgba(255, 255, 255, 0.85); }
+
+/* inset live preview, like the app's darker box inside each plan card */
+.plan-preview {
+  margin-top: auto; padding: 10px; border-radius: 12px;
+  background: rgba(0, 0, 0, 0.28);
+}
+.plan-features + .plan-preview { margin-top: 11px; }
+.pv-row, .pv-popup { display: flex; align-items: flex-start; gap: 10px; text-align: left; }
+.pv-avatar {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+}
+.pv-avatar-ring { background: var(--red); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55); }
+.pv-who { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; }
+.pv-who-pro { color: rgba(255, 255, 255, 0.95); }
+.pv-ts {
+  font-weight: 500; font-size: 10px; font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.14); border-radius: 999px; padding: 1px 7px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.pv-body { font-size: 12.5px; color: rgba(255, 255, 255, 0.92); margin-top: 2px; }
+/* Pro popup: the crown-pattern background on your color, gold border — like the app */
+.pv-popup {
+  border-radius: 12px; padding: 9px 12px 10px;
+  background-color: rgba(237, 61, 35, 0.55);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 165 115' width='34' height='24'%3E%3Cpath d='M21,114L14,73L4,17L48,59M14,73L26,40M48,59L87,71M48,59L60,110L110,110L110,83L87,71M48,56L78,5L110,54L87,71M111,56L115,62L161,13L150,70M150,70L142,114M150,70L121,70' stroke='white' stroke-opacity='0.2' stroke-width='7' fill='none'/%3E%3C/svg%3E");
+  background-size: 34px 24px;
+  border: 1.5px solid rgba(255, 176, 66, 0.85);
+}
+.pv-track {
+  position: relative; height: 7px; border-radius: 999px; margin-top: 10px;
+  background: linear-gradient(90deg,
+    hsl(0 46% 63%), hsl(45 46% 63%), hsl(90 46% 63%), hsl(135 46% 63%),
+    hsl(180 46% 63%), hsl(225 46% 63%), hsl(270 46% 63%), hsl(315 46% 63%), hsl(360 46% 63%));
+}
+.pv-thumb {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 15px; height: 15px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
 /* ---- how it works ---- */
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
 .step {
@@ -600,7 +758,33 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .feature { grid-template-columns: 1fr; gap: 40px; padding: 32px 0; }
   .feature.reverse .feature-copy { order: 1; }
   .feature.reverse .feature-visual { order: 2; }
+  .plan-free .plan-features { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .premium-intro .lede { padding: 0; }
   section { padding: 64px 0; }
+
+  /* premium plan cards go full-width here, so drop the desktop "compact
+     sidebar" sizing: roomier padding, phone-readable type, bigger checks */
+  .plans { max-width: 520px; gap: 16px; }
+  .plans::before { inset: -16px -8px; }
+  .plan { padding: 18px; border-radius: 18px; }
+  .plan-head { flex-wrap: wrap; row-gap: 2px; }
+  .plan-title, .plan-free .plan-title { font-size: 18px; }
+  .plan-price, .plan-free .plan-price { font-size: 19px; }
+  .plan-per { font-size: 12px; }
+  .plan-badge { font-size: 10.5px; padding: 2px 9px 3px; }
+  .plan-features { margin-top: 12px; gap: 8px; }
+  .plan-features li { font-size: 14px; }
+  .plan-features svg { width: 16px; height: 16px; }
+  .plan-free { padding: 20px 18px; margin-top: 32px; }
+  .plans-divider { margin: 28px auto; }
+  .plan-preview { padding: 12px; }
+  .plan-features + .plan-preview { margin-top: 14px; }
+  .pv-avatar { width: 26px; height: 26px; font-size: 11px; }
+  .pv-who { font-size: 13px; }
+  .pv-ts { font-size: 11px; }
+  .pv-body { font-size: 14px; }
+  .pv-track { height: 8px; margin-top: 12px; }
+  .pv-thumb { width: 17px; height: 17px; }
 }
