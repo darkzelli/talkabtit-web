@@ -36,13 +36,13 @@ export default function Hero() {
         </div>
 
         <div className="hero-streamers">
-          <div className="wordmarks">
-            <span className="wm wm-netflix">NETFLIX</span>
-            <span className="wm wm-hulu">hulu</span>
-            <span className="wm wm-disney">Disney+</span>
-            <span className="wm wm-max">MAX</span>
-            <span className="wm wm-prime">prime video</span>
-            <span className="wm wm-cr">crunchyroll</span>
+          <div className="logo-strip">
+            <img className="logo logo-netflix" src="/logos/netflix.svg" alt="Netflix" />
+            <img className="logo logo-hulu" src="/logos/hulu.svg" alt="Hulu" />
+            <img className="logo logo-disney" src="/logos/disneyplus.svg" alt="Disney+" />
+            <img className="logo logo-max" src="/logos/max.svg" alt="Max" />
+            <img className="logo logo-prime" src="/logos/primevideo.svg" alt="Prime Video" />
+            <img className="logo logo-cr" src="/logos/crunchyroll.svg" alt="Crunchyroll" />
           </div>
         </div>
 
@@ -64,7 +64,9 @@ export default function Hero() {
             Subscriptions not included — you'll need your own account with each
             service. TalkAbtIT isn't a piracy app: we don't stream, host, or
             unlock any content. You sign in directly with the service, and your
-            login details never pass through us.
+            login details never pass through us. TalkAbtIT is not affiliated
+            with, endorsed by, or sponsored by any of these streaming services —
+            all names and logos are trademarks of their respective owners.
           </span>
         </div>
       </div>

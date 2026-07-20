@@ -50,7 +50,8 @@ export default function TermsPage() {
                   endorsed by, or sponsored by Netflix, Hulu, Disney+, Max, Prime
                   Video, Crunchyroll, or any other streaming service.
                 </strong>{" "}
-                All trademarks belong to their respective owners.
+                All names, trademarks, and logos are the property of their
+                respective owners and are used for identification purposes only.
               </p>
 
               <h2>2. Eligibility</h2>
