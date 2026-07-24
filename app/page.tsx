@@ -1,24 +1,8 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import Premium from "@/components/Premium";
-import HowItWorks from "@/components/HowItWorks";
-import Closing from "@/components/Closing";
-import Footer from "@/components/Footer";
+import ComingSoon from "@/components/ComingSoon";
 
+// The full marketing site is preserved in <HomePage /> (components/HomePage.tsx).
+// While we're pre-launch, "/" shows the coming-soon splash instead. To restore
+// the site, swap the render below back to `<HomePage />` and drop this import.
 export default function Home() {
-  return (
-    <>
-      <div className="glow" />
-      <Nav />
-      <main>
-        <Hero />
-        <Features />
-        <Premium />
-        <HowItWorks />
-        <Closing />
-      </main>
-      <Footer />
-    </>
-  );
+  return <ComingSoon />;
 }
