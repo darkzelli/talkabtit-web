@@ -32,8 +32,9 @@ export const metadata: Metadata = {
   keywords: [
     "TalkAbtIT",
     "comment section for streaming",
+    "browser extension for streaming",
+    "Chrome extension",
     "watch together",
-    "second screen app",
     "time-stamped comments",
     "watch party",
     ...SUPPORTED_SERVICES.map((s) => `${s} comments`),
@@ -82,7 +83,7 @@ export const viewport: Viewport = {
 
 // Site-wide structured data. Organization + WebSite describe the brand; the
 // SoftwareApplication node makes the product eligible for app-style rich
-// results (name, category, price, platform).
+// results (name, category, price, platform) — here a browser extension.
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -108,8 +109,8 @@ const jsonLd = {
       "@id": `${SITE_URL}/#app`,
       name: SITE_NAME,
       description: SITE_DESCRIPTION,
-      applicationCategory: "SocialNetworkingApplication",
-      operatingSystem: "iOS",
+      applicationCategory: "BrowserApplication",
+      operatingSystem: "Chrome",
       url: SITE_URL,
       publisher: { "@id": `${SITE_URL}/#organization` },
       // Core experience is free; the optional paid tiers are documented on-page.

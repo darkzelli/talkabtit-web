@@ -21,23 +21,26 @@ function PlayerCard() {
   );
 }
 
-function TvCard() {
+function SyncCard() {
   return (
     <div className="tv-card-wrap" aria-hidden="true">
       <div className="tv-card">
-        {/* SecondScreenShape from the app: two overlapping screens, brand red */}
+        {/* runtime clock — comments are pinned to the show's timeline, not the wall clock */}
         <svg
-          width="54"
-          height="45"
-          viewBox="0 0 274 230"
+          width="46"
+          height="46"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="var(--red)"
-          strokeWidth="15"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <path d="M222 66.5V5H5v203h176M222 66.5h46.5v158H181V208M222 66.5h-41V208" />
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3.5 2" />
         </svg>
-        <div className="label">Playing on another device</div>
-        <div className="sublabel">Join the discussion while you watch</div>
+        <div className="label">Synced to the runtime</div>
+        <div className="sublabel">You're at 8:10 — no spoilers from ahead</div>
       </div>
       <div className="progress">
         <div className="bar" />
@@ -53,15 +56,15 @@ function TvCard() {
 const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
-    title: "Watch right in the app",
-    body: "Sign in with the accounts you already pay for. TalkAbtIT wraps the player and brings the crowd — open Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll without leaving the app.",
+    title: "Right on the page you're watching",
+    body: "Sign in with the accounts you already pay for. TalkAbtIT layers the conversation straight onto the player — Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll, right in your browser.",
     visual: <PlayerCard />,
   },
   {
-    kicker: "Watching on your TV?",
-    title: "Keep the conversation on your phone",
-    body: "View the comments on your phone while you watch — synced to the show's runtime.",
-    visual: <TvCard />,
+    kicker: "No spoilers, ever",
+    title: "Comments pinned to the exact moment",
+    body: "Every comment is tied to the show's runtime, so at 8:10 you only see what people said by 8:10 — never a beat ahead. Flip on spoiler protection for an extra layer, and if you're about to give something away, mark your comment as a spoiler before you send so it stays hidden until everyone's caught up.",
+    visual: <SyncCard />,
   },
 ];
 

@@ -125,10 +125,10 @@ nav {
 .btn-appstore-text { display: flex; flex-direction: column; line-height: 1.15; font-weight: 600; font-size: 19px; letter-spacing: 0.01em; }
 .btn-appstore-text small { font-size: 10.5px; font-weight: 500; opacity: 0.85; }
 
-/* ---- hero (two-column: copy beside the phone, wordmark strip below) ---- */
+/* ---- hero (two-column: copy beside the browser mock, wordmark strip below) ---- */
 .hero { text-align: center; padding: 72px 0 76px; }
 .hero-grid {
-  display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px;
+  display: grid; grid-template-columns: 1fr 1.18fr; gap: 48px;
   align-items: center; text-align: left;
 }
 .hero h1 { font-size: clamp(36px, 4.5vw, 58px); letter-spacing: 0.5px; }
@@ -136,7 +136,7 @@ nav {
 .hero p.sub { color: var(--text-dim); font-size: 18px; margin: 20px 0 30px; max-width: 520px; }
 .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 
-/* streaming-service wordmark strip below the phone.
+/* streaming-service wordmark strip below the browser mock.
    breaks out of the 1080px wrap so it can stretch with the window and keep one line */
 .hero-streamers {
   margin-top: 72px;
@@ -158,45 +158,79 @@ nav {
 .logo-prime   { height: 34px; }
 .logo-cr      { height: 30px; }
 
-/* ---- phone demo: landscape fullscreen player + comments popup (mirrors the app) ----
-   Sized off the viewport: everything inside is in em, scaled by the clamp below. */
-.phone {
+/* ---- browser demo: a Chrome-style window with a fullscreen player + comments
+   overlay (mirrors the extension in action). Sized off the viewport: everything
+   inside is in em, scaled by the clamp below. */
+.browser {
   width: 100%; margin: 0;
-  font-size: clamp(6px, 0.9vw, 9px);
-  border-radius: 2.4em; padding: 0.75em;
-  background: linear-gradient(160deg, #14151b, #0c0d11);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: clamp(7px, 1.05vw, 11px);
+  border-radius: 1.5em; overflow: hidden;
+  background: #1c1d21;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(237, 61, 35, 0.12);
 }
-.screen {
-  position: relative; aspect-ratio: 19.5 / 9; border-radius: 1.75em; overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+
+/* tab strip: traffic-light window controls + the active streaming tab */
+.browser-tabbar {
+  display: flex; align-items: center; gap: 1.1em;
+  height: 3em; padding: 0 1.1em; background: #17181b;
 }
-/* punch-hole camera on the left edge (landscape orientation) */
-.screen .cam {
-  position: absolute; left: 0.8em; top: 50%; transform: translateY(-50%);
-  width: 0.65em; height: 0.65em; border-radius: 50%; z-index: 3;
-  background: #000; border: 1px solid rgba(255, 255, 255, 0.22);
+.traffic { display: flex; align-items: center; gap: 0.55em; }
+.traffic span { width: 0.85em; height: 0.85em; border-radius: 50%; }
+.traffic span:nth-child(1) { background: #ff5f57; }
+.traffic span:nth-child(2) { background: #febc2e; }
+.traffic span:nth-child(3) { background: #28c840; }
+.browser-tab {
+  display: flex; align-items: center; gap: 0.6em; align-self: flex-end;
+  height: 2.1em; padding: 0 0.9em; min-width: 11em; max-width: 16em;
+  background: #2b2c30; border-radius: 0.7em 0.7em 0 0;
+  font-size: 1.05em; font-weight: 600; color: rgba(255, 255, 255, 0.82);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tab-fav {
+  width: 1em; height: 1em; border-radius: 0.25em; flex-shrink: 0;
+  background: linear-gradient(135deg, #1ce783, #0b8f4f);
+}
+.tab-x { margin-left: auto; color: rgba(255, 255, 255, 0.5); font-size: 1.2em; line-height: 1; }
+.tab-new { color: rgba(255, 255, 255, 0.5); font-size: 1.5em; line-height: 1; margin-left: 0.1em; }
+
+/* toolbar: nav buttons, omnibox, pinned extension + menu */
+.browser-toolbar {
+  display: flex; align-items: center; gap: 0.9em;
+  height: 3.1em; padding: 0 1em; background: #2b2c30;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+.tb-nav { display: flex; align-items: center; gap: 0.7em; color: rgba(255, 255, 255, 0.6); }
+.omnibox {
+  flex: 1; display: flex; align-items: center; gap: 0.6em;
+  height: 2.3em; padding: 0 1em; border-radius: 999px; background: #17181b;
+  color: rgba(255, 255, 255, 0.62); font-size: 1.05em;
+  white-space: nowrap; overflow: hidden;
+}
+.omnibox svg { width: 1.1em; height: 1.1em; flex-shrink: 0; color: rgba(255, 255, 255, 0.42); }
+.omnibox .url { overflow: hidden; text-overflow: ellipsis; }
+.tb-actions { display: flex; align-items: center; gap: 0.75em; color: rgba(255, 255, 255, 0.6); }
+/* the TalkAbtIT extension, pinned and lit up in gold */
+.tb-ext {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.3em; height: 2.3em; border-radius: 50%;
+  background: rgba(255, 185, 31, 0.16); color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(255, 185, 31, 0.3);
+}
+.tb-ext svg { width: 1.4em; height: 1.4em; }
+.tb-menu { display: flex; }
+.tb-menu svg { width: 1.5em; height: 1.5em; }
+
+/* the web page: fullscreen player with comments overlaid. Bottom corners are
+   clipped by the window's own border-radius (overflow: hidden above). */
+.screen {
+  position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #0b0c10;
 }
 /* real clip playing in the video area — public/talkabtitvidmin.webm */
 .screen-video {
   position: absolute; inset: 0; z-index: 0;
   width: 100%; height: 100%; object-fit: cover;
   background: #0b0c10;
-}
-
-/* play button centered in the visible video area (left of the popup) */
-.screen-play {
-  position: absolute; top: 50%; left: 27%; transform: translate(-50%, -50%);
-  width: 3.8em; height: 3.8em; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.10); border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(6px);
-  display: flex; align-items: center; justify-content: center;
-}
-.screen-play::after {
-  content: ''; margin-left: 0.3em;
-  border-left: 1em solid var(--text); border-top: 0.65em solid transparent; border-bottom: 0.65em solid transparent;
 }
 /* comments overlaid directly on the fullscreen video — transparent so the show
    stays visible underneath */
@@ -328,7 +362,7 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 .skel-comment:nth-child(3) .skel-line { animation-delay: 0.4s; }
 @keyframes skelPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
 
-/* feature visual: TV second-screen card (mirrors the app's watch-outside banner) */
+/* feature visual: runtime-sync card (comments pinned to the show's timeline) */
 .tv-card-wrap { max-width: 360px; margin: 0 auto; width: 100%; }
 .tv-card {
   background: linear-gradient(160deg, #14151b, #0c0d11);
@@ -646,6 +680,7 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 }
 .plan-price { font-size: 16px; font-weight: 800; }
 .plan-per { font-size: 11px; font-weight: 500; color: var(--text-dim); margin-left: 2px; }
+.plan-annual { margin-top: 2px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-align: right; }
 .plan-features { list-style: none; margin: 9px 0 0; display: grid; gap: 5px; }
 .plan-features li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; text-align: left; }
 .plan-features svg { flex-shrink: 0; width: 14px; height: 14px; color: rgba(255, 255, 255, 0.85); }
@@ -783,7 +818,7 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .hero-grid { grid-template-columns: 1fr; gap: 44px; text-align: center; }
   .hero .ctas { justify-content: center; }
   .hero p.sub { margin-left: auto; margin-right: auto; }
-  .phone { font-size: 1.7vw; }
+  .browser { font-size: 1.7vw; }
   .hero-streamers { margin-top: 56px; }
   .logo-strip { gap: 20px 30px; }
   .logo-disney { height: 34px; }

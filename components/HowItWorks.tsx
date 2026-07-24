@@ -1,11 +1,11 @@
 const STEPS = [
   {
-    title: "Get the app & pick a username",
-    body: "It's the name everyone sees with your comments. Sign up takes seconds with your Apple ID.",
+    title: "Add it to your browser & pick a username",
+    body: "Install the extension from the Chrome Web Store, then create an account with your email and pick the name everyone sees with your comments. Takes seconds.",
   },
   {
     title: "Open your streaming service",
-    body: "Log in to Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll — right inside the app, or keep playing on your TV.",
+    body: "Head to Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll in your browser and start playing — TalkAbtIT lights up right on the page.",
   },
   {
     title: "Join the conversation",

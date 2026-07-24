@@ -80,24 +80,26 @@ function ProPreview() {
 }
 
 const FREE_FEATURES = [
-  "Post 1 comment per day",
-  "Time-synced comments",
-  "View top 7 comments per episode",
+  "Unlimited comments, replies & likes",
+  "Time-synced to the exact moment",
+  "Every comment on every episode",
   "Avatar picker",
+  "Spoiler protection",
 ];
 
+// Premium is expression only — commenting and reading are free for everyone,
+// never sold. Perk lists mirror the extension popup's plan cards.
 const PREMIUM_PLANS = [
   {
     title: "Plus",
     price: "$3.99",
     period: "/month",
+    annual: "or $39.99/year — 2 months free",
     badge: null as string | null,
     features: [
-      "Popup comments",
+      "Popup comments over the video",
       "Custom name color",
       "Profile pic (PNG or JPG)",
-      "Post 10 comments per day",
-      "See all comments",
     ],
     preview: <PlusPreview /> as React.ReactNode,
   },
@@ -105,8 +107,9 @@ const PREMIUM_PLANS = [
     title: "Pro",
     price: "$7.99",
     period: "/month",
+    annual: "or $79.99/year — 2 months free",
     badge: "Best value",
-    features: ["Everything in Plus", "Unlimited comments", "GIF profile pic", "Custom popup color"],
+    features: ["Everything in Plus", "GIF profile pic", "Custom popup color"],
     preview: <ProPreview />,
   },
 ];
@@ -121,8 +124,8 @@ export default function Premium() {
             Stay <span className="accent-gold">free</span> forever
           </h2>
           <p className="lede">
-            Everything you need to talk about your shows costs nothing. No
-            trial, no card, no catch.
+            Commenting and reading are free and unlimited — no daily caps, no
+            locked threads. No trial, no card, no catch.
           </p>
         </div>
 
@@ -153,10 +156,10 @@ export default function Premium() {
             <span className="accent-gold">Premium</span>
           </h3>
           <p className="lede">
-            Make your comments stand out. Pick your avatar, tint your popup,
-            and slide to the exact color your name shows up in, with a live
-            preview of your popup and comment before you save. Unlock exclusive
-            avatars and looks as you go.
+            Make your comments stand out. Premium is pure expression — popup
+            comments over the video, a profile pic, and the exact color your
+            name shows up in, with a live preview before you save. It never
+            sells posting or reading; those stay free for everyone.
           </p>
         </div>
 
@@ -179,6 +182,7 @@ export default function Premium() {
                     <small className="plan-per">{plan.period}</small>
                   </span>
                 </div>
+                <div className="plan-annual">{plan.annual}</div>
                 <ul className="plan-features">
                   {plan.features.map((f) => (
                     <li key={f}>

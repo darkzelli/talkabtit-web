@@ -29,8 +29,8 @@ export default function PrivacyPage() {
               <p>
                 This Privacy Policy explains how TalkAbtIT (&quot;TalkAbtIT,&quot;
                 &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) collects, uses,
-                and protects your information when you use the TalkAbtIT app and
-                related services (the &quot;Service&quot;). By using the Service,
+                and protects your information when you use the TalkAbtIT browser
+                extension and related services (the &quot;Service&quot;). By using the Service,
                 you agree to the practices described here.
               </p>
 
@@ -46,10 +46,10 @@ export default function PrivacyPage() {
               <h2>Information we collect</h2>
               <h3>Account information</h3>
               <p>
-                When you sign in with Apple, we receive a unique identifier and,
-                depending on your Apple settings, an email address (which may be a
-                private relay address Apple provides). We also store the username
-                you choose and any profile details or customization you set.
+                When you create a TalkAbtIT account, we store your email
+                address and a unique account identifier. We also store the
+                username you choose and any profile details or customization
+                you set.
               </p>
               <h3>Content you create</h3>
               <p>
@@ -59,8 +59,8 @@ export default function PrivacyPage() {
               </p>
               <h3>Usage and device information</h3>
               <p>
-                We may collect limited technical information — such as app
-                version, device type, and diagnostic or crash data — to keep the
+                We may collect limited technical information — such as extension
+                version, browser type, and diagnostic or crash data — to keep the
                 Service working and to improve it.
               </p>
 
@@ -105,9 +105,9 @@ export default function PrivacyPage() {
                 <li>
                   <strong>Service providers:</strong> we use trusted vendors to
                   host and operate the Service — including Supabase for
-                  authentication and database hosting, and Apple for sign-in and
-                  payments. They process data on our behalf under their own
-                  agreements.
+                  authentication and database hosting, Google for sign-in, and
+                  Stripe for payments. They process data on our behalf under their
+                  own agreements.
                 </li>
                 <li>
                   <strong>Legal reasons:</strong> we may disclose information if
@@ -135,8 +135,8 @@ export default function PrivacyPage() {
 
               <h2>Your rights and choices</h2>
               <p>
-                You can delete your account at any time from within the app, which
-                removes your profile and associated data. Depending on where you
+                You can delete your account at any time from within the extension,
+                which removes your profile and associated data. Depending on where you
                 live, you may have additional rights to access, correct, or
                 request deletion of your personal information. To make a request,
                 contact us at the address below.
@@ -154,7 +154,7 @@ export default function PrivacyPage() {
               <p>
                 We may update this Privacy Policy from time to time. When we make
                 material changes, we&apos;ll update the &quot;Last updated&quot;
-                date above and, where appropriate, notify you in the app.
+                date above and, where appropriate, notify you in the extension.
               </p>
 
               <h2>Contact us</h2>

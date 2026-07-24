@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms that govern your use of TalkAbtIT, the app that adds a live comment section to your favorite streaming services.",
+    "The terms that govern your use of TalkAbtIT, the browser extension that adds a live comment section to your favorite streaming services.",
   alternates: { canonical: "/terms/" },
 };
 
@@ -30,8 +30,8 @@ export default function TermsPage() {
                 Welcome to TalkAbtIT. These Terms of Service (&quot;Terms&quot;)
                 are an agreement between you and TalkAbtIT (&quot;TalkAbtIT,&quot;
                 &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) and govern your
-                use of the TalkAbtIT app and related services (the
-                &quot;Service&quot;). By downloading, accessing, or using the
+                use of the TalkAbtIT browser extension and related services (the
+                &quot;Service&quot;). By installing, accessing, or using the
                 Service, you agree to be bound by these Terms. If you don&apos;t
                 agree, please don&apos;t use the Service.
               </p>
@@ -65,7 +65,7 @@ export default function TermsPage() {
 
               <h2>3. Your account</h2>
               <p>
-                You create an account by signing in with your Apple ID and
+                You create an account by signing in with your Google account and
                 choosing a username. You are responsible for maintaining the
                 security of your account and for all activity that happens under
                 it. Please choose a username that isn&apos;t offensive,
@@ -115,19 +115,19 @@ export default function TermsPage() {
               <p>
                 We may remove content and suspend or terminate accounts that
                 violate these rules. You can report comments and block other
-                users from within the app.
+                users from within the extension.
               </p>
 
               <h2>6. Purchases and subscriptions</h2>
               <p>
                 The core Service is free to use. We may offer optional paid
-                features (such as a &quot;Pro&quot; upgrade with additional
-                customization). Purchases are processed by Apple through the App
-                Store and are subject to Apple&apos;s terms. Subscriptions renew
-                automatically unless cancelled at least 24 hours before the end of
-                the current period, and you can manage or cancel them in your App
-                Store account settings. Except where required by law, purchases
-                are non-refundable.
+                features (such as &quot;Plus&quot; and &quot;Pro&quot; upgrades
+                with additional customization). Payments are processed by our
+                payment provider, Stripe, and are subject to Stripe&apos;s terms.
+                Subscriptions renew automatically until cancelled, and you can
+                manage or cancel your subscription at any time from within the
+                extension or through the billing portal we provide. Except where
+                required by law, purchases are non-refundable.
               </p>
 
               <h2>7. Intellectual property</h2>
@@ -174,7 +174,7 @@ export default function TermsPage() {
               <p>
                 We may update these Terms from time to time. When we make material
                 changes, we&apos;ll update the &quot;Last updated&quot; date above
-                and, where appropriate, notify you in the app. Your continued use
+                and, where appropriate, notify you in the extension. Your continued use
                 of the Service after changes take effect means you accept the
                 revised Terms.
               </p>

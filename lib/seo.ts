@@ -9,10 +9,16 @@ export const SITE_URL = "https://talkabtit.app";
 export const SITE_NAME = "TalkAbtIT";
 
 export const SITE_TAGLINE =
-  "Add a comment section to any streaming service";
+  "A comment section for streaming, right in your browser";
 
 export const SITE_DESCRIPTION =
-  "No one to watch with? No problem. TalkAbtIT adds a live, time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.";
+  "No one to watch with? No problem. TalkAbtIT is a browser extension that adds a live, time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.";
+
+// Chrome Web Store listing for the extension. TODO: replace the placeholder id
+// with the real listing id once the extension is published — this constant is
+// the single source of truth for every "Get TalkAbtIT" button.
+export const CHROME_STORE_URL =
+  "https://chromewebstore.google.com/detail/talkabtit";
 
 // The streaming services the product layers onto — reused in copy and schema.
 export const SUPPORTED_SERVICES = [
@@ -24,10 +30,12 @@ export const SUPPORTED_SERVICES = [
   "Crunchyroll",
 ] as const;
 
-// 1200x630 social-share image (generated from the in-app screenshot).
+// 1200x630 social-share card (Open Graph + Twitter). Committed as a static PNG
+// so GitHub Pages serves it with the right image/png content-type. Regenerate
+// it from scripts/og-image.tsx — see the instructions at the top of that file.
 export const OG_IMAGE = {
-  url: "/og.jpg",
+  url: "/og.png",
   width: 1200,
   height: 630,
-  alt: "TalkAbtIT — a live, time-stamped comment section on top of your streaming service.",
+  alt: "TalkAbtIT — a comment section for streaming, right in your browser.",
 } as const;
