@@ -83,17 +83,19 @@ const FREE_FEATURES = [
   "Post 1 comment per day",
   "Time-synced comments",
   "View top 7 comments per episode",
+  "Avatar picker",
 ];
 
 const PREMIUM_PLANS = [
   {
     title: "Plus",
-    price: "$4.99",
+    price: "$3.99",
     period: "/month",
     badge: null as string | null,
     features: [
       "Popup comments",
       "Custom name color",
+      "Profile pic (PNG or JPG)",
       "Post 10 comments per day",
       "See all comments",
     ],
@@ -101,10 +103,10 @@ const PREMIUM_PLANS = [
   },
   {
     title: "Pro",
-    price: "$9.99",
+    price: "$7.99",
     period: "/month",
     badge: "Best value",
-    features: ["Everything in Plus", "Custom popup color", "Profile pic"],
+    features: ["Everything in Plus", "Unlimited comments", "GIF profile pic", "Custom popup color"],
     preview: <ProPreview />,
   },
 ];
