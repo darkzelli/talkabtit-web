@@ -12,7 +12,7 @@ export const SITE_TAGLINE =
   "A comment section for streaming, right in your browser";
 
 export const SITE_DESCRIPTION =
-  "No one to watch with? No problem. TalkAbtIT is a browser extension that adds a live, time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.";
+  "No one to watch with? No problem. TalkAbtIT is a browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.";
 
 // Chrome Web Store listing for the extension. TODO: replace the placeholder id
 // with the real listing id once the extension is published — this constant is

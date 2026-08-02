@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <div className="wrap">
             <span className="kicker">Legal</span>
             <h1 className="display">Privacy Policy</h1>
-            <p className="updated">Last updated: July 19, 2026</p>
+            <p className="updated">Last updated: July 29, 2026</p>
           </div>
         </header>
 
@@ -46,8 +46,12 @@ export default function PrivacyPage() {
               <h2>Information we collect</h2>
               <h3>Account information</h3>
               <p>
-                When you create a TalkAbtIT account, we store your email
-                address and a unique account identifier. We also store the
+                You create a TalkAbtIT account with an email address and
+                password, or by signing in with Google or GitHub — Sign in
+                with Apple is not supported. Either way, we store your email
+                address and a unique account identifier; when you use Google
+                or GitHub, we receive your email address from them and never
+                see your password for those services. We also store the
                 username you choose and any profile details or customization
                 you set.
               </p>
@@ -105,7 +109,8 @@ export default function PrivacyPage() {
                 <li>
                   <strong>Service providers:</strong> we use trusted vendors to
                   host and operate the Service — including Supabase for
-                  authentication and database hosting, Google for sign-in, and
+                  authentication and database hosting, Google and GitHub for
+                  sign-in, and
                   Stripe for payments. They process data on our behalf under their
                   own agreements.
                 </li>

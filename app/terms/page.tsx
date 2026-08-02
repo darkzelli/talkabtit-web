@@ -19,7 +19,7 @@ export default function TermsPage() {
           <div className="wrap">
             <span className="kicker">Legal</span>
             <h1 className="display">Terms of Service</h1>
-            <p className="updated">Last updated: July 19, 2026</p>
+            <p className="updated">Last updated: July 29, 2026</p>
           </div>
         </header>
 
@@ -38,7 +38,7 @@ export default function TermsPage() {
 
               <h2>1. What TalkAbtIT is</h2>
               <p>
-                TalkAbtIT adds a live, time-stamped comment section on top of
+                TalkAbtIT adds a time-stamped comment section on top of
                 third-party streaming services so you can talk about shows and
                 movies with other viewers. TalkAbtIT does not stream, host,
                 download, or unlock any video content. All content plays through
@@ -65,8 +65,10 @@ export default function TermsPage() {
 
               <h2>3. Your account</h2>
               <p>
-                You create an account by signing in with your Google account and
-                choosing a username. You are responsible for maintaining the
+                You create an account by signing in with your Google or GitHub
+                account — or with an email address and password — and
+                choosing a username. Sign in with Apple is not supported. You
+                are responsible for maintaining the
                 security of your account and for all activity that happens under
                 it. Please choose a username that isn&apos;t offensive,
                 misleading, or infringing — we may reclaim or require changes to

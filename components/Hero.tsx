@@ -7,15 +7,14 @@ export default function Hero() {
       <div className="wrap">
         <div className="hero-grid">
           <div className="hero-copy">
-            <span className="kicker">Watch with everyone</span>
+            <span className="kicker">Join the conversation</span>
             <h1 className="display">
               A <span className="accent">comment section</span> for your
               favorite streaming service.
             </h1>
             <p className="sub">
               No one to watch with? No problem. Add TalkAbtIT to your browser
-              and talk about your favorite shows — with time-stamped comments
-              synced to the video.
+              and talk about your favorite shows with everyone.
             </p>
             <div className="ctas">
               <a

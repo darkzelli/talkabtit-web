@@ -14,7 +14,7 @@ const GLYPHS = {
   },
 };
 
-function AvatarGlyph({
+export function AvatarGlyph({
   name,
   size,
   color,

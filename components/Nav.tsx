@@ -22,7 +22,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
         <div className="nav-links">
           <a href={`${base}#premium`}>Customize</a>
           <a href={`${base}#how`}>How it works</a>
-          <a href="/faq/">FAQ</a>
+          <a href="/support/">FAQ</a>
         </div>
         <a className="btn btn-white btn-sm btn-icon" href={CHROME_STORE_URL} target="_blank" rel="noopener">
           <ExtensionIcon size={15} />

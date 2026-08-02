@@ -7,13 +7,13 @@ import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about TalkAbtIT — the browser extension that adds a live, time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
-  alternates: { canonical: "/faq/" },
+    "Answers to common questions about TalkAbtIT — the browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
+  alternates: { canonical: "/support/" },
   openGraph: {
     title: "FAQ — TalkAbtIT",
     description:
       "Answers to common questions about TalkAbtIT — the comment section for your favorite streaming service.",
-    url: "/faq/",
+    url: "/support/",
     images: [OG_IMAGE],
   },
 };
@@ -105,12 +105,13 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     q: "How do I sign up?",
     a: (
       <>
-        Add the extension from the Chrome Web Store, create an account with your
-        email, and pick a username — that&apos;s the name everyone sees next to
-        your comments. The whole thing takes a few seconds.
+        Add the extension from the Chrome Web Store, then continue with Google
+        or GitHub — or create an account with your email — and pick a username:
+        that&apos;s the name everyone sees next to your comments. The whole
+        thing takes a few seconds. Sign in with Apple isn&apos;t supported.
       </>
     ),
-    text: "Add the extension from the Chrome Web Store, create an account with your email, and pick a username — that's the name everyone sees next to your comments. The whole thing takes a few seconds.",
+    text: "Add the extension from the Chrome Web Store, then continue with Google or GitHub — or create an account with your email — and pick a username: that's the name everyone sees next to your comments. The whole thing takes a few seconds. Sign in with Apple isn't supported.",
   },
   {
     q: "Is it free?",
@@ -142,12 +143,12 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
       <>
         Someone starts every conversation — and it&apos;s remembered: the first
         comment on an episode permanently wears a &quot;started the
-        conversation&quot; marker. If you&apos;d rather jump into a room that&apos;s
-        already talking, the extension points you to the most active episodes
-        right now.
+        conversation&quot; marker. Not sure where to begin? The extension&apos;s
+        New Releases picks link you straight to fresh episodes where the
+        conversation is just getting started.
       </>
     ),
-    text: "Someone starts every conversation — and it's remembered: the first comment on an episode permanently wears a \"started the conversation\" marker. If you'd rather jump into a room that's already talking, the extension points you to the most active episodes right now.",
+    text: "Someone starts every conversation — and it's remembered: the first comment on an episode permanently wears a \"started the conversation\" marker. Not sure where to begin? The extension's New Releases picks link you straight to fresh episodes where the conversation is just getting started.",
   },
   {
     q: "How do I report a comment or block someone?",
@@ -184,7 +185,7 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": `${SITE_URL}/faq/#faq`,
+  "@id": `${SITE_URL}/support/#faq`,
   mainEntity: FAQS.map((item) => ({
     "@type": "Question",
     name: item.q,

@@ -1,16 +1,5 @@
-import { CustomizeCard } from "./Customize";
-
-/* crown glyph traced from the app's bundled avatar SVG */
-const CROWN_D =
-  "M21.2959 114.304L13.8282 72.9122M13.8282 72.9122L3.7959 17.3045L48.2959 58.8045M13.8282 72.9122L13.2959 74.3045M13.8282 72.9122L26.2959 40.3045M48.2959 58.8045L87.2959 71.3045M48.2959 58.8045L60.2959 109.804H109.796V83.3045L87.2959 71.3045M48.2959 56.3045L77.7959 4.80448L109.796 54.3045L87.2959 71.3045M110.796 55.8045L115.296 62.3045L160.796 13.3045L150.365 69.8045M150.365 69.8045L142.296 114.304M150.365 69.8045H121.296";
-
-function Crown({ size, color }: { size: number; color: string }) {
-  return (
-    <svg viewBox="0 0 165 115" width={size} fill="none" stroke={color}>
-      <path d={CROWN_D} vectorEffect="non-scaling-stroke" strokeWidth={1.6} />
-    </svg>
-  );
-}
+import { AvatarGlyph } from "./Customize";
+import NameStyles from "./NameStyles";
 
 function Check() {
   return (
@@ -31,11 +20,51 @@ function Check() {
   );
 }
 
-/* mirrors the app's Plus preview: your comment with a custom name color + hue slider */
-function PlusPreview() {
+function PerkTag({ label }: { label: string }) {
+  return <span className="perk-tag">{label}</span>;
+}
+
+/* One showcase tile: title + tier tag up top, live demo in the middle,
+   one-line caption under it. The demo areas reuse the pv-* preview pieces. */
+function Perk({
+  title,
+  tier,
+  sub,
+  bare,
+  children,
+}: {
+  title: string;
+  tier?: string;
+  sub?: string;
+  /* no glass box at all — the demo inside is the card */
+  bare?: boolean;
+  children: React.ReactNode;
+}) {
+  /* the label always sits above; bare demos are the card themselves, the
+     rest get a glass box around just the demo */
+  const demo = (
+    <>
+      <div className="perk-demo">{children}</div>
+      {sub && <p className="perk-sub">{sub}</p>}
+    </>
+  );
   return (
-    <div className="plan-preview">
-      <div className="pv-row">
+    <div className="perk">
+      <div className="perk-head">
+        <span className="perk-name">{title}</span>
+        {tier && <PerkTag label={tier} />}
+      </div>
+      {bare ? demo : <div className="perk-box">{demo}</div>}
+    </div>
+  );
+}
+
+/* Popup comments (Plus): a frosted popup floating over a dark "video",
+   red runtime bar underneath — the moment the comment is pinned to. */
+function PopupDemo() {
+  return (
+    <div className="pk-video" aria-hidden="true">
+      <div className="pk-bubble">
         <span className="pv-avatar" style={{ background: "#A855F7" }}>
           Z
         </span>
@@ -46,34 +75,47 @@ function PlusPreview() {
           <div className="pv-body">this scene goes so hard 🔥</div>
         </div>
       </div>
-      <div className="pv-track">
-        <span
-          className="pv-thumb"
-          style={{ left: "76%", background: "#A855F7" }}
-        />
+      <div className="pk-progress">
+        <span className="pk-progress-fill" />
       </div>
     </div>
   );
 }
 
-/* mirrors the app's Pro preview: crown-pattern popup on your color, gold border */
-function ProPreview() {
+/* The Plus look, all at once: uploaded profile pic, custom name color
+   cycling the vivid ramp, and the popcorn bucket by the name. */
+function PlusCardDemo() {
   return (
-    <div className="plan-preview">
-      <div className="pv-popup">
-        <span className="pv-avatar pv-avatar-ring">Z</span>
+    <div className="pk-inset" aria-hidden="true">
+      <div className="pv-row">
+        <span className="pv-avatar pk-av-still" />
         <div>
-          <div className="pv-who pv-who-pro">
-            <Crown size={12} color="#FFB91F" /> you
+          <div className="pv-who pk-color-cycle">
+            you <AvatarGlyph name="popcorn" size={13} color="#FFB91F" />{" "}
+            <span className="pv-ts">12:04</span>
           </div>
-          <div className="pv-body">that episode was great</div>
+          <div className="pv-body">this scene goes so hard 🔥</div>
         </div>
       </div>
-      <div className="pv-track">
-        <span
-          className="pv-thumb"
-          style={{ left: "8%", background: "var(--red)" }}
-        />
+    </div>
+  );
+}
+
+/* The Pro look, all at once: GIF profile pic, crown badge, an animated
+   name style, and the popup filled solid in your color. */
+function ProCardDemo() {
+  return (
+    <div className="pv-popup" aria-hidden="true">
+      <span className="pv-avatar pk-av-gif" />
+      <div>
+        <div className="pv-who pv-who-pro">
+          <span className="ns-fx ns-scan" data-text="you">
+            you
+          </span>{" "}
+          <AvatarGlyph name="crown" size={14} color="#FFB91F" />{" "}
+          <span className="pv-ts">12:04</span>
+        </div>
+        <div className="pv-body">that episode was great</div>
       </div>
     </div>
   );
@@ -88,7 +130,9 @@ const FREE_FEATURES = [
 ];
 
 // Premium is expression only — commenting and reading are free for everyone,
-// never sold. Perk lists mirror the extension popup's plan cards.
+// never sold. Perk lists mirror the extension's customize sheet: name color +
+// uploaded pic + popup comments + bucket badge at Plus; crown badge, name
+// styles, popup fill and GIF pics at Pro.
 const PREMIUM_PLANS = [
   {
     title: "Plus",
@@ -100,8 +144,8 @@ const PREMIUM_PLANS = [
       "Popup comments over the video",
       "Custom name color",
       "Profile pic (PNG or JPG)",
+      "Popcorn bucket badge",
     ],
-    preview: <PlusPreview /> as React.ReactNode,
   },
   {
     title: "Pro",
@@ -109,10 +153,41 @@ const PREMIUM_PLANS = [
     period: "/month",
     annual: "or $79.99/year — 2 months free",
     badge: "Best value",
-    features: ["Everything in Plus", "GIF profile pic", "Custom popup color"],
-    preview: <ProPreview />,
+    features: [
+      "Everything in Plus",
+      "Crown badge on every comment",
+      "9 name styles — Glitch, VHS & more",
+      "Custom popup background",
+      "GIF profile pic",
+    ],
   },
 ];
+
+function PlanCard({ plan }: { plan: (typeof PREMIUM_PLANS)[number] }) {
+  return (
+    <div className={plan.badge ? "plan plan-featured" : "plan"}>
+      <div className="plan-head">
+        <span className="plan-title">
+          {plan.title}
+          {plan.badge && <span className="plan-badge">{plan.badge}</span>}
+        </span>
+        <span className="plan-price">
+          {plan.price}
+          <small className="plan-per">{plan.period}</small>
+        </span>
+      </div>
+      <div className="plan-annual">{plan.annual}</div>
+      <ul className="plan-features">
+        {plan.features.map((f) => (
+          <li key={f}>
+            <Check />
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function Premium() {
   return (
@@ -156,49 +231,46 @@ export default function Premium() {
             <span className="accent-gold">Premium</span>
           </h3>
           <p className="lede">
-            Make your comments stand out. Premium is pure expression — popup
-            comments over the video, a profile pic, and the exact color your
-            name shows up in, with a live preview before you save. It never
-            sells posting or reading; those stay free for everyone.
+            Make your comments stand out. Premium is pure expression — posting
+            and reading stay free for everyone.
           </p>
         </div>
 
-        <div className="feature premium-feature">
-          <div className="plans">
-            {PREMIUM_PLANS.map((plan) => (
-              <div
-                className={plan.badge ? "plan plan-featured" : "plan"}
-                key={plan.title}
-              >
-                <div className="plan-head">
-                  <span className="plan-title">
-                    {plan.title}
-                    {plan.badge && (
-                      <span className="plan-badge">{plan.badge}</span>
-                    )}
-                  </span>
-                  <span className="plan-price">
-                    {plan.price}
-                    <small className="plan-per">{plan.period}</small>
-                  </span>
-                </div>
-                <div className="plan-annual">{plan.annual}</div>
-                <ul className="plan-features">
-                  {plan.features.map((f) => (
-                    <li key={f}>
-                      <Check />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                {plan.preview}
-              </div>
-            ))}
+        {/* everything you unlock, in two tier columns — each column keeps
+            its tiles together, so mobile stacks Plus with its popup demo
+            before Pro with its name styles */}
+        <div className="perk-grid">
+          <div className="perk-col">
+            {/* one tier pill heads the whole column */}
+            <div className="perk-col-head">
+              <PerkTag label="PLUS" />
+            </div>
+            <Perk bare title="The Plus look">
+              <PlusCardDemo />
+            </Perk>
+            <Perk title="Popup comments">
+              <PopupDemo />
+            </Perk>
+            <PlanCard plan={PREMIUM_PLANS[0]} />
           </div>
-          <div className="feature-visual">
-            <CustomizeCard />
+          <div className="perk-col">
+            <div className="perk-col-head">
+              <PerkTag label="PRO" />
+            </div>
+            <Perk bare title="The Pro look">
+              <ProCardDemo />
+            </Perk>
+            <Perk title="Name styles">
+              <NameStyles />
+            </Perk>
+            <PlanCard plan={PREMIUM_PLANS[1]} />
           </div>
         </div>
+
+        <p className="plans-note">
+          Sign in to the extension and upgrade right from the popup — monthly
+          or annual, cancel anytime.
+        </p>
       </div>
     </section>
   );

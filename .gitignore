@@ -1,6 +1,7 @@
 /node_modules
 /.next
 /out
+/.ui-graph
 next-env.d.ts
 *.tsbuildinfo
 .DS_Store

@@ -1,52 +1,108 @@
+import { AvatarGlyph } from "./Customize";
+
 function PlayerCard() {
   return (
     <div className="player-card" aria-hidden="true">
       <div className="video">
-        <img className="video-img" src="/talkbt.webp" alt="" loading="lazy" decoding="async" />
+        <img className="video-img" src="/player-panel.jpg" alt="" loading="lazy" decoding="async" />
         <div className="play" />
         <div className="track" />
-      </div>
-      <div className="skel-comments">
-        {[0, 1, 2].map((i) => (
-          <div className="skel-comment" key={i}>
-            <div className="skel-avatar" />
-            <div className="skel-lines">
-              <div className="skel-line skel-name" />
-              <div className="skel-line skel-body" />
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
 }
 
-function SyncCard() {
+function Heart({ filled }: { filled?: boolean }) {
   return (
-    <div className="tv-card-wrap" aria-hidden="true">
-      <div className="tv-card">
-        {/* runtime clock — comments are pinned to the show's timeline, not the wall clock */}
-        <svg
-          width="46"
-          height="46"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="var(--red)"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 7v5l3.5 2" />
-        </svg>
-        <div className="label">Synced to the runtime</div>
-        <div className="sublabel">You're at 8:10 — no spoilers from ahead</div>
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill={filled ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  );
+}
+
+/* CSS recreation of the extension's comment panel mid-episode: sort and
+   popup controls up top, then the feed with spoiler images blurred until
+   you've caught up. */
+function SpoilerPanelCard() {
+  return (
+    <div className="spoiler-card" aria-hidden="true">
+      <div className="sp-head">
+        <img src="/logo.svg" alt="" loading="lazy" decoding="async" />
+        <span className="sp-x">✕</span>
       </div>
-      <div className="progress">
-        <div className="bar" />
-        <div className="times">
-          <span>8:10</span>
-          <span>24:00</span>
+      <div>
+        <div className="sp-service">Crunchyroll</div>
+        <div className="sp-title">Demon Slayer: Infinity Castle</div>
+      </div>
+      <div className="sp-chips">
+        <span className="sp-chip">By time</span>
+        <span className="sp-chip">Top</span>
+        <span className="sp-chip sp-chip-on">Newest</span>
+      </div>
+      <div className="sp-chips">
+        <span className="sp-label">Popup duration</span>
+        <span className="sp-chip sp-chip-on">5s</span>
+        <span className="sp-chip">10s</span>
+        <span className="sp-chip">20s</span>
+        <span className="sp-chip">30s</span>
+      </div>
+      <div className="sp-comment">
+        {/* Plus: an uploaded PNG/JPG pic */}
+        <span className="sp-avatar pk-av-still" />
+        <div className="sp-main">
+          <div className="sp-row">
+            <span className="sp-who" style={{ color: "#C084FC" }}>
+              mika_j <AvatarGlyph name="popcorn" size={12} color="#FFB91F" />{" "}
+              <span className="pv-ts">2:46</span>
+            </span>
+            <span className="sp-like">
+              <Heart /> 0
+            </span>
+          </div>
+          <div className="sp-body">😂😂😂😂</div>
+        </div>
+      </div>
+      <div className="sp-comment">
+        {/* Pro: the GIF pic */}
+        <span className="sp-avatar pk-av-gif" />
+        <div className="sp-main">
+          <div className="sp-row">
+            <span className="sp-who">
+              ozani <AvatarGlyph name="crown" size={12} color="#FFB91F" />
+              <span className="pv-ts">2:34</span>
+            </span>
+            <span className="sp-like sp-like-on">
+              <Heart filled /> 1
+            </span>
+          </div>
+          <div className="sp-img sp-img-a" />
+        </div>
+      </div>
+      <div className="sp-comment">
+        {/* free: a bundled avatar from the picker */}
+        <span className="sp-avatar sp-av-free">
+          <AvatarGlyph name="flag" size={12} color="#fff" />
+        </span>
+        <div className="sp-main">
+          <div className="sp-row">
+            <span className="sp-who" style={{ color: "#6EE7A0" }}>
+              renn
+              <span className="pv-ts">2:34</span>
+            </span>
+            <span className="sp-like">
+              <Heart /> 0
+            </span>
+          </div>
+          <img className="sp-gif" src="/homer.gif" alt="" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
@@ -57,14 +113,14 @@ const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
     title: "Right on the page you're watching",
-    body: "Sign in with the accounts you already pay for. TalkAbtIT layers the conversation straight onto the player — Netflix, Hulu, Disney+, Max, Prime Video, or Crunchyroll, right in your browser.",
+    body: "Sign in with the accounts you already pay for. TalkAbtIT layers the conversation straight onto the player.",
     visual: <PlayerCard />,
   },
   {
     kicker: "No spoilers, ever",
-    title: "Comments pinned to the exact moment",
-    body: "Every comment is tied to the show's runtime, so at 8:10 you only see what people said by 8:10 — never a beat ahead. Flip on spoiler protection for an extra layer, and if you're about to give something away, mark your comment as a spoiler before you send so it stays hidden until everyone's caught up.",
-    visual: <SyncCard />,
+    title: "Spoilers stay blurred until you're ready",
+    body: "About to give something away? Hit the spoiler button and your comment sends blurred — readers tap to reveal it when they're ready.",
+    visual: <SpoilerPanelCard />,
   },
 ];
 
