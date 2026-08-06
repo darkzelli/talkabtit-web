@@ -58,6 +58,10 @@ a { color: inherit; }
 .coming-foot a { color: var(--gold); text-decoration: none; }
 .coming-foot a:hover { text-decoration: underline; }
 .coming-foot .sep { opacity: 0.4; }
+.coming-social { display: flex; gap: 12px; align-items: center; }
+.coming-social a { display: inline-flex; color: var(--text-dim); transition: color 0.15s ease; }
+.coming-social a:hover { color: var(--gold); }
+.coming-social svg { width: 16px; height: 16px; }
 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
