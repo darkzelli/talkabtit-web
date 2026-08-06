@@ -93,7 +93,7 @@ const jsonLd = {
       name: SITE_NAME,
       url: SITE_URL,
       logo: `${SITE_URL}/logo.svg`,
-      email: "support@talkabtit.com",
+      email: "support@talkabtit.app",
     },
     {
       "@type": "WebSite",

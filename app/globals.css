@@ -148,14 +148,13 @@ nav {
   gap: clamp(28px, 5vw, 72px); flex-wrap: wrap;
 }
 /* Official brand SVGs (public/logos). Per-logo heights are optically balanced —
-   Disney+ and Prime Video need extra because their arc/smile eat vertical space,
-   so a uniform height would make their wordmarks read smaller than the rest. */
+   Disney+ needs extra because its arc eats vertical space, so a uniform
+   height would make its wordmark read smaller than the rest. */
 .logo { width: auto; display: block; flex: none; }
 .logo-netflix { height: 23px; }
 .logo-hulu    { height: 25px; }
 .logo-disney  { height: 40px; }
 .logo-max     { height: 25px; }
-.logo-prime   { height: 34px; }
 .logo-cr      { height: 30px; }
 
 /* ---- browser demo: a Chrome-style window with a fullscreen player + comments
@@ -1036,7 +1035,6 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .hero-streamers { margin-top: 56px; }
   .logo-strip { gap: 20px 30px; }
   .logo-disney { height: 34px; }
-  .logo-prime  { height: 29px; }
   .logo-cr     { height: 26px; }
   .logo-netflix, .logo-hulu, .logo-max { height: 21px; }
   .feature { grid-template-columns: 1fr; gap: 40px; padding: 32px 0; }

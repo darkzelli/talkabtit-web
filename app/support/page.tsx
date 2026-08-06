@@ -7,7 +7,7 @@ import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about TalkAbtIT — the browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll.",
+    "Answers to common questions about TalkAbtIT — the browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, and Crunchyroll.",
   alternates: { canonical: "/support/" },
   openGraph: {
     title: "FAQ — TalkAbtIT",
@@ -38,12 +38,12 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     q: "Which streaming services work with it?",
     a: (
       <>
-        Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll work with
-        TalkAbtIT, with more coming soon. They work right in your browser — start
-        playing on any of them and the comments appear on the page.
+        Netflix, Hulu, Disney+, Max, and Crunchyroll work with TalkAbtIT, with
+        more coming soon. They work right in your browser — start playing on
+        any of them and the comments appear on the page.
       </>
     ),
-    text: "Netflix, Hulu, Disney+, Max, Prime Video, and Crunchyroll work with TalkAbtIT, with more coming soon. They work right in your browser — start playing on any of them and the comments appear on the page.",
+    text: "Netflix, Hulu, Disney+, Max, and Crunchyroll work with TalkAbtIT, with more coming soon. They work right in your browser — start playing on any of them and the comments appear on the page.",
   },
   {
     q: "Do I need my own subscriptions?",
@@ -247,7 +247,7 @@ export default function FAQPage() {
               <h3 className="display">Still have a question?</h3>
               <p>
                 Reach us at{" "}
-                <a href="mailto:support@talkabtit.com">support@talkabtit.com</a>{" "}
+                <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>{" "}
                 and we&apos;ll get back to you.
               </p>
             </div>

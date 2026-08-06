@@ -49,7 +49,6 @@ export default function Hero() {
             <img className="logo logo-hulu" src="/logos/hulu.svg" alt="Hulu" />
             <img className="logo logo-disney" src="/logos/disneyplus.svg" alt="Disney+" />
             <img className="logo logo-max" src="/logos/max.svg" alt="Max" />
-            <img className="logo logo-prime" src="/logos/primevideo.svg" alt="Prime Video" />
             <img className="logo logo-cr" src="/logos/crunchyroll.svg" alt="Crunchyroll" />
           </div>
         </div>

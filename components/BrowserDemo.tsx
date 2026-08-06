@@ -10,7 +10,8 @@ const SERVICE_SEGMENTS = [
   { t: 0.0, name: "Netflix", url: "netflix.com/watch", fav: "#E50914" },
   { t: 0.9, name: "Crunchyroll", url: "crunchyroll.com/watch", fav: "#F47521" },
   { t: 2.12, name: "Netflix", url: "netflix.com/watch", fav: "#E50914" },
-  { t: 3.12, name: "Prime Video", url: "primevideo.com/watch", fav: "#00A8E1" },
+  // 3.12–3.88 is a Prime Video cut in the clip; Prime is no longer supported,
+  // so the tab keeps the previous label until the video is re-cut without it.
   { t: 3.88, name: "Hulu", url: "hulu.com/watch", fav: "#1CE783" },
 ];
 

@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <div className="wrap">
             <span className="kicker">Legal</span>
             <h1 className="display">Privacy Policy</h1>
-            <p className="updated">Last updated: July 29, 2026</p>
+            <p className="updated">Last updated: August 5, 2026</p>
           </div>
         </header>
 
@@ -57,15 +57,25 @@ export default function PrivacyPage() {
               </p>
               <h3>Content you create</h3>
               <p>
-                We store the comments you post, along with their timestamps and
-                the show or content they relate to, so we can display the
-                conversation to you and other viewers.
+                We store the comments you post — including any GIFs you attach —
+                along with their timestamps and the show or content they relate
+                to, so we can display the conversation to you and other viewers.
+                If you upload a profile picture, we store that image too.
               </p>
               <h3>Usage and device information</h3>
               <p>
                 We may collect limited technical information — such as extension
                 version, browser type, and diagnostic or crash data — to keep the
                 Service working and to improve it.
+              </p>
+              <h3>Viewing activity</h3>
+              <p>
+                When you open the comment panel on an episode, we record that a
+                viewing session happened — the show or episode, when it was
+                opened, and a random identifier for your extension install — so
+                we can see how rooms are doing and show which episodes are
+                trending. That identifier is minted locally in your browser and
+                isn&apos;t derived from your account.
               </p>
 
               <h2>Information we do not collect</h2>
@@ -115,11 +125,34 @@ export default function PrivacyPage() {
                   own agreements.
                 </li>
                 <li>
+                  <strong>GIFs and ads:</strong> the GIF picker talks directly
+                  to Klipy, our GIF and advertising partner — see &quot;GIFs and
+                  advertising&quot; below for exactly what Klipy receives.
+                </li>
+                <li>
                   <strong>Legal reasons:</strong> we may disclose information if
                   required by law or to protect the rights, safety, and security
                   of our users and the Service.
                 </li>
               </ul>
+
+              <h2>GIFs and advertising</h2>
+              <p>
+                The GIF picker is powered by Klipy, a third-party GIF library.
+                When you browse or search for GIFs, your browser talks to Klipy
+                directly, so Klipy receives your search terms, IP address,
+                browser information, and language — much like when you visit any
+                website. We also pass Klipy a random identifier for your
+                extension install; we never send Klipy your account, email
+                address, or username.
+              </p>
+              <p>
+                The GIF picker may also show sponsored content provided by Klipy
+                and its advertising partners. Those ads are served by Klipy
+                using the same information described above — TalkAbtIT does not
+                give advertisers your identity, and we don&apos;t show ads
+                anywhere else in the Service.
+              </p>
 
               <h2>Data storage and security</h2>
               <p>
@@ -132,7 +165,9 @@ export default function PrivacyPage() {
               <h2>Data retention</h2>
               <p>
                 We keep your information for as long as your account is active or
-                as needed to provide the Service. When you delete your account, we
+                as needed to provide the Service. If a paid subscription ends, we
+                remove the paid customization that came with it, including any
+                uploaded profile picture. When you delete your account, we
                 remove your profile and associated personal data, except where we
                 need to retain certain information to comply with legal
                 obligations or resolve disputes.
@@ -166,7 +201,7 @@ export default function PrivacyPage() {
               <p>
                 If you have questions about this Privacy Policy or your data,
                 email us at{" "}
-                <a href="mailto:support@talkabtit.com">support@talkabtit.com</a>.
+                <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>.
               </p>
             </div>
           </div>

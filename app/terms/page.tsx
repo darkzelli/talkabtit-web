@@ -19,7 +19,7 @@ export default function TermsPage() {
           <div className="wrap">
             <span className="kicker">Legal</span>
             <h1 className="display">Terms of Service</h1>
-            <p className="updated">Last updated: July 29, 2026</p>
+            <p className="updated">Last updated: August 5, 2026</p>
           </div>
         </header>
 
@@ -47,8 +47,8 @@ export default function TermsPage() {
               <p>
                 <strong>
                   TalkAbtIT is an independent product and is not affiliated with,
-                  endorsed by, or sponsored by Netflix, Hulu, Disney+, Max, Prime
-                  Video, Crunchyroll, or any other streaming service.
+                  endorsed by, or sponsored by Netflix, Hulu, Disney+, Max,
+                  Crunchyroll, or any other streaming service.
                 </strong>{" "}
                 All names, trademarks, and logos are the property of their
                 respective owners and are used for identification purposes only.
@@ -115,12 +115,25 @@ export default function TermsPage() {
                 </li>
               </ul>
               <p>
-                We may remove content and suspend or terminate accounts that
-                violate these rules. You can report comments and block other
-                users from within the extension.
+                We may remove or filter content and suspend or terminate
+                accounts that violate these rules. Some filtering is automatic —
+                for example, profanity is masked and comments containing links
+                are blocked. You can report comments and block other users from
+                within the extension.
               </p>
 
-              <h2>6. Purchases and subscriptions</h2>
+              <h2>6. GIFs and advertising</h2>
+              <p>
+                The GIF picker is powered by Klipy, a third-party GIF library,
+                and may include sponsored content provided by Klipy and its
+                advertising partners. We don&apos;t endorse and aren&apos;t
+                responsible for third-party GIFs or ads, and sponsored content
+                may be shown to free and paid users alike. See our{" "}
+                <a href="/privacy/">Privacy Policy</a> for what Klipy receives
+                when you use the picker.
+              </p>
+
+              <h2>7. Purchases and subscriptions</h2>
               <p>
                 The core Service is free to use. We may offer optional paid
                 features (such as &quot;Plus&quot; and &quot;Pro&quot; upgrades
@@ -129,10 +142,13 @@ export default function TermsPage() {
                 Subscriptions renew automatically until cancelled, and you can
                 manage or cancel your subscription at any time from within the
                 extension or through the billing portal we provide. Except where
-                required by law, purchases are non-refundable.
+                required by law, purchases are non-refundable. When a paid
+                subscription ends or moves to a lower tier, the customization
+                that came with it — including any uploaded profile picture — is
+                removed from your profile.
               </p>
 
-              <h2>7. Intellectual property</h2>
+              <h2>8. Intellectual property</h2>
               <p>
                 The Service, including its software, design, logos, and content
                 we create, is owned by TalkAbtIT and protected by intellectual
@@ -142,7 +158,7 @@ export default function TermsPage() {
                 derivative works from the Service without our permission.
               </p>
 
-              <h2>8. Disclaimers</h2>
+              <h2>9. Disclaimers</h2>
               <p>
                 The Service is provided &quot;as is&quot; and &quot;as
                 available&quot; without warranties of any kind, whether express or
@@ -153,7 +169,7 @@ export default function TermsPage() {
                 service.
               </p>
 
-              <h2>9. Limitation of liability</h2>
+              <h2>10. Limitation of liability</h2>
               <p>
                 To the fullest extent permitted by law, TalkAbtIT will not be
                 liable for any indirect, incidental, special, consequential, or
@@ -164,7 +180,7 @@ export default function TermsPage() {
                 the claim or USD $50.
               </p>
 
-              <h2>10. Termination</h2>
+              <h2>11. Termination</h2>
               <p>
                 You may stop using the Service and delete your account at any
                 time. We may suspend or terminate your access if you violate
@@ -172,7 +188,7 @@ export default function TermsPage() {
                 their nature should survive termination will continue to apply.
               </p>
 
-              <h2>11. Changes to these Terms</h2>
+              <h2>12. Changes to these Terms</h2>
               <p>
                 We may update these Terms from time to time. When we make material
                 changes, we&apos;ll update the &quot;Last updated&quot; date above
@@ -181,7 +197,7 @@ export default function TermsPage() {
                 revised Terms.
               </p>
 
-              <h2>12. Governing law</h2>
+              <h2>13. Governing law</h2>
               <p>
                 These Terms are governed by the laws of the United States and the
                 state in which TalkAbtIT operates, without regard to conflict of
@@ -189,10 +205,10 @@ export default function TermsPage() {
                 located there, unless applicable law requires otherwise.
               </p>
 
-              <h2>13. Contact</h2>
+              <h2>14. Contact</h2>
               <p>
                 Questions about these Terms? Email us at{" "}
-                <a href="mailto:support@talkabtit.com">support@talkabtit.com</a>.
+                <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>.
               </p>
             </div>
           </div>
