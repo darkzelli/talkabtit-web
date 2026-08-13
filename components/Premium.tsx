@@ -282,7 +282,7 @@ export default function Premium() {
 
         <div className="premium-intro">
           <h3 className="display premium-title">
-            Get <img className="premium-logo" src="/logo.svg" alt="TalkAbtIt" loading="lazy" decoding="async" />{" "}
+            Get <img className="premium-logo" src="/logo.svg" alt="TalkAbtIT" loading="lazy" decoding="async" />{" "}
             <span className="accent-gold">Premium</span>
           </h3>
           <p className="lede">
