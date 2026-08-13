@@ -18,7 +18,6 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
       <div className="nav-inner">
         <a className="nav-logo" href={sub ? "/" : "#"} aria-label="TalkAbtIT home">
           <img src="/logo.svg" alt="TalkAbtIT" />
-          <span className="nav-wordmark display">TalkAbtIT</span>
         </a>
         <div className="nav-links">
           <a href={`${base}#premium`}>Customize</a>

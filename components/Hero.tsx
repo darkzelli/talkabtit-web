@@ -13,10 +13,8 @@ export default function Hero() {
               favorite streaming service.
             </h1>
             <p className="sub">
-              TalkAbtIT is a free browser extension that adds a time-synced
-              comment section to Netflix, Hulu, Disney+, HBO Max, and
-              Crunchyroll. No one to watch with? No problem — talk about your
-              favorite shows with everyone.
+              No one to watch with? No problem. Add TalkAbtIT to your browser
+              and talk about your favorite shows with everyone.
             </p>
             <div className="ctas">
               <a
