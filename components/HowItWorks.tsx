@@ -19,7 +19,7 @@ const STEPS = [
   },
   {
     title: "Open your streaming service",
-    body: "Head to Netflix, Hulu, Disney+, Max, or Crunchyroll and press play — the popcorn bucket pops up over the video. Click it to open the conversation.",
+    body: "Head to Netflix, Hulu, Disney+, HBO Max, or Crunchyroll and press play — the popcorn bucket pops up over the video. Click it to open the conversation.",
     visual: <BucketDemo />,
   },
   {

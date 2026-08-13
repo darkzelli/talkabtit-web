@@ -158,7 +158,7 @@ nav {
 .logo-netflix { height: 23px; }
 .logo-hulu    { height: 25px; }
 .logo-disney  { height: 40px; }
-.logo-max     { height: 25px; }
+.logo-max     { height: 40px; } /* stacked HBO-over-max mark, sized like Disney+ */
 .logo-cr      { height: 30px; }
 
 /* ---- browser demo: a Chrome-style window with a fullscreen player + comments
@@ -173,16 +173,11 @@ nav {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(237, 61, 35, 0.12);
 }
 
-/* tab strip: traffic-light window controls + the active streaming tab */
+/* tab strip: the active streaming tab, hugging the left edge */
 .browser-tabbar {
-  display: flex; align-items: center; gap: 1.1em;
-  height: 3em; padding: 0 1.1em; background: #17181b;
+  display: flex; align-items: center; gap: 0.9em;
+  height: 3em; padding: 0 0.7em; background: #17181b;
 }
-.traffic { display: flex; align-items: center; gap: 0.55em; }
-.traffic span { width: 0.85em; height: 0.85em; border-radius: 50%; }
-.traffic span:nth-child(1) { background: #ff5f57; }
-.traffic span:nth-child(2) { background: #febc2e; }
-.traffic span:nth-child(3) { background: #28c840; }
 .browser-tab {
   display: flex; align-items: center; gap: 0.6em; align-self: flex-end;
   height: 2.1em; padding: 0 0.9em; min-width: 11em; max-width: 16em;
@@ -194,8 +189,12 @@ nav {
   width: 1em; height: 1em; border-radius: 0.25em; flex-shrink: 0;
   background: linear-gradient(135deg, #1ce783, #0b8f4f);
 }
-.tab-x { margin-left: auto; color: rgba(255, 255, 255, 0.5); font-size: 1.2em; line-height: 1; }
-.tab-new { color: rgba(255, 255, 255, 0.5); font-size: 1.5em; line-height: 1; margin-left: 0.1em; }
+/* the + rides in the same bottom band as the tab so they center together;
+   1.47em at this 1.5em font = the tab's rendered height (2.1em at 1.05em) */
+.tab-new {
+  display: flex; align-items: center; align-self: flex-end; height: 1.47em;
+  color: rgba(255, 255, 255, 0.5); font-size: 1.5em; line-height: 1;
+}
 
 /* toolbar: nav buttons, omnibox, pinned extension + menu */
 .browser-toolbar {
@@ -213,38 +212,26 @@ nav {
 .omnibox svg { width: 1.1em; height: 1.1em; flex-shrink: 0; color: rgba(255, 255, 255, 0.42); }
 .omnibox .url { overflow: hidden; text-overflow: ellipsis; }
 .tb-actions { display: flex; align-items: center; gap: 0.75em; color: rgba(255, 255, 255, 0.6); }
-/* the TalkAbtIT extension, pinned and lit up in gold */
+/* the TalkAbtIT extension, pinned */
 .tb-ext {
   display: flex; align-items: center; justify-content: center;
-  width: 2.3em; height: 2.3em; border-radius: 50%;
-  background: rgba(255, 185, 31, 0.16); color: var(--gold);
-  box-shadow: 0 0 0 1px rgba(255, 185, 31, 0.3);
+  width: 2.3em; height: 2.3em;
 }
-.tb-ext svg { width: 1.4em; height: 1.4em; }
+.tb-ext img { height: 1.6em; width: auto; }
 .tb-menu { display: flex; }
 .tb-menu svg { width: 1.5em; height: 1.5em; }
 
-/* the web page: fullscreen player with comments overlaid. Bottom corners are
+/* the web page: a fullscreen player. Bottom corners are
    clipped by the window's own border-radius (overflow: hidden above). */
 .screen {
   position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #0b0c10;
 }
-/* real clip playing in the video area — public/talkabtitvidmin.webm */
+/* real clip playing in the video area — public/talkabtit-demo-*.webm */
 .screen-video {
   position: absolute; inset: 0; z-index: 0;
   width: 100%; height: 100%; object-fit: cover;
   background: #0b0c10;
 }
-/* comments overlaid directly on the fullscreen video — transparent so the show
-   stays visible underneath */
-.comments-popup {
-  position: absolute; top: 0.7em; right: 0.7em; bottom: 0.7em; width: 46%; z-index: 2;
-  display: flex; flex-direction: column;
-  background: transparent; border: none; padding: 0;
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-}
-/* slid off the video, then slid back to re-add the comments */
-.comments-popup.is-hidden { transform: translateX(118%); opacity: 0; }
 .video {
   position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
@@ -268,31 +255,6 @@ nav {
 }
 .video .track { position: absolute; left: 14px; right: 14px; bottom: 12px; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.18); }
 .video .track::before { content: ''; position: absolute; inset: 0 70% 0 0; border-radius: 3px; background: var(--gold); }
-
-.feed {
-  flex: 1; overflow: hidden; min-height: 0;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 90%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0, #000 90%, transparent 100%);
-}
-.feed-inner { display: flex; flex-direction: column; gap: 0.85em; }
-
-.comment {
-  background: rgba(237, 61, 35, 0.20); border: 1px solid rgba(237, 61, 35, 0.32);
-  border-radius: 0.75em; padding: 0.5em 0.75em; flex-shrink: 0;
-  transform-origin: top left;
-  animation: comment-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-/* each comment eases in as it is "sent" */
-@keyframes comment-in {
-  from { opacity: 0; transform: translateY(0.7em) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.comment .who { display: flex; align-items: center; gap: 0.45em; font-size: 0.82em; font-weight: 700; }
-.comment .ts {
-  font-weight: 400; font-size: 0.7em; font-variant-numeric: tabular-nums;
-  background: rgba(255, 255, 255, 0.16); border-radius: 999px; padding: 0.1em 0.55em; color: rgba(255, 255, 255, 0.9);
-}
-.comment .body { font-size: 0.82em; color: rgba(255, 255, 255, 0.65); margin-top: 0.15em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ---- sections ---- */
 section { padding: 88px 0; }
@@ -378,6 +340,8 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 .sp-like { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 600; color: var(--text-dim); }
 .sp-like-on { color: var(--red); }
 .sp-body { margin-top: 3px; font-size: 12.5px; }
+/* a text comment sent as a spoiler: blurred until tapped */
+.sp-body-blur { filter: blur(4px); user-select: none; }
 /* spoiler frames: colorful gradients blurred past recognition — the negative
    inset keeps the blur from feathering the edges */
 .sp-img { position: relative; margin-top: 7px; height: 72px; border-radius: 10px; overflow: hidden; }
@@ -760,8 +724,9 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 }
 .perk-demo > .pv-popup { flex: 1; align-items: center; }
 
-/* popup comments: a frosted bubble floats in over a dark "video", the red
-   runtime bar marking the moment it's pinned to */
+/* popup comments: bare time-stamped comments pop in over a dark "video" one
+   after another (mirroring the extension capture), the red runtime bar
+   marking the moment they're pinned to */
 .pk-video {
   border-radius: 12px; padding: 12px 12px 10px;
   background:
@@ -769,19 +734,43 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
     linear-gradient(160deg, #1d2230, #0a0c12);
   display: flex; flex-direction: column; gap: 12px;
 }
-.pk-bubble {
-  display: flex; align-items: flex-start; gap: 10px; text-align: left;
-  max-width: 360px;
-  padding: 9px 12px 10px; border-radius: 12px;
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  animation: pk-pop 6s ease-in-out infinite;
+/* bottom-anchored, right-aligned column: a comment entering at the bottom
+   grows out of 0fr and pushes everything above it up, exactly like the
+   extension stacks live popups */
+.pk-stage {
+  aspect-ratio: 16 / 9; overflow: hidden;
+  display: flex; flex-direction: column;
+  /* centered, not bottom-anchored: a lone first comment sits mid-panel, and
+     each arrival below still pushes the ones above it upward */
+  justify-content: center; align-items: flex-end;
+  padding: 4px 2px;
 }
-@keyframes pk-pop {
-  0%        { opacity: 0; transform: translateY(9px); }
-  10%, 80%  { opacity: 1; transform: translateY(0); }
-  92%, 100% { opacity: 0; transform: translateY(0); }
+.pk-pop {
+  display: grid; grid-template-rows: 0fr;
+  max-width: 78%; text-align: left;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  animation: pk-pop-cycle 14s ease-in-out infinite;
+}
+.pk-pop-inner { min-height: 0; overflow: hidden; }
+/* each popup owns a ~6s window of the shared 14s cycle (staggered via
+   animation-delay inline): grow in at the bottom, hold, fade, collapse */
+@keyframes pk-pop-cycle {
+  0%        { grid-template-rows: 0fr; opacity: 0; }
+  3%        { grid-template-rows: 1fr; opacity: 1; }
+  40%       { grid-template-rows: 1fr; opacity: 1; }
+  44%       { grid-template-rows: 1fr; opacity: 0; }
+  47%, 100% { grid-template-rows: 0fr; opacity: 0; }
+}
+.pk-pop-inner > .pv-body { padding-bottom: 8px; }
+/* fixed width — a % here would resolve against the popup's shrink-to-fit box
+   and balloon it to max-width, dragging the gif toward the stage's left edge */
+.pk-pop-gif { display: block; width: 148px; max-width: 100%; border-radius: 10px; margin: 4px 0 8px; }
+/* the perk-grid reduced-motion rule freezes the cycle; rest on the last two
+   comments (text + GIF) shown statically so the panel still demos the feature */
+@media (prefers-reduced-motion: reduce) {
+  .pk-pop { opacity: 1; grid-template-rows: 1fr; }
+  .pk-pop:nth-child(-n + 2) { display: none; }
 }
 .pk-progress { height: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
 .pk-progress-fill { display: block; height: 100%; width: 38%; border-radius: inherit; background: var(--red); }
@@ -804,7 +793,7 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 
 /* the Pro card: a looping "GIF" pic */
 .pk-av-gif {
-  background: url("/gif-avatar.gif") center / cover;
+  background: url("/gif-avatar.webp") center / cover;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
 }
 
@@ -1016,7 +1005,7 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* ---- footer (multi-column) ---- */
 footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14px; color: var(--text-dim); }
 .footer-grid {
-  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
   max-width: 1080px; margin: 0 auto; padding: 0 24px 44px;
 }
 .footer-brand img { height: 30px; display: block; margin-bottom: 14px; }
@@ -1039,8 +1028,9 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .hero-streamers { margin-top: 56px; }
   .logo-strip { gap: 20px 30px; }
   .logo-disney { height: 34px; }
+  .logo-max    { height: 34px; }
   .logo-cr     { height: 26px; }
-  .logo-netflix, .logo-hulu, .logo-max { height: 21px; }
+  .logo-netflix, .logo-hulu { height: 21px; }
   .feature { grid-template-columns: 1fr; gap: 40px; padding: 32px 0; }
   .feature.reverse .feature-copy { order: 1; }
   .feature.reverse .feature-visual { order: 2; }

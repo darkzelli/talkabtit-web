@@ -47,7 +47,7 @@ export default function TermsPage() {
               <p>
                 <strong>
                   TalkAbtIT is an independent product and is not affiliated with,
-                  endorsed by, or sponsored by Netflix, Hulu, Disney+, Max,
+                  endorsed by, or sponsored by Netflix, Hulu, Disney+, HBO Max,
                   Crunchyroll, or any other streaming service.
                 </strong>{" "}
                 All names, trademarks, and logos are the property of their
@@ -80,8 +80,8 @@ export default function TermsPage() {
                 To use the Service you need your own active subscriptions with
                 the streaming services you want to watch. Your use of those
                 services is governed by their own terms and privacy policies. You
-                sign in directly with each service, and you agree to comply with
-                their terms. We are not responsible for the availability,
+                sign in on each service&apos;s own site, and you agree to comply
+                with their terms. We are not responsible for the availability,
                 content, or policies of any third-party service.
               </p>
 

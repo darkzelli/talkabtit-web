@@ -48,7 +48,7 @@ export default function Hero() {
             <img className="logo logo-netflix" src="/logos/netflix.svg" alt="Netflix" />
             <img className="logo logo-hulu" src="/logos/hulu.svg" alt="Hulu" />
             <img className="logo logo-disney" src="/logos/disneyplus.svg" alt="Disney+" />
-            <img className="logo logo-max" src="/logos/max.svg" alt="Max" />
+            <img className="logo logo-max" src="/logos/max.svg" alt="HBO Max" />
             <img className="logo logo-cr" src="/logos/crunchyroll.svg" alt="Crunchyroll" />
           </div>
         </div>
@@ -68,10 +68,11 @@ export default function Hero() {
             <path d="M9 12l2 2 4-4" />
           </svg>
           <span>
-            Subscriptions not included — you'll need your own account with each
-            service. TalkAbtIT isn't piracy: we don't stream, host, or
-            unlock any content. You sign in directly with the service, and your
-            login details never pass through us. TalkAbtIT is not affiliated
+            Subscriptions not included — you'll need an active subscription to
+            each streaming service you watch. TalkAbtIT isn't piracy: we don't
+            stream, host, or unlock any content. You sign in on each streaming
+            service's own site, just like you normally do — TalkAbtIT never asks
+            for or sees your streaming logins. TalkAbtIT is not affiliated
             with, endorsed by, or sponsored by any of these streaming services —
             all names and logos are trademarks of their respective owners.
           </span>

@@ -34,6 +34,14 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
             </li>
           </ul>
         </div>
+        <div className="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </footer>
   );

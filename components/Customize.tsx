@@ -114,7 +114,7 @@ export function CustomizeCard() {
         </span>
       </div>
 
-      <div className="cz-label">Popup</div>
+      <div className="cz-label">Pop-up</div>
       <div className="cz-glass">
         <div className="cz-bubble">
           <div className="cz-who">

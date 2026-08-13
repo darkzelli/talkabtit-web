@@ -59,21 +59,76 @@ function Perk({
   );
 }
 
-/* Popup comments (Plus): a frosted popup floating over a dark "video",
-   red runtime bar underneath — the moment the comment is pinned to. */
+/* Popup comments (Plus): the extension's popups recreated in code, matching
+   the capture — a right-side column anchored near the bottom where each new
+   comment pops in underneath and pushes the stack up, holds ~5s, then
+   collapses away as the loop continues. One comment is a GIF, reusing
+   homer.webp (already loaded by the Features section). The slight per-item
+   right offsets echo the capture's staggered layout. */
+const POPUP_CYCLE: {
+  who: string;
+  color: string;
+  ts: string;
+  body?: string;
+  badge?: boolean;
+  gif?: string;
+  offset: string;
+}[] = [
+  {
+    who: "mia_watches",
+    color: "#4FC3F7",
+    ts: "12:04",
+    body: "NO WAY he actually said that 😭",
+    offset: "2%",
+  },
+  {
+    who: "lateshift",
+    color: "#F472B6",
+    ts: "12:31",
+    body: "😂😂😂",
+    offset: "9%",
+  },
+  {
+    who: "kthedirector",
+    color: "#A78BFA",
+    ts: "12:36",
+    badge: true,
+    body: "ok this scene lives rent free in my head",
+    offset: "0%",
+  },
+  {
+    who: "val.entine",
+    color: "#4ADE80",
+    ts: "12:41",
+    gif: "/homer.webp",
+    offset: "5%",
+  },
+];
+
 function PopupDemo() {
   return (
     <div className="pk-video" aria-hidden="true">
-      <div className="pk-bubble">
-        <span className="pv-avatar" style={{ background: "#A855F7" }}>
-          Z
-        </span>
-        <div>
-          <div className="pv-who" style={{ color: "#C084FC" }}>
-            you <span className="pv-ts">12:04</span>
+      <div className="pk-stage">
+        {POPUP_CYCLE.map((p, i) => (
+          <div
+            key={p.who}
+            className="pk-pop"
+            style={{ marginRight: p.offset, animationDelay: `${i * 2.6}s` }}
+          >
+            <div className="pk-pop-inner">
+              <div className="pv-who" style={{ color: p.color }}>
+                {p.who}{" "}
+                {p.badge && <AvatarGlyph name="popcorn" size={13} color="#FFB91F" />}{" "}
+                <span className="pv-ts">{p.ts}</span>
+              </div>
+              {p.gif ? (
+                <img className="pk-pop-gif" src={p.gif} alt="" loading="lazy" decoding="async" />
+              ) : (
+                <div className="pv-body">{p.body}</div>
+              )}
+            </div>
           </div>
-          <div className="pv-body">this scene goes so hard 🔥</div>
-        </div>
+        ))}
       </div>
       <div className="pk-progress">
         <span className="pk-progress-fill" />
@@ -141,7 +196,7 @@ const PREMIUM_PLANS = [
     annual: "or $39.99/year — 2 months free",
     badge: null as string | null,
     features: [
-      "Popup comments over the video",
+      "Pop-up comments over the video",
       "Custom name color",
       "Profile pic (PNG or JPG)",
       "Popcorn bucket badge",
@@ -149,15 +204,15 @@ const PREMIUM_PLANS = [
   },
   {
     title: "Pro",
-    price: "$7.99",
+    price: "$5.99",
     period: "/month",
-    annual: "or $79.99/year — 2 months free",
+    annual: "or $59.99/year — 2 months free",
     badge: "Best value",
     features: [
       "Everything in Plus",
       "Crown badge on every comment",
       "9 name styles — Glitch, VHS & more",
-      "Custom popup background",
+      "Custom pop-up background",
       "GIF profile pic",
     ],
   },
@@ -248,7 +303,7 @@ export default function Premium() {
             <Perk bare title="The Plus look">
               <PlusCardDemo />
             </Perk>
-            <Perk title="Popup comments">
+            <Perk bare title="Pop-up comments">
               <PopupDemo />
             </Perk>
             <PlanCard plan={PREMIUM_PLANS[0]} />
@@ -268,7 +323,7 @@ export default function Premium() {
         </div>
 
         <p className="plans-note">
-          Sign in to the extension and upgrade right from the popup — monthly
+          Sign in to the extension and upgrade right from the pop-up — monthly
           or annual, cancel anytime.
         </p>
       </div>

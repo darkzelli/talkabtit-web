@@ -7,7 +7,7 @@ import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about TalkAbtIT — the browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, and Crunchyroll.",
+    "Answers to common questions about TalkAbtIT — the browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, HBO Max, and Crunchyroll.",
   alternates: { canonical: "/support/" },
   openGraph: {
     title: "FAQ — TalkAbtIT",
@@ -38,23 +38,25 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     q: "Which streaming services work with it?",
     a: (
       <>
-        Netflix, Hulu, Disney+, Max, and Crunchyroll work with TalkAbtIT, with
+        Netflix, Hulu, Disney+, HBO Max, and Crunchyroll work with TalkAbtIT,
+        with
         more coming soon. They work right in your browser — start playing on
         any of them and the comments appear on the page.
       </>
     ),
-    text: "Netflix, Hulu, Disney+, Max, and Crunchyroll work with TalkAbtIT, with more coming soon. They work right in your browser — start playing on any of them and the comments appear on the page.",
+    text: "Netflix, Hulu, Disney+, HBO Max, and Crunchyroll work with TalkAbtIT, with more coming soon. They work right in your browser — start playing on any of them and the comments appear on the page.",
   },
   {
     q: "Do I need my own subscriptions?",
     a: (
       <>
         Yes. TalkAbtIT doesn&apos;t include or replace any subscription —
-        you&apos;ll need your own account with each service. You sign in directly
-        with the service, so your login details never pass through us.
+        you&apos;ll need an active subscription to each streaming service you
+        watch. You sign in on the streaming service&apos;s own site, just like
+        you normally do — TalkAbtIT never asks for your streaming login.
       </>
     ),
-    text: "Yes. TalkAbtIT doesn't include or replace any subscription — you'll need your own account with each service. You sign in directly with the service, so your login details never pass through us.",
+    text: "Yes. TalkAbtIT doesn't include or replace any subscription — you'll need an active subscription to each streaming service you watch. You sign in on the streaming service's own site, just like you normally do — TalkAbtIT never asks for your streaming login.",
   },
   {
     q: "Is this legal? Is it piracy?",
@@ -71,13 +73,14 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     q: "Does TalkAbtIT see my streaming passwords?",
     a: (
       <>
-        No. You log in directly with each streaming service, and those
-        credentials never pass through our servers. See our{" "}
+        No. You log in on each streaming service&apos;s own site, just like you
+        normally do — TalkAbtIT never asks for those credentials, and they never
+        pass through our servers. See our{" "}
         <a href="/privacy/">Privacy Policy</a> for the details on what we do and
         don&apos;t collect.
       </>
     ),
-    text: "No. You log in directly with each streaming service, and those credentials never pass through our servers. See our Privacy Policy for the details on what we do and don't collect.",
+    text: "No. You log in on each streaming service's own site, just like you normally do — TalkAbtIT never asks for those credentials, and they never pass through our servers. See our Privacy Policy for the details on what we do and don't collect.",
   },
   {
     q: "How do comments stay in sync with the show?",
@@ -119,23 +122,23 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
       <>
         Yes. Commenting and reading are free and unlimited — no daily caps, no
         locked threads. An optional Premium upgrade adds ways to stand out, like
-        popup comments over the video, a custom name color, and a profile pic;
-        it never sells posting or reading.
+        pop-up comments over the video, a custom name color, and a profile pic —
+        but posting and reading are never behind a paywall.
       </>
     ),
-    text: "Yes. Commenting and reading are free and unlimited — no daily caps, no locked threads. An optional Premium upgrade adds ways to stand out, like popup comments over the video, a custom name color, and a profile pic; it never sells posting or reading.",
+    text: "Yes. Commenting and reading are free and unlimited — no daily caps, no locked threads. An optional Premium upgrade adds ways to stand out, like pop-up comments over the video, a custom name color, and a profile pic — but posting and reading are never behind a paywall.",
   },
   {
     q: "What can I customize?",
     a: (
       <>
-        Everyone can pick an avatar for free. Plus adds popup comments over the
+        Everyone can pick an avatar for free. Plus adds pop-up comments over the
         video, a custom name color, and a profile pic (PNG or JPG); Pro adds GIF
-        profile pics and a custom popup color — all with a live preview before
+        profile pics and a custom pop-up color — all with a live preview before
         you save, so your comments look like you.
       </>
     ),
-    text: "Everyone can pick an avatar for free. Plus adds popup comments over the video, a custom name color, and a profile pic (PNG or JPG); Pro adds GIF profile pics and a custom popup color — all with a live preview before you save, so your comments look like you.",
+    text: "Everyone can pick an avatar for free. Plus adds pop-up comments over the video, a custom name color, and a profile pic (PNG or JPG); Pro adds GIF profile pics and a custom pop-up color — all with a live preview before you save, so your comments look like you.",
   },
   {
     q: "What if no one has commented on my episode yet?",

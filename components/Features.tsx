@@ -4,7 +4,7 @@ function PlayerCard() {
   return (
     <div className="player-card" aria-hidden="true">
       <div className="video">
-        <img className="video-img" src="/player-panel.jpg" alt="" loading="lazy" decoding="async" />
+        <img className="video-img" src="/player-panel.avif" alt="" loading="lazy" decoding="async" />
         <div className="play" />
         <div className="track" />
       </div>
@@ -49,7 +49,7 @@ function SpoilerPanelCard() {
         <span className="sp-chip sp-chip-on">Newest</span>
       </div>
       <div className="sp-chips">
-        <span className="sp-label">Popup duration</span>
+        <span className="sp-label">Pop-up duration</span>
         <span className="sp-chip sp-chip-on">5s</span>
         <span className="sp-chip">10s</span>
         <span className="sp-chip">20s</span>
@@ -68,7 +68,9 @@ function SpoilerPanelCard() {
               <Heart /> 0
             </span>
           </div>
-          <div className="sp-body">😂😂😂😂</div>
+          <div className="sp-body sp-body-blur">
+            not zenitsu sleep-running up the whole castle 😂😂
+          </div>
         </div>
       </div>
       <div className="sp-comment">
@@ -102,7 +104,7 @@ function SpoilerPanelCard() {
               <Heart /> 0
             </span>
           </div>
-          <img className="sp-gif" src="/homer.gif" alt="" loading="lazy" decoding="async" />
+          <img className="sp-gif" src="/homer.webp" alt="" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>

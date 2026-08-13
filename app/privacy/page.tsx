@@ -37,8 +37,9 @@ export default function PrivacyPage() {
               <h2>The short version</h2>
               <p>
                 TalkAbtIT adds a comment section on top of the streaming services
-                you already use. <strong>You sign in directly with each streaming
-                service, and those passwords never pass through our servers.</strong>{" "}
+                you already use. <strong>You sign in on each streaming
+                service&apos;s own site — TalkAbtIT never asks for those
+                passwords, and they never pass through our servers.</strong>{" "}
                 We collect only what we need to run your account and the
                 conversation around your shows.
               </p>
