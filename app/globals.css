@@ -90,8 +90,9 @@ nav {
   border-bottom: 1px solid var(--hairline);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 24px; max-width: 1080px; margin: 0 auto; }
-.nav-logo { display: flex; align-items: center; }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
 .nav-logo img { height: 34px; display: block; transform: translateY(-5px); }
+.nav-wordmark { font-size: 26px; color: var(--text); letter-spacing: 0.02em; }
 .nav-links { align-items: center; }
 .nav-links a { display: inline-flex; align-items: center; line-height: 1; }
 .nav-links { display: flex; gap: 26px; margin-right: auto; margin-left: 34px; }
