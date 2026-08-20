@@ -10,7 +10,7 @@ export default function Hero() {
             <span className="kicker">Join the conversation</span>
             <h1 className="display">
               A <span className="accent">comment section</span> for your
-              favorite streaming service.
+              favorite streaming services.
             </h1>
             <p className="sub">
               No one to watch with? No problem. Add TalkAbtIT to your browser

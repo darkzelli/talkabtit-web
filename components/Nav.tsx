@@ -17,11 +17,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
     <nav>
       <div className="nav-inner">
         <a className="nav-logo" href={sub ? "/" : "#"} aria-label="TalkAbtIT home">
-          {/* Temporary for Google OAuth branding verification: plain-text name
-              instead of the logo mark (the bucket art doesn't legibly spell
-              "Abt"). Swap back to <img src="/logo.svg" alt="TalkAbtIT" /> after
-              the approval email. */}
-          <span className="nav-wordmark display">TalkAbtIT</span>
+          <img src="/logo.svg" alt="TalkAbtIT" />
         </a>
         <div className="nav-links">
           <a href={`${base}#premium`}>Customize</a>

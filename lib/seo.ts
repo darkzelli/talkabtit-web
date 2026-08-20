@@ -9,7 +9,7 @@ export const SITE_URL = "https://talkabtit.app";
 export const SITE_NAME = "TalkAbtIT";
 
 export const SITE_TAGLINE =
-  "A comment section for streaming, right in your browser";
+  "A comment section for your favorite streaming services";
 
 export const SITE_DESCRIPTION =
   "No one to watch with? No problem. TalkAbtIT is a browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, and Crunchyroll.";
