@@ -1,8 +1,8 @@
-import HomePage from "@/components/HomePage";
+import ComingSoon from "@/components/ComingSoon";
 
-// "/" renders the full marketing site. The pre-launch splash still lives in
-// <ComingSoon /> (components/ComingSoon.tsx) — swap the render back to it to
-// park the site again.
+// "/" is parked on the pre-launch splash. The full marketing site lives in
+// <HomePage /> (components/HomePage.tsx) — swap the render back to it to
+// relaunch the site.
 export default function Home() {
-  return <HomePage />;
+  return <ComingSoon />;
 }
