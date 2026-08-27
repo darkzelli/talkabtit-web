@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <div className="wrap">
             <span className="kicker">Legal</span>
             <h1 className="display">Privacy Policy</h1>
-            <p className="updated">Last updated: August 5, 2026</p>
+            <p className="updated">Last updated: August 26, 2026</p>
           </div>
         </header>
 
@@ -27,56 +27,72 @@ export default function PrivacyPage() {
           <div className="wrap">
             <div className="prose">
               <p>
-                This Privacy Policy explains how TalkAbtIT (&quot;TalkAbtIT,&quot;
-                &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) collects, uses,
-                and protects your information when you use the TalkAbtIT browser
-                extension and related services (the &quot;Service&quot;). By using the Service,
-                you agree to the practices described here.
+                This Privacy Policy governs the information ByWhateverMedium
+                L.L.C. collects on its websites and through its online services
+                (the &quot;Service&quot;). The terms &quot;TalkAbtIT,&quot;
+                &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; include
+                talkabtit.app, ByWhateverMedium L.L.C., and our affiliates and
+                subsidiaries. This Privacy Policy explains how TalkAbtIT may
+                collect, use, and disclose information we obtain through the
+                Service. By using the Service, you agree to the practices
+                described here.
               </p>
 
-              <h2>The short version</h2>
+              <h2>When TalkAbtIT collects your information</h2>
+              <h3>Installation</h3>
               <p>
-                TalkAbtIT adds a comment section on top of the streaming services
-                you already use. <strong>You sign in on each streaming
-                service&apos;s own site — TalkAbtIT never asks for those
-                passwords, and they never pass through our servers.</strong>{" "}
-                We collect only what we need to run your account and the
-                conversation around your shows.
+                If you install the TalkAbtIT browser extension, a random
+                identifier is minted locally in your browser for that install.
+                It is used to record viewing sessions and anonymous usage
+                statistics, and it isn&apos;t derived from your account.
               </p>
-
-              <h2>Information we collect</h2>
-              <h3>Account information</h3>
+              <h3>Creating an account</h3>
               <p>
                 You create a TalkAbtIT account with an email address and
-                password, or by signing in with Google or GitHub — Sign in
-                with Apple is not supported. Either way, we store your email
+                password, or by signing in with Google or GitHub. Either way,
+                we store your email
                 address and a unique account identifier; when you use Google
                 or GitHub, we receive your email address from them and never
                 see your password for those services. We also store the
                 username you choose and any profile details or customization
                 you set.
               </p>
-              <h3>Content you create</h3>
+              <h3>Using the Service</h3>
               <p>
-                We store the comments you post — including any GIFs you attach —
-                along with their timestamps and the show or content they relate
-                to, so we can display the conversation to you and other viewers.
-                If you upload a profile picture, we store that image too.
+                We collect information about your use of the Service. We store
+                the comments you post — including any GIFs you attach — along
+                with their timestamps and the show or content they relate to.
+                Unlike a live watch-party chat that disappears when the party
+                ends, TalkAbtIT comments persist by design so we can display
+                the conversation to you and other viewers. If you upload a
+                profile picture, we store that image too.
               </p>
-              <h3>Usage and device information</h3>
-              <p>
-                We may collect limited technical information — such as extension
-                version, browser type, and diagnostic or crash data — to keep the
-                Service working and to improve it.
-              </p>
-              <h3>Viewing activity</h3>
               <p>
                 When you open the comment panel on an episode, we record that a
                 viewing session happened — the show or episode, when it was
-                opened, and a random identifier for your extension install — so
-                we can see how rooms are doing and show which episodes are
-                trending. That identifier is minted locally in your browser and
-                isn&apos;t derived from your account.
+                opened, and the random identifier for your extension install —
+                so we can see how rooms are doing and show which episodes are
+                trending. We may also collect limited technical information —
+                such as extension version, browser type, and diagnostic or
+                crash data — to keep the Service working and to improve it.
+              </p>
+              <h3>Communications</h3>
+              <p>
+                If you contact us directly, we may receive additional
+                information about you — for example, your name, email address,
+                the contents of your message, any attachments you send us, and
+                any other information you choose to provide.
+              </p>
+              <h3>Cookies, automatic data collection, and related technologies</h3>
+              <p>
+                When you visit the Service, we and our third-party service
+                providers receive and record information on server logs from
+                your browser — such as your IP address, browser type, and the
+                date and time of your visit. Our payment provider, Stripe, may
+                use cookies and similar technologies to process payments and to
+                detect and prevent fraud. We do not run third-party advertising
+                trackers on our website; the GIF picker&apos;s interaction with
+                Klipy is described in &quot;GIFs and advertising&quot; below.
               </p>
 
               <h2>Information we do not collect</h2>
@@ -95,7 +111,8 @@ export default function PrivacyPage() {
                   To display comments and sync them to the runtime of the show
                   you&apos;re watching.
                 </li>
-                <li>To provide customization and other Pro features.</li>
+                <li>To provide customization and other premium features.</li>
+                <li>To process payments and prevent fraud.</li>
                 <li>
                   To maintain, secure, troubleshoot, and improve the Service.
                 </li>
@@ -165,13 +182,20 @@ export default function PrivacyPage() {
 
               <h2>Data retention</h2>
               <p>
-                We keep your information for as long as your account is active or
-                as needed to provide the Service. If a paid subscription ends, we
-                remove the paid customization that came with it, including any
-                uploaded profile picture. When you delete your account, we
-                remove your profile and associated personal data, except where we
-                need to retain certain information to comply with legal
-                obligations or resolve disputes.
+                We retain your personal information only for as long as
+                necessary to fulfill the purposes for which it was collected,
+                including any legal, accounting, or reporting requirements.
+                Payment and transaction data (including IP addresses and risk
+                assessment scores) are retained for the periods required by
+                applicable financial regulations and for the purpose of
+                managing disputes, chargebacks, and fraud claims. If a paid
+                subscription ends, we remove the paid customization that came
+                with it, including any uploaded profile picture. When you
+                delete your account, we remove your profile and associated
+                personal data, except where we need to retain certain
+                information to comply with legal obligations or resolve
+                disputes. When personal information is no longer required, we
+                will securely delete or anonymize it.
               </p>
 
               <h2>Your rights and choices</h2>
@@ -181,6 +205,51 @@ export default function PrivacyPage() {
                 live, you may have additional rights to access, correct, or
                 request deletion of your personal information. To make a request,
                 contact us at the address below.
+              </p>
+
+              <h2>California privacy rights</h2>
+              <p>
+                If you are a California resident, the California Consumer
+                Privacy Act (&quot;CCPA&quot;) as amended by the California
+                Privacy Rights Act (&quot;CPRA&quot;) provides you with the
+                following rights: (i) the right to know what personal
+                information we have collected about you; (ii) the right to
+                delete personal information we have collected from you; (iii)
+                the right to opt out of the sale or sharing of your personal
+                information — we do not sell your personal information; (iv)
+                the right to correct inaccurate personal information; and (v)
+                the right to non-discrimination for exercising your privacy
+                rights.
+              </p>
+              <p>
+                <strong>Exercising your rights.</strong> To exercise any of the
+                rights described above, please email us at{" "}
+                <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>.
+                We will respond to your request within the timeframe required
+                by applicable law. We may need to verify your identity before
+                processing your request.
+              </p>
+
+              <h2>Legal bases for processing (EEA users)</h2>
+              <p>
+                If you are located in the European Economic Area, we rely on
+                the following legal bases to process your personal information:
+                (i) <strong>Contract performance</strong> — processing necessary
+                to provide the Service and fulfill our contractual obligations
+                to you, including processing payments; (ii){" "}
+                <strong>Legitimate interests</strong> — processing necessary for
+                our legitimate interests, including fraud prevention and
+                detection via Stripe Radar, securing our Service, and improving
+                it, where these interests are not overridden by your data
+                protection rights; (iii) <strong>Legal obligation</strong> —
+                processing necessary to comply with applicable laws,
+                regulations, and legal processes, including financial reporting
+                and anti-money laundering requirements; and (iv){" "}
+                <strong>Consent</strong> — where we ask for your explicit
+                consent for specific processing activities, such as marketing
+                communications. You may withdraw your consent at any time by
+                contacting us at{" "}
+                <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>.
               </p>
 
               <h2>Children&apos;s privacy</h2>

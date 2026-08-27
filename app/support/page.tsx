@@ -38,13 +38,12 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     q: "Which streaming services work with it?",
     a: (
       <>
-        Netflix, Hulu, Disney+, HBO Max, and Crunchyroll work with TalkAbtIT,
-        with
-        more coming soon. They work right in your browser — start playing on
-        any of them and the comments appear on the page.
+        TalkAbtIT works with Netflix, Hulu, Disney+, HBO Max, and Crunchyroll,
+        with more coming soon. It works right in your browser — start playing
+        any content from them and the comments appear on the page.
       </>
     ),
-    text: "Netflix, Hulu, Disney+, HBO Max, and Crunchyroll work with TalkAbtIT, with more coming soon. They work right in your browser — start playing on any of them and the comments appear on the page.",
+    text: "TalkAbtIT works with Netflix, Hulu, Disney+, HBO Max, and Crunchyroll, with more coming soon. It works right in your browser — start playing any content from them and the comments appear on the page.",
   },
   {
     q: "Do I need my own subscriptions?",
@@ -111,10 +110,10 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
         Add the extension from the Chrome Web Store, then continue with Google
         or GitHub — or create an account with your email — and pick a username:
         that&apos;s the name everyone sees next to your comments. The whole
-        thing takes a few seconds. Sign in with Apple isn&apos;t supported.
+        thing takes a few seconds.
       </>
     ),
-    text: "Add the extension from the Chrome Web Store, then continue with Google or GitHub — or create an account with your email — and pick a username: that's the name everyone sees next to your comments. The whole thing takes a few seconds. Sign in with Apple isn't supported.",
+    text: "Add the extension from the Chrome Web Store, then continue with Google or GitHub — or create an account with your email — and pick a username: that's the name everyone sees next to your comments. The whole thing takes a few seconds.",
   },
   {
     q: "Is it free?",
@@ -135,10 +134,10 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
         Everyone can pick an avatar for free. Plus adds pop-up comments over the
         video, a custom name color, and a profile pic (PNG or JPG); Pro adds GIF
         profile pics and a custom pop-up color — all with a live preview before
-        you save, so your comments look like you.
+        you save.
       </>
     ),
-    text: "Everyone can pick an avatar for free. Plus adds pop-up comments over the video, a custom name color, and a profile pic (PNG or JPG); Pro adds GIF profile pics and a custom pop-up color — all with a live preview before you save, so your comments look like you.",
+    text: "Everyone can pick an avatar for free. Plus adds pop-up comments over the video, a custom name color, and a profile pic (PNG or JPG); Pro adds GIF profile pics and a custom pop-up color — all with a live preview before you save.",
   },
   {
     q: "What if no one has commented on my episode yet?",

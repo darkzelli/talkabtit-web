@@ -28,10 +28,11 @@ export default function TermsPage() {
             <div className="prose">
               <p>
                 Welcome to TalkAbtIT. These Terms of Service (&quot;Terms&quot;)
-                are an agreement between you and TalkAbtIT (&quot;TalkAbtIT,&quot;
-                &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) and govern your
-                use of the TalkAbtIT browser extension and related services (the
-                &quot;Service&quot;). By installing, accessing, or using the
+                are an agreement between you and ByWhateverMedium L.L.C.
+                (&quot;TalkAbtIT,&quot; &quot;we,&quot; &quot;us,&quot; or
+                &quot;our&quot;), the company that owns and operates TalkAbtIT,
+                and govern your use of the TalkAbtIT browser extension and
+                related services (the &quot;Service&quot;). By installing, accessing, or using the
                 Service, you agree to be bound by these Terms. If you don&apos;t
                 agree, please don&apos;t use the Service.
               </p>
@@ -67,8 +68,7 @@ export default function TermsPage() {
               <p>
                 You create an account by signing in with your Google or GitHub
                 account — or with an email address and password — and
-                choosing a username. Sign in with Apple is not supported. You
-                are responsible for maintaining the
+                choosing a username. You are responsible for maintaining the
                 security of your account and for all activity that happens under
                 it. Please choose a username that isn&apos;t offensive,
                 misleading, or infringing — we may reclaim or require changes to
@@ -151,7 +151,8 @@ export default function TermsPage() {
               <h2>8. Intellectual property</h2>
               <p>
                 The Service, including its software, design, logos, and content
-                we create, is owned by TalkAbtIT and protected by intellectual
+                we create, is owned by ByWhateverMedium L.L.C. and protected
+                by intellectual
                 property laws. We grant you a limited, personal, non-transferable,
                 non-exclusive license to use the Service for its intended
                 purpose. You may not copy, modify, distribute, or create

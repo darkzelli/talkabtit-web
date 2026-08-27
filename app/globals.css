@@ -63,6 +63,25 @@ a { color: inherit; }
 .coming-social a:hover { color: var(--gold); }
 .coming-social svg { width: 16px; height: 16px; }
 
+/* ---- 404 (shares the splash shell; the bucket mark stands in for about's
+   "o", its popcorn riding above the x-height like an ascender) ---- */
+.nf-title {
+  font-size: clamp(36px, 11.5vw, 120px);
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 42px rgba(237, 61, 35, 0.35);
+}
+.nf-title .accent {
+  color: var(--gold);
+  text-shadow: 0 0 42px rgba(255, 185, 31, 0.35);
+}
+.nf-mark {
+  height: 1em; width: auto;
+  margin: 0 0.02em;
+  /* the svg keeps ~5% padding under the bucket — pull it onto the baseline */
+  vertical-align: -0.05em;
+}
+.nf-home { margin-top: 36px; }
+
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
 /* small uppercase label above every section heading */
