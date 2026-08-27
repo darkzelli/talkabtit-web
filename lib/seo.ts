@@ -14,11 +14,10 @@ export const SITE_TAGLINE =
 export const SITE_DESCRIPTION =
   "No one to watch with? No problem. TalkAbtIT is a browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, Max, and Crunchyroll.";
 
-// Chrome Web Store listing for the extension. TODO: replace the placeholder id
-// with the real listing id once the extension is published — this constant is
-// the single source of truth for every "Get TalkAbtIT" button.
+// Chrome Web Store listing for the extension — the single source of truth for
+// every "Get TalkAbtIT" button.
 export const CHROME_STORE_URL =
-  "https://chromewebstore.google.com/detail/talkabtit";
+  "https://chromewebstore.google.com/detail/talkabtit/cemkclokkcdemkidbcfgkheaicpinjjh";
 
 // The streaming services the product layers onto — reused in copy and schema.
 export const SUPPORTED_SERVICES = [
