@@ -35,5 +35,5 @@ export const OG_IMAGE = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: "TalkAbtIT — a comment section for streaming, right in your browser.",
+  alt: "TalkAbtIT — a comment section for your favorite streaming services.",
 } as const;
