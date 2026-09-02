@@ -20,7 +20,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
           <img src="/logo.svg" alt="TalkAbtIT" />
         </a>
         <div className="nav-links">
-          <a href={`${base}#premium`}>Customize</a>
+          <a href="/premium/">Premium</a>
           <a href={`${base}#how`}>How it works</a>
           <a href="/support/">FAQ</a>
         </div>

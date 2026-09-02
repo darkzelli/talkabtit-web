@@ -20,7 +20,14 @@ function Check() {
   );
 }
 
-function PerkTag({ label }: { label: string }) {
+function PerkTag({ label, href }: { label: string; href?: string }) {
+  if (href) {
+    return (
+      <a className="perk-tag" href={href}>
+        {label}
+      </a>
+    );
+  }
   return <span className="perk-tag">{label}</span>;
 }
 
@@ -244,15 +251,57 @@ function PlanCard({ plan }: { plan: (typeof PREMIUM_PLANS)[number] }) {
   );
 }
 
+/* The Plus tiles, in order — shared by the /premium/ overview column and the
+   /premium/plus/ detail page. */
+export function PlusPerks() {
+  return (
+    <>
+      <Perk bare title="The Plus look">
+        <PlusCardDemo />
+      </Perk>
+      <Perk bare title="Pop-up comments">
+        <PopupDemo />
+      </Perk>
+      <PlanCard plan={PREMIUM_PLANS[0]} />
+    </>
+  );
+}
+
+/* The Pro tiles — same deal for /premium/ and /premium/pro/. */
+export function ProPerks() {
+  return (
+    <>
+      <Perk bare title="The Pro look">
+        <ProCardDemo />
+      </Perk>
+      <Perk title="Name styles">
+        <NameStyles />
+      </Perk>
+      <PlanCard plan={PREMIUM_PLANS[1]} />
+    </>
+  );
+}
+
+export function UpgradeNote() {
+  return (
+    <p className="plans-note">
+      Sign in to the extension and upgrade right from the pop-up — monthly or
+      annual, cancel anytime.
+    </p>
+  );
+}
+
+/* The full pricing page body, rendered at /premium/ — free-first pitch up
+   top, then the Plus/Pro split with each column linking into its tier page. */
 export default function Premium() {
   return (
-    <section id="premium" className="band band-premium">
+    <section className="band band-premium">
       <div className="wrap">
         <div className="premium-head">
           <span className="kicker">Pricing</span>
-          <h2 className="display">
+          <h1 className="display">
             Stay <span className="accent-gold">free</span> forever
-          </h2>
+          </h1>
           <p className="lede">
             Commenting and reading are free and unlimited — no daily caps, no
             locked threads. No trial, no card, no catch.
@@ -296,36 +345,27 @@ export default function Premium() {
             before Pro with its name styles */}
         <div className="perk-grid">
           <div className="perk-col">
-            {/* one tier pill heads the whole column */}
+            {/* one tier pill heads the whole column, linking into its page */}
             <div className="perk-col-head">
-              <PerkTag label="PLUS" />
+              <PerkTag label="PLUS" href="/premium/plus/" />
             </div>
-            <Perk bare title="The Plus look">
-              <PlusCardDemo />
-            </Perk>
-            <Perk bare title="Pop-up comments">
-              <PopupDemo />
-            </Perk>
-            <PlanCard plan={PREMIUM_PLANS[0]} />
+            <PlusPerks />
+            <a className="perk-more" href="/premium/plus/">
+              Everything in Plus →
+            </a>
           </div>
           <div className="perk-col">
             <div className="perk-col-head">
-              <PerkTag label="PRO" />
+              <PerkTag label="PRO" href="/premium/pro/" />
             </div>
-            <Perk bare title="The Pro look">
-              <ProCardDemo />
-            </Perk>
-            <Perk title="Name styles">
-              <NameStyles />
-            </Perk>
-            <PlanCard plan={PREMIUM_PLANS[1]} />
+            <ProPerks />
+            <a className="perk-more" href="/premium/pro/">
+              Everything in Pro →
+            </a>
           </div>
         </div>
 
-        <p className="plans-note">
-          Sign in to the extension and upgrade right from the pop-up — monthly
-          or annual, cancel anytime.
-        </p>
+        <UpgradeNote />
       </div>
     </section>
   );
