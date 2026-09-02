@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms that govern your use of TalkAbtIT, the browser extension that adds a live comment section to your favorite streaming services.",
+    "The terms that govern your use of TalkAbtIT, the browser extension that adds a live comment section to streaming services.",
   alternates: { canonical: "/terms/" },
 };
 

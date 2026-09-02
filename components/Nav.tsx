@@ -26,7 +26,8 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
         </div>
         <a className="btn btn-white btn-sm btn-icon" href={CHROME_STORE_URL} target="_blank" rel="noopener">
           <ExtensionIcon size={15} />
-          Get TalkAbtIT
+          <span className="nav-cta-full">Get TalkAbtIT</span>
+          <span className="nav-cta-short">Get now</span>
         </a>
       </div>
     </nav>

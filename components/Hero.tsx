@@ -7,15 +7,12 @@ export default function Hero() {
       <div className="wrap">
         <div className="hero-grid">
           <div className="hero-copy">
-            <span className="kicker">Join the conversation</span>
             <h1 className="display">
-              A <span className="accent">comment section</span> for your
-              favorite streaming services.
+              A <span className="accent">comment section</span>
+              <br />
+              for streaming services.
             </h1>
-            <p className="sub">
-              No one to watch with? No problem. Add TalkAbtIT to your browser
-              and talk about your favorite shows with everyone.
-            </p>
+            <p className="sub">Stop watching alone. Watch with everyone.</p>
             <div className="ctas">
               <a
                 className="btn-appstore"
@@ -44,38 +41,16 @@ export default function Hero() {
         </div>
 
         <div className="hero-streamers">
-          <div className="logo-strip">
-            <img className="logo logo-netflix" src="/logos/netflix.svg" alt="Netflix" />
-            <img className="logo logo-hulu" src="/logos/hulu.svg" alt="Hulu" />
-            <img className="logo logo-disney" src="/logos/disneyplus.svg" alt="Disney+" />
-            <img className="logo logo-max" src="/logos/max.svg" alt="HBO Max" />
-            <img className="logo logo-cr" src="/logos/crunchyroll.svg" alt="Crunchyroll" />
+          <div className="streamers-inner">
+            <span className="streamers-label">Add a comment section to</span>
+            <div className="logo-strip">
+              <img className="logo logo-netflix" src="/logos/netflix.svg" alt="Netflix" />
+              <img className="logo logo-hulu" src="/logos/hulu.svg" alt="Hulu" />
+              <img className="logo logo-disney" src="/logos/disneyplus.svg" alt="Disney+" />
+              <img className="logo logo-max" src="/logos/max.svg" alt="HBO Max" />
+              <img className="logo logo-cr" src="/logos/crunchyroll.svg" alt="Crunchyroll" />
+            </div>
           </div>
-        </div>
-
-        <div className="disclaimer">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z" />
-            <path d="M9 12l2 2 4-4" />
-          </svg>
-          <span>
-            Subscriptions not included — you'll need an active subscription to
-            each streaming service you watch. TalkAbtIT isn't piracy: we don't
-            stream, host, or unlock any content. You sign in on each streaming
-            service's own site, just like you normally do — TalkAbtIT never asks
-            for or sees your streaming logins. TalkAbtIT is not affiliated
-            with, endorsed by, or sponsored by any of these streaming services —
-            all names and logos are trademarks of their respective owners.
-          </span>
         </div>
       </div>
     </header>

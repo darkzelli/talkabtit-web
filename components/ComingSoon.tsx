@@ -1,5 +1,5 @@
 // Temporary splash shown at "/" while the full site is parked. Uses the same
-// brand theme (dark base, gold accent, ambient glow) and the Handjet display
+// brand theme (dark base, gold accent, ambient glow) and the site's display
 // font already loaded site-wide via `.display`.
 export default function ComingSoon() {
   return (

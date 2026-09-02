@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "FAQ — TalkAbtIT",
     description:
-      "Answers to common questions about TalkAbtIT — the comment section for your favorite streaming service.",
+      "Answers to common questions about TalkAbtIT — the comment section for streaming services.",
     url: "/support/",
     images: [OG_IMAGE],
   },
@@ -225,8 +225,8 @@ export default function FAQPage() {
             <span className="kicker">Questions &amp; answers</span>
             <h1 className="display">Frequently asked questions</h1>
             <p className="lede">
-              Everything about how TalkAbtIT works — the comment section for your
-              favorite streaming service.
+              Everything about how TalkAbtIT works — the comment section for
+              streaming services.
             </p>
           </div>
         </header>

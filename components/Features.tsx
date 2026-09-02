@@ -115,7 +115,7 @@ const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
     title: "Right on the page you're watching",
-    body: "Sign in with the accounts you already pay for. TalkAbtIT layers the conversation straight onto the player.",
+    body: "Add the Chrome extension and open any show. TalkAbtIT layers the conversation straight onto the player.",
     visual: <PlayerCard />,
   },
   {

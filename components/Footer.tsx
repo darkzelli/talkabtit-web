@@ -6,7 +6,7 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
       <div className="footer-grid">
         <div className="footer-brand">
           <img src="/logo.svg" alt="TalkAbtIT" loading="lazy" decoding="async" />
-          <p>A comment section for your favorite streaming service.</p>
+          <p>A comment section for streaming services.</p>
           <p className="footer-copy">© 2026 TalkAbtIT</p>
         </div>
         <div className="footer-col">
@@ -39,6 +39,26 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
           <ul>
             <li>
               <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>
+            </li>
+          </ul>
+        </div>
+        <div className="footer-col">
+          <h4>Follow</h4>
+          <ul>
+            <li>
+              <a href="https://x.com/TalkAbtItapp" target="_blank" rel="noopener noreferrer">
+                X
+              </a>
+            </li>
+            <li>
+              <a href="https://www.tiktok.com/@TalkAbtItapp" target="_blank" rel="noopener noreferrer">
+                TikTok
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/TalkAbtItapp" target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
             </li>
           </ul>
         </div>

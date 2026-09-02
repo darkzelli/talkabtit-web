@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// 404 wears the splash's outfit (dark base, ambient glow, Handjet display).
+// 404 wears the splash's outfit (dark base, ambient glow, display face).
 // The popcorn-bucket mark stands in for about's "o" — the same trick as the
 // wordmark, where the bucket spells "Abt".
 export default function NotFound() {

@@ -11,13 +11,13 @@ import {
   OG_IMAGE,
 } from "@/lib/seo";
 
-// Only weight 700 (`.display` headings) is ever used, so the variable font is
-// instanced to 700 and subset to Latin + punctuation — 284KB TTF -> 15KB WOFF2.
-const handjet = localFont({
-  src: "./fonts/Handjet-700.woff2",
-  weight: "700",
+// Display face for `.display` headings. Archivo Black ships as a single
+// black-weight cut; this is Google Fonts' latin-subset woff2, self-hosted — 10KB.
+const displayFont = localFont({
+  src: "./fonts/ArchivoBlack-400.woff2",
+  weight: "400",
   display: "swap",
-  variable: "--font-handjet",
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -128,7 +128,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={handjet.variable}>
+    <html lang="en" className={displayFont.variable}>
       <body>
         {children}
         <script

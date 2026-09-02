@@ -15,7 +15,7 @@ import { join } from "path";
 //   4. rm app/opengraph-image.tsx
 export const dynamic = "force-static";
 export const alt =
-  "TalkAbtIT — a comment section for your favorite streaming services";
+  "TalkAbtIT — a comment section for streaming services";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -76,7 +76,7 @@ export default function OpengraphImage() {
             A comment section for
           </div>
           <div style={{ fontSize: 44, fontWeight: 700, lineHeight: 1.2, letterSpacing: -0.5, color: GOLD }}>
-            your favorite streaming services.
+            streaming services.
           </div>
         </div>
       </div>
