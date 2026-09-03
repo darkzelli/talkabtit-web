@@ -20,14 +20,7 @@ function Check() {
   );
 }
 
-function PerkTag({ label, href }: { label: string; href?: string }) {
-  if (href) {
-    return (
-      <a className="perk-tag" href={href}>
-        {label}
-      </a>
-    );
-  }
+function PerkTag({ label }: { label: string }) {
   return <span className="perk-tag">{label}</span>;
 }
 
@@ -251,48 +244,8 @@ function PlanCard({ plan }: { plan: (typeof PREMIUM_PLANS)[number] }) {
   );
 }
 
-/* The Plus tiles, in order — shared by the /premium/ overview column and the
-   /premium/plus/ detail page. */
-export function PlusPerks() {
-  return (
-    <>
-      <Perk bare title="The Plus look">
-        <PlusCardDemo />
-      </Perk>
-      <Perk bare title="Pop-up comments">
-        <PopupDemo />
-      </Perk>
-      <PlanCard plan={PREMIUM_PLANS[0]} />
-    </>
-  );
-}
-
-/* The Pro tiles — same deal for /premium/ and /premium/pro/. */
-export function ProPerks() {
-  return (
-    <>
-      <Perk bare title="The Pro look">
-        <ProCardDemo />
-      </Perk>
-      <Perk title="Name styles">
-        <NameStyles />
-      </Perk>
-      <PlanCard plan={PREMIUM_PLANS[1]} />
-    </>
-  );
-}
-
-export function UpgradeNote() {
-  return (
-    <p className="plans-note">
-      Sign in to the extension and upgrade right from the pop-up — monthly or
-      annual, cancel anytime.
-    </p>
-  );
-}
-
 /* The full pricing page body, rendered at /premium/ — free-first pitch up
-   top, then the Plus/Pro split with each column linking into its tier page. */
+   top, then the Plus/Pro split. */
 export default function Premium() {
   return (
     <section className="band band-premium">
@@ -345,27 +298,36 @@ export default function Premium() {
             before Pro with its name styles */}
         <div className="perk-grid">
           <div className="perk-col">
-            {/* one tier pill heads the whole column, linking into its page */}
+            {/* one tier pill heads the whole column */}
             <div className="perk-col-head">
-              <PerkTag label="PLUS" href="/premium/plus/" />
+              <PerkTag label="PLUS" />
             </div>
-            <PlusPerks />
-            <a className="perk-more" href="/premium/plus/">
-              Everything in Plus →
-            </a>
+            <Perk bare title="The Plus look">
+              <PlusCardDemo />
+            </Perk>
+            <Perk bare title="Pop-up comments">
+              <PopupDemo />
+            </Perk>
+            <PlanCard plan={PREMIUM_PLANS[0]} />
           </div>
           <div className="perk-col">
             <div className="perk-col-head">
-              <PerkTag label="PRO" href="/premium/pro/" />
+              <PerkTag label="PRO" />
             </div>
-            <ProPerks />
-            <a className="perk-more" href="/premium/pro/">
-              Everything in Pro →
-            </a>
+            <Perk bare title="The Pro look">
+              <ProCardDemo />
+            </Perk>
+            <Perk title="Name styles">
+              <NameStyles />
+            </Perk>
+            <PlanCard plan={PREMIUM_PLANS[1]} />
           </div>
         </div>
 
-        <UpgradeNote />
+        <p className="plans-note">
+          Sign in to the extension and upgrade right from the pop-up — monthly
+          or annual, cancel anytime.
+        </p>
       </div>
     </section>
   );

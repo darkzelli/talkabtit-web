@@ -1,5 +1,5 @@
 :root {
-  --bg: #090A0D;
+  --bg: #0F0E0E;
   --bg-elevated: #121319;
   --text: #F2F4F8;
   --text-dim: #9198A6;
@@ -96,22 +96,26 @@ a { color: inherit; }
   margin-bottom: 14px;
 }
 
-/* ---- ambient brand wash (mirrors the app's onboarding backdrop) ---- */
+/* ---- page base: flat near-black matching the nav's rendered color — the red
+   aurora and the fixed-layer highlights (which drifted against the content on
+   scroll) are gone; sections read as solid blocks, like the elevated band ---- */
 .glow {
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(600px 420px at 85% 78%, rgba(255, 185, 31, 0.10), transparent 70%),
-    linear-gradient(135deg, rgba(237, 61, 35, 0.55) 0%, rgba(185, 42, 21, 0.30) 22%, rgba(87, 21, 9, 0.16) 45%, transparent 68%);
+  background: var(--bg);
 }
 
 /* ---- nav ---- */
 nav {
   position: sticky; top: 0; z-index: 10;
   backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  background: rgba(9, 10, 13, 0.65);
+  /* same hue as the page base so the bar blends seamlessly at the top of the
+     page, going translucent-blurred only over scrolled content */
+  background: rgba(15, 14, 14, 0.65);
   border-bottom: 1px solid var(--hairline);
 }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 24px; max-width: 1080px; margin: 0 auto; }
+/* fixed height (not padding-driven) so the hero can subtract it exactly to
+   fill the rest of the first screen */
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 64px; padding: 0 24px; max-width: 1080px; margin: 0 auto; }
 .nav-logo { display: flex; align-items: center; text-decoration: none; }
 .nav-logo img { height: 34px; display: block; transform: translateY(-5px); }
 .nav-links { align-items: center; }
@@ -152,56 +156,89 @@ nav {
 .btn-appstore-text small { font-size: 10.5px; font-weight: 500; opacity: 0.85; }
 
 /* ---- hero (two-column: browser mock beside the copy, wordmark strip below) ---- */
-.hero { text-align: center; padding: 72px 0 76px; }
-/* wider than the site wrap so the two-line headline has room to spread */
-.hero .wrap { max-width: 1400px; }
-/* equal columns so the gap between player and copy sits on the page's center line */
-.hero-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-  align-items: center; text-align: left;
+.hero {
+  text-align: center; padding: 48px 0 56px;
+  /* own the whole first screen — fill the viewport minus the sticky nav
+     (64px + 1px border) so the features band only appears once you scroll */
+  min-height: calc(100vh - 65px);
+  min-height: calc(100svh - 65px);
+  display: flex; flex-direction: column; justify-content: center;
 }
-/* DOM keeps the copy first (a11y/SEO); order flips it to the right visually */
-.hero-copy { order: 2; }
+.hero .wrap { width: 100%; max-width: 1400px; }
+/* one centered column: headline + sub up top, the browser demo mid-screen,
+   the store CTA under it */
 .hero h1 { font-size: clamp(28px, 3.55vw, 52px); letter-spacing: -0.015em; line-height: 1.1; }
 .hero h1 .accent {
   color: var(--gold);
   /* halo pulls the eye to the product noun first */
   text-shadow: 0 0 34px rgba(255, 185, 31, 0.35);
 }
-.hero p.sub { color: #C7CDDA; font-size: 18px; margin: 20px 0 30px; max-width: 520px; }
-.hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+/* the tagline rides in the CTA row, beside the button — bright and weighty
+   so it holds its own against the red button */
+.hero p.sub { color: #fff; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin: 0; white-space: nowrap; }
+/* the demo sits alone mid-column: sized off the viewport HEIGHT (16:9 plus
+   window chrome) so headline + demo + CTA + logo strip all fit one screen —
+   capped at 680px on tall viewports, floored so it never collapses */
+/* the demo matches the headline's rendered width: the h1 is 3.55vw type
+   (capped 52px) and "for streaming services." runs ~12.4x the font size,
+   so ~44vw capped at 645px keeps card and copy flush at every size */
+.hero .browser { max-width: min(44vw, 645px); margin: 28px auto 0; }
+/* the row spans the card's width: tagline pinned left, button pinned right */
+.hero .ctas {
+  display: flex; gap: 14px 20px; align-items: center;
+  justify-content: space-between;
+  max-width: min(44vw, 645px); margin: 26px auto 0;
+}
 
-/* streaming-service wordmark strip below the browser mock.
-   breaks out of the 1080px wrap so it can stretch with the window and keep one line */
-.hero-streamers {
-  margin-top: 72px;
-  position: relative; left: 50%; transform: translateX(-50%);
-  width: min(1280px, 100vw - 48px);
+/* streaming-service wordmarks (official brand SVGs, public/logos) scattered
+   across the hero as a ghosted background layer — flattened to a faint gray
+   shade of the background, snapping to full brand color on hover. Each mark
+   still links to its service landing page. Positions live in Hero.tsx. */
+.hero { position: relative; overflow: hidden; }
+/* the wrap rides above the marks but must not swallow their hover: a plain div
+   is a hit-target across its whole box even where transparent, so pass pointer
+   events through and re-enable them only on the actual content */
+.hero .wrap { position: relative; z-index: 1; pointer-events: none; }
+.hero .wrap :is(h1, p, a, .browser) { pointer-events: auto; }
+/* shrink the headline's hit-box to its text — as a full-width block its empty
+   flanks would swallow hover meant for the marks riding at the same height */
+.hero h1 { width: fit-content; margin-left: auto; margin-right: auto; }
+.hero-bg-logos { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.bg-logo {
+  position: absolute; display: block;
+  /* the layer is inert so hero content stays clickable; the marks themselves
+     take the pointer wherever they peek out from behind the content */
+  pointer-events: auto;
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+  filter: grayscale(1) brightness(2.4);
+  opacity: 0.09;
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
 }
-/* shrink-wraps to the logo row's width so the label's left edge lines up
-   with the first logo, while the whole block stays centered */
-.streamers-inner { width: fit-content; margin: 0 auto; }
-/* small label sitting flush left above the wordmark strip */
-.streamers-label {
-  display: block; text-align: left;
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 20px;
+.bg-logo img { height: 100%; width: auto; display: block; }
+/* ambient life: the marks take turns glowing up to full brand color — one at a
+   time. All share one 35s cycle; each mark's --gd (set in Hero.tsx) drops its
+   glow into its own 3.5s slot, and the glow window fits inside one slot with a
+   beat of quiet before the next mark lights. Motion-safe only. */
+@media (prefers-reduced-motion: no-preference) {
+  .bg-logo {
+    animation: bg-logo-glow 35s ease-in-out var(--gd, 0s) infinite;
+  }
 }
-.logo-strip {
-  display: flex; align-items: center; justify-content: center;
-  gap: clamp(28px, 5vw, 72px); flex-wrap: wrap;
+/* soft symmetric breathe: ~1.2s up, short hold, ~1.2s down (3.5% of 35s each
+   way); peak sits just under full opacity */
+@keyframes bg-logo-glow {
+  0% { filter: grayscale(1) brightness(2.4); opacity: 0.09; }
+  3.5%, 5% { filter: none; opacity: 0.9; }
+  8.5%, 100% { filter: grayscale(1) brightness(2.4); opacity: 0.09; }
 }
-/* Official brand SVGs (public/logos). Per-logo heights are optically balanced —
-   Disney+ needs extra because its arc eats vertical space, so a uniform
-   height would make its wordmark read smaller than the rest. */
-.logo { width: auto; display: block; flex: none; }
-.logo-netflix { height: 23px; }
-.logo-hulu    { height: 25px; }
-.logo-disney  { height: 40px; }
-.logo-max     { height: 40px; } /* stacked HBO-over-max mark, sized like Disney+ */
-.logo-cr      { height: 30px; }
+/* hover always wins. !important (not animation: none) so the glow cycle's
+   clock keeps running underneath — resetting it would knock the hovered mark
+   out of its slot and let two marks light at once from then on */
+.bg-logo:hover {
+  filter: none !important;
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(1.12);
+}
 
 /* ---- browser demo: a Chrome-style window with a fullscreen player + comments
    overlay (mirrors the extension in action). Sized off the viewport: everything
@@ -617,7 +654,7 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* ---- premium (free-first pitch: "stay free forever" + free card, an "or"
    divider, then the premium feature row — glass plan cards over the brand
    aurora glow, gold Best-value badge, live perk previews) ---- */
-.band-premium { background: linear-gradient(180deg, #1A0B06, #0E0B07); }
+.band-premium { background: var(--bg); }
 .band-premium .accent-gold { color: var(--gold); }
 
 .premium-head { text-align: center; }
@@ -625,26 +662,6 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* the pricing section is now its own page, so its headline is an h1 —
    size it like the section h2 it used to be */
 .premium-head h1 { font-size: clamp(30px, 4.2vw, 44px); }
-
-/* ---- tier detail pages (/premium/plus/, /premium/pro/): one perk column,
-   centered at the stacked-grid width, floating on its own aurora ---- */
-.perk-solo {
-  position: relative;
-  display: flex; flex-direction: column; gap: 14px;
-  max-width: 520px; margin: 36px auto 0;
-}
-.perk-solo::before {
-  content: ''; position: absolute; inset: -36px -30px; pointer-events: none;
-  background:
-    radial-gradient(340px 260px at 12% 18%, rgba(237, 61, 35, 0.30), transparent 70%),
-    radial-gradient(360px 280px at 85% 85%, rgba(249, 115, 22, 0.22), transparent 70%),
-    radial-gradient(320px 250px at 80% 15%, rgba(255, 185, 31, 0.20), transparent 70%);
-  filter: blur(34px);
-}
-/* the cross-link between the two tier pages, under the plans note */
-.tier-switch { text-align: center; margin-top: 22px; font-size: 14px; color: var(--text-dim); }
-.tier-switch a { color: var(--gold); font-weight: 700; text-decoration: none; }
-.tier-switch a:hover { text-decoration: underline; }
 
 /* the free card stands alone: calm glass, no aurora — premium gets the glow */
 .plan-free { max-width: 560px; margin: 40px auto 0; padding: 18px 22px; }
@@ -729,23 +746,13 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   gap: 14px clamp(14px, 4vw, 48px);
   margin-top: 36px;
 }
-/* each column is a subgrid over five shared rows (pill, tier card, demo
-   tile, price card, tier-page link), so the popup/name-style tiles match
-   heights and the two price cards match heights across columns */
-.perk-col { display: grid; grid-template-rows: subgrid; grid-row: span 5; }
+/* each column is a subgrid over four shared rows (pill, tier card, demo
+   tile, price card), so the popup/name-style tiles match heights and the two
+   price cards match heights across columns */
+.perk-col { display: grid; grid-template-rows: subgrid; grid-row: span 4; }
 /* the tier pill heading each column, a size up from the tile tags */
 .perk-col-head { display: flex; justify-content: center; }
 .perk-col-head .perk-tag { font-size: 12px; padding: 3px 16px; }
-/* pills that double as links into /premium/plus/ and /premium/pro/ */
-a.perk-tag { text-decoration: none; }
-a.perk-tag:hover { background: rgba(255, 185, 31, 0.16); }
-/* "Everything in Plus →" under each column's price card */
-.perk-more {
-  display: block; text-align: center;
-  font-size: 13px; font-weight: 700; color: var(--gold);
-  text-decoration: none; margin-top: 4px;
-}
-.perk-more:hover { text-decoration: underline; }
 /* wider aurora than the plans': the whole grid floats on the brand glow */
 .perk-grid::before {
   content: ''; position: absolute; inset: -36px -30px; pointer-events: none;
@@ -961,8 +968,7 @@ a.perk-tag:hover { background: rgba(255, 185, 31, 0.16); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .perk-grid *, .perk-grid *::before, .perk-grid *::after,
-  .perk-solo *, .perk-solo *::before, .perk-solo *::after { animation: none; }
+  .perk-grid *, .perk-grid *::before, .perk-grid *::after { animation: none; }
   /* the moving pseudo layers make no sense frozen — drop them and keep a
      static VHS shadow as the one still-legible hint of the styles */
   .ns-slice::after, .ns-echo::before, .ns-echo::after,
@@ -970,61 +976,92 @@ a.perk-tag:hover { background: rgba(255, 185, 31, 0.16); }
   .ns-vhs { text-shadow: 1px 0 rgba(255, 0, 60, 0.55), -1px 0 rgba(0, 229, 255, 0.55); }
 }
 
-/* ---- how it works ---- */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
-.step {
-  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--hairline);
-  border-radius: 16px; padding: 28px 24px;
+/* ---- how it works: Teleparty-style split — heading + clickable step list on
+   the left (red bar marks the active step) with the store button under it,
+   the active step's demo stage on the right, all on the page's flat base ---- */
+.how { background: var(--bg); }
+.how-grid {
+  display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: clamp(40px, 6vw, 90px); align-items: center;
 }
-.step .num {
-  font-family: var(--font-display), 'Arial Black', sans-serif; font-weight: 400; font-size: 34px;
-  background: linear-gradient(120deg, var(--red), var(--gold));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+.how-steps { list-style: none; margin: 36px 0 0; display: flex; flex-direction: column; gap: 4px; }
+/* each row reads "1 | Add it to your browser" — number, divider bar, words —
+   flush left with the heading; the bar lights up red on the active step */
+.how-step {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; text-align: left; cursor: pointer;
+  background: none; border: 0; padding: 12px 0;
+  font: inherit; font-size: 18px; font-weight: 700; color: var(--text-dim);
+  transition: color 0.18s ease;
 }
-.step h3 { font-size: 18px; margin: 10px 0 8px; }
-.step p { font-size: 14.5px; color: var(--text-dim); }
+.how-step-num { min-width: 0.7em; }
+.how-step-bar {
+  width: 3px; height: 1.3em; border-radius: 2px; flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background 0.18s ease;
+}
+.how-step:hover { color: var(--text); }
+.how-step-on, .how-step-on:hover { color: var(--red); }
+.how-step-on .how-step-bar { background: var(--red); }
+/* the stage: a 16:9 panel the step videos will fill (object-fit: cover) */
+.how-media {
+  aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
+  background: linear-gradient(160deg, #17181c, #0c0d10);
+  border: 1px solid var(--hairline);
+}
+.how-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* until the step videos land: the bucket mark resting on the dark stage */
+.how-media-empty { height: 100%; display: flex; align-items: center; justify-content: center; }
+.how-media-empty img { width: 64px; opacity: 0.3; }
+/* captions stack in one grid cell (inactive ones hidden but still sized), so
+   the block is always as tall as the longest step and the page never jumps */
+.how-caption { display: grid; margin-top: 20px; }
+.how-caption-item { grid-area: 1 / 1; }
+.how-step-title { font-size: 20px; font-weight: 800; color: var(--red); }
+.how-step-body { margin-top: 8px; font-size: 16.5px; line-height: 1.6; color: var(--text-dim); max-width: 640px; }
 
-/* step 2's visual: the extension's edge button exactly as it overlays the
-   player — frosted square, bucket mark, unread badge — on a dark video strip */
-.bucket-demo {
-  position: relative; margin-top: 16px; height: 84px; border-radius: 12px;
-  background:
-    radial-gradient(130px 55px at 25% 35%, rgba(237, 61, 35, 0.18), transparent 70%),
-    linear-gradient(160deg, #1D2230, #0A0C12);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+/* ---- closing CTA: a full-bleed band on the page's flat base, copy left +
+   store button right ---- */
+.closing {
+  background: var(--bg);
+  padding: 72px 0;
 }
-.bucket-btn {
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  width: 44px; height: 44px; border-radius: 12px;
-  background: rgba(9, 10, 13, 0.45);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  display: flex; align-items: center; justify-content: center;
+.banner-row {
+  /* button vertically centered against the copy block */
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; text-align: left;
 }
-.bucket-btn img {
-  width: 82%; height: 82%; display: block;
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.65));
+/* stop the button at the footer text's right edge below, not the wrap's own
+   edge: the footer grid's last 1fr column is (content - 4 gaps) / 6 wide and
+   its widest line ("Instagram") runs ~65px from the column's left edge */
+.closing .btn {
+  margin-right: max(0px, calc((min(100vw - 48px, 1032px) - 192px) / 6 - 65px));
 }
-.bucket-badge {
-  position: absolute; top: -6px; right: -6px;
-  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
-  background: var(--red); color: #fff;
-  font-size: 10px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-}
-
-/* ---- closing CTA banner (Teleparty-style community card) ---- */
-.closing { padding: 40px 0 110px; }
-.banner {
-  background: linear-gradient(120deg, var(--red), var(--red-deep));
-  border-radius: 26px; padding: 64px 32px; text-align: center;
-  box-shadow: 0 26px 70px rgba(237, 61, 35, 0.30);
-}
-.banner h2 { font-size: clamp(30px, 4.4vw, 46px); }
-.banner p { color: rgba(255, 255, 255, 0.85); font-size: 18px; margin: 14px auto 30px; max-width: 440px; }
+.banner-copy h2 { font-size: clamp(28px, 3.6vw, 42px); }
+.banner-copy p { color: rgba(255, 255, 255, 0.85); font-size: 18px; margin: 14px 0 0; max-width: 520px; }
+.closing .btn { flex-shrink: 0; }
 
 /* ---- content pages (FAQ + legal) ---- */
 .page-hero { padding: 76px 0 44px; border-bottom: 1px solid var(--hairline); }
+/* service landing pages (/netflix/, /hulu/, …) */
+.page-hero .accent { color: var(--gold); text-shadow: 0 0 34px rgba(255, 185, 31, 0.35); }
+.svc-cta { margin-top: 28px; }
+.svc-faq { margin-top: 20px; }
+.svc-disclaimer { margin-top: 40px; font-size: 12.5px; color: var(--text-dim); max-width: 780px; }
+/* comparison table on /teleparty-alternative/ — TalkAbtIT column gets a
+   faint gold wash; the wrapper scrolls sideways on narrow screens */
+.vs-scroll { overflow-x: auto; max-width: 780px; margin: 18px 0 10px; }
+.vs-table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+.vs-table th, .vs-table td {
+  padding: 12px 14px; text-align: left; vertical-align: top;
+  border: 1px solid var(--hairline); color: var(--text-dim); line-height: 1.5;
+}
+.vs-table th {
+  font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text); background: rgba(255, 255, 255, 0.04);
+}
+.vs-table td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+.vs-table th:nth-child(2), .vs-table td:nth-child(2) { background: rgba(255, 185, 31, 0.05); }
 .page-hero h1 { font-size: clamp(30px, 4.4vw, 46px); letter-spacing: -0.01em; }
 .page-hero .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-width: 640px; }
 .page-hero .updated { margin-top: 20px; font-size: 13px; color: var(--text-dim); }
@@ -1071,6 +1108,8 @@ a.perk-tag:hover { background: rgba(255, 185, 31, 0.16); }
 
 /* ---- footer (multi-column) ---- */
 footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14px; color: var(--text-dim); }
+/* homepage: the closing band above is the same flat black — no divider */
+.footer-flush { border-top: 0; }
 .footer-grid {
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px;
   max-width: 1080px; margin: 0 auto; padding: 0 24px 44px;
@@ -1099,28 +1138,27 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
 @media (max-width: 860px) {
   .nav-links { display: none; }
   .hero { padding-top: 56px; }
-  .hero-grid { grid-template-columns: 1fr; gap: 44px; text-align: center; }
-  /* stacked: copy back on top, sized so both forced headline lines hold —
+  /* headline sized so both forced lines hold —
      "A comment section" / "for streaming services." with no ragged rewrap */
-  .hero-copy { order: 0; }
   .hero h1 { font-size: clamp(21px, 6.7vw, 34px); }
-  .hero .ctas { justify-content: center; }
-  .hero p.sub { margin-left: auto; margin-right: auto; }
   .browser { font-size: 1.7vw; }
-  .hero-streamers { margin-top: 56px; }
-  /* stacked layout: let the strip wrap again and center the label */
-  .streamers-inner { width: auto; }
-  .streamers-label { text-align: center; }
-  .logo-strip { gap: 20px 30px; }
-  .logo-disney { height: 34px; }
-  .logo-max    { height: 34px; }
-  .logo-cr     { height: 26px; }
-  .logo-netflix, .logo-hulu { height: 21px; }
+  /* stacked layout: the wrap is the width limit, not the desktop copy match */
+  .hero .browser { max-width: none; }
+  .hero .ctas { max-width: none; justify-content: center; flex-wrap: wrap; }
+  .hero p.sub { font-size: 18px; white-space: normal; }
+  /* closing band stacks: copy centered over the button */
+  .banner-row { flex-direction: column; align-items: center; text-align: center; }
+  .closing .btn { margin-right: 0; }
+  .banner-copy p { margin-left: auto; margin-right: auto; }
+  /* stacked layout fills the width, and touch has no hover — drop the
+     background wordmarks (the footer keeps the service-page links) */
+  .hero-bg-logos { display: none; }
   .feature { grid-template-columns: 1fr; gap: 40px; padding: 32px 0; }
   .feature.reverse .feature-copy { order: 1; }
   .feature.reverse .feature-visual { order: 2; }
   .plan-free .plan-features { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: 1fr; }
+  .how-grid { grid-template-columns: 1fr; gap: 36px; }
+  .how-step { font-size: 16px; padding: 10px 0; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .premium-intro .lede { padding: 0; }
   section { padding: 64px 0; }

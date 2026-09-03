@@ -2,14 +2,18 @@ import { CHROME_STORE_URL } from "@/lib/seo";
 
 export default function Closing() {
   return (
-    <section id="get" className="closing wrap">
-      <div className="banner">
-        <h2 className="display">Stop watching alone. Watch with everyone.</h2>
-        <p>
-          Add TalkAbtIT to your browser and talk about your favorite shows.
-        </p>
+    <section id="get" className="closing">
+      {/* full-bleed red band: headline + sub on the left, store button beside
+          them on the right */}
+      <div className="wrap banner-row">
+        <div className="banner-copy">
+          <h2 className="display">Stop watching alone. Watch with everyone.</h2>
+          <p>
+            Add TalkAbtIT to your browser and talk about your favorite shows.
+          </p>
+        </div>
         <a
-          className="btn btn-white btn-lg btn-icon"
+          className="btn btn-brand btn-lg btn-icon"
           href={CHROME_STORE_URL}
           target="_blank"
           rel="noopener"

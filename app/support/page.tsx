@@ -128,6 +128,19 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     text: "Yes. Commenting and reading are free and unlimited — no daily caps, no locked threads. An optional Premium upgrade adds ways to stand out, like pop-up comments over the video, a custom name color, and a profile pic — but posting and reading are never behind a paywall.",
   },
   {
+    q: "How is TalkAbtIT different from Teleparty?",
+    a: (
+      <>
+        Teleparty runs live watch parties — everyone joins a session and
+        watches at the same time. TalkAbtIT pins comments to timestamps in the
+        show, so the shared experience works even when everyone watches on
+        their own schedule. See the full{" "}
+        <a href="/teleparty-alternative/">TalkAbtIT vs Teleparty</a> comparison.
+      </>
+    ),
+    text: "Teleparty runs live watch parties — everyone joins a session and watches at the same time. TalkAbtIT pins comments to timestamps in the show, so the shared experience works even when everyone watches on their own schedule.",
+  },
+  {
     q: "What can I customize?",
     a: (
       <>

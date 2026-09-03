@@ -2,7 +2,9 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
   // on sub-pages the section anchors have to jump back to the homepage first
   const base = sub ? "/" : "";
   return (
-    <footer>
+    // on the homepage the closing band above is the same flat black, so the
+    // divider line is dropped there; sub-pages keep it
+    <footer className={sub ? undefined : "footer-flush"}>
       <div className="footer-grid">
         <div className="footer-brand">
           <img src="/logo.svg" alt="TalkAbtIT" loading="lazy" decoding="async" />
