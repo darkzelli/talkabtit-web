@@ -21,8 +21,8 @@ const hboMax: ServiceConfig = {
   slug: "hbo-max",
   lede: "TalkAbtIT is a free Chrome extension that adds a time-stamped comment section to every show and movie on HBO Max. The Sunday-night episode ends and everyone has thoughts — now they live on the player, pinned to the moment.",
   pitch: [
-    "No platform breeds episode-by-episode discussion like HBO Max — Sunday premieres, week-long theory cycles, scene-by-scene breakdowns. And all of it happens off-platform, hours after the credits, in threads you have to find while dodging spoilers for the episode you haven't finished.",
-    "TalkAbtIT moves that discussion onto the player. Every comment is pinned to a timestamp, so the reaction to the scene sits on the scene — you read exactly what people said about the moment you're watching, and nothing beyond it. Watch live on Sunday or catch up on Thursday; the conversation is already in place.",
+    "The talking happens everywhere except where you watch: the Sunday episode ends and the discussion lives in threads you have to go find.",
+    "TalkAbtIT puts the comment section on the HBO Max player — every comment pinned to its exact scene, spoiler-tagged comments blurred until you tap them, and likes to rank the best reactions.",
   ],
   steps: [
     {

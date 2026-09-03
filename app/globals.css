@@ -858,9 +858,7 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   80%      { color: hsl(340 100% 70%); }
 }
 .pk-av-still {
-  background:
-    radial-gradient(8px 8px at 62% 32%, #FFD98A, transparent 70%),
-    linear-gradient(150deg, #4C6EF5 0%, #274690 55%, #101B3D 100%);
+  background: url("/still-avatar.webp") center / cover;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
@@ -979,7 +977,37 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* ---- how it works: Teleparty-style split — heading + clickable step list on
    the left (red bar marks the active step) with the store button under it,
    the active step's demo stage on the right, all on the page's flat base ---- */
-.how { background: var(--bg); }
+/* customize sits on the base bg; how-it-works wears .band-elevated (the same
+   blue as the features band) so the two alternate */
+.customize { background: var(--bg); }
+/* premium showcase tiles standing in for the old customize-card mock:
+   name styles + name color + avatar/pfp, reusing /premium's perk pieces */
+.customize-stack {
+  width: min(430px, 100%);
+  display: flex; flex-direction: column; gap: 24px;
+}
+.cz-picks { display: flex; gap: 26px; }
+.cz-pick { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+.cz-pick-circle {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.cz-pick-free { background: var(--red); }
+/* Plus uploaded pic at tile size */
+.cz-pick-still {
+  background: url("/still-avatar.webp") center / cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+.cz-pick-cap {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px;
+  color: var(--text-dim);
+}
+.customize-more {
+  display: inline-block; margin-top: 26px;
+  font-size: 15px; font-weight: 700; color: var(--gold);
+  text-decoration: none;
+}
+.customize-more:hover { text-decoration: underline; }
 .how-grid {
   display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   gap: clamp(40px, 6vw, 90px); align-items: center;
@@ -1003,16 +1031,61 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 .how-step:hover { color: var(--text); }
 .how-step-on, .how-step-on:hover { color: var(--red); }
 .how-step-on .how-step-bar { background: var(--red); }
-/* the stage: a 16:9 panel the step videos will fill (object-fit: cover) */
+/* the stage: a 16:9 panel; the step screenshots stack in the single grid cell
+   (inactive ones visibility-hidden) so switching steps never re-decodes */
 .how-media {
-  aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
+  display: grid; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
   background: linear-gradient(160deg, #17181c, #0c0d10);
   border: 1px solid var(--hairline);
 }
-.how-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* until the step videos land: the bucket mark resting on the dark stage */
-.how-media-empty { height: 100%; display: flex; align-items: center; justify-content: center; }
-.how-media-empty img { width: 64px; opacity: 0.3; }
+.how-media img, .how-media video {
+  grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; display: block;
+}
+/* the "click the popcorn bucket" stage: a bare player surface with a remake
+   of the extension's bucket button riding the right edge */
+.how-bucket-mock {
+  grid-area: 1 / 1; position: relative;
+  background:
+    radial-gradient(120% 90% at 30% 18%, rgba(255, 255, 255, 0.05), transparent 60%),
+    linear-gradient(160deg, #17181c, #0c0d10);
+}
+/* faux progress bar so the surface reads as a video mid-playback */
+.how-bucket-mock::after {
+  content: ''; position: absolute; left: 4%; right: 4%; bottom: 7%;
+  height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--gold) 0 32%, rgba(255, 255, 255, 0.18) 32%);
+}
+.bucket-btn {
+  position: absolute; right: 4.5%; top: 50%; transform: translateY(-50%);
+  width: clamp(52px, 13%, 84px); aspect-ratio: 1;
+  border-radius: 22%;
+  background: rgba(22, 23, 29, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+}
+.bucket-btn img { width: 60%; height: auto; display: block; }
+.bucket-badge {
+  position: absolute; top: -9px; right: -9px;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 999px; background: var(--red);
+  color: #fff; font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+/* soft expanding ring inviting the click (motion-safe only) */
+.bucket-btn::before {
+  content: ''; position: absolute; inset: -6px; border-radius: 28%;
+  border: 2px solid rgba(237, 61, 35, 0.55); opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bucket-btn::before { animation: bucket-pulse 2.4s ease-out infinite; }
+}
+@keyframes bucket-pulse {
+  0% { transform: scale(0.9); opacity: 0; }
+  35% { opacity: 1; }
+  70%, 100% { transform: scale(1.3); opacity: 0; }
+}
+
 /* captions stack in one grid cell (inactive ones hidden but still sized), so
    the block is always as tall as the longest step and the page never jumps */
 .how-caption { display: grid; margin-top: 20px; }
@@ -1046,7 +1119,35 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* service landing pages (/netflix/, /hulu/, …) */
 .page-hero .accent { color: var(--gold); text-shadow: 0 0 34px rgba(255, 185, 31, 0.35); }
 .svc-cta { margin-top: 28px; }
+/* service hero: copy on the left, the player mock riding top-right */
+.svc-hero {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: clamp(32px, 5vw, 72px);
+}
+.svc-hero-copy { max-width: 620px; }
+.svc-hero .player-card { flex: none; width: min(44%, 520px); }
 .svc-faq { margin-top: 20px; }
+/* clear air between the pitch and the walkthrough */
+.prose .svc-how-title { margin-top: 110px; }
+/* step walkthrough: three columns across, each one a glyph on top with the
+   red STEP kicker, display-face title and body underneath */
+.svc-steps {
+  margin-top: 36px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+}
+.svc-step-icon { width: 38px; margin-bottom: 16px; color: var(--red); }
+.svc-step-icon svg { display: block; width: 100%; height: auto; }
+.svc-step-kicker {
+  display: block; color: var(--red);
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.svc-step h3 { font-size: clamp(19px, 1.8vw, 25px); margin: 8px 0 10px; }
+.svc-step p { color: var(--text-dim); font-size: 15.5px; line-height: 1.6; margin: 0; }
+/* step 1's body is the store button itself, sized down to sit in the column */
+.svc-step-cta { margin-top: 4px; }
+.svc-step-cta .btn-appstore-text { font-size: 16px; }
 .svc-disclaimer { margin-top: 40px; font-size: 12.5px; color: var(--text-dim); max-width: 780px; }
 /* comparison table on /teleparty-alternative/ — TalkAbtIT column gets a
    faint gold wash; the wrapper scrolls sideways on narrow screens */
@@ -1153,6 +1254,11 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   /* stacked layout fills the width, and touch has no hover — drop the
      background wordmarks (the footer keeps the service-page links) */
   .hero-bg-logos { display: none; }
+  /* steps stack into one column */
+  .svc-steps { grid-template-columns: 1fr; gap: 44px; }
+  /* hero stacks: copy first, player mock full width below */
+  .svc-hero { flex-direction: column; align-items: flex-start; }
+  .svc-hero .player-card { width: 100%; }
   .feature { grid-template-columns: 1fr; gap: 40px; padding: 32px 0; }
   .feature.reverse .feature-copy { order: 1; }
   .feature.reverse .feature-visual { order: 2; }

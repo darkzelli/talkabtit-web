@@ -21,8 +21,8 @@ const hulu: ServiceConfig = {
   slug: "hulu",
   lede: "TalkAbtIT is a free Chrome extension that adds a time-stamped comment section to every show on Hulu. This week's episode drops, everyone reacts — and the reactions live right on the player, pinned to the moment.",
   pitch: [
-    "Hulu is where week-to-week TV lives — next-day network episodes, currently airing seasons, the shows people actually talk about at work the next morning. But the talking happens everywhere except where you watch: the episode ends and you go hunting for the discussion somewhere else.",
-    "TalkAbtIT puts that discussion on the Hulu player itself. Every comment is pinned to a timestamp, so reactions land exactly where they belong — the cold open, the reveal, the cliffhanger. Catch the episode the night it drops or three days later; the conversation is waiting at every moment either way.",
+    "The talking happens everywhere except where you watch: the episode ends and you go hunting for the discussion somewhere else.",
+    "TalkAbtIT puts the comment section right on the Hulu player — every comment pinned to the exact moment it's about, spoiler-tagged comments blurred until you tap them, and likes to float the best reactions to the top.",
   ],
   steps: [
     {

@@ -1,3 +1,5 @@
+import NameStyles from "./NameStyles";
+
 /* Avatar glyphs traced from the app's bundled SVGs (Assets.xcassets/Avatars) */
 const GLYPHS = {
   crown: {
@@ -174,5 +176,86 @@ export function CustomizeCard() {
 
       <span className="cz-save">Save</span>
     </div>
+  );
+}
+
+export default function Customize() {
+  return (
+    <section id="customize" className="customize band">
+      <div className="wrap">
+        <div className="feature">
+          <div className="feature-copy">
+            <span className="kicker">Make it yours</span>
+            <h2 className="display">Customize how you show up</h2>
+            <p className="lede">
+              Everyone picks an avatar for free, with a live preview before you
+              save. Plus adds pop-up comments over the video, a custom name
+              color, a profile pic, and the popcorn-bucket badge — Pro layers
+              on a crown badge, GIF pics, a custom pop-up background, and nine
+              animated name styles.
+            </p>
+            <a className="customize-more" href="/premium/">
+              See everything in Premium →
+            </a>
+          </div>
+          <div className="feature-visual">
+            {/* premium showcase tiles, same look as /premium's perk grid */}
+            <div className="customize-stack">
+              <div className="perk">
+                <div className="perk-head">
+                  <span className="perk-name">Name styles</span>
+                  <span className="perk-tag">PRO</span>
+                </div>
+                <div className="perk-box">
+                  <NameStyles />
+                </div>
+              </div>
+              <div className="perk">
+                <div className="perk-head">
+                  <span className="perk-name">Name color</span>
+                  <span className="perk-tag">PLUS</span>
+                </div>
+                <div className="perk-box" aria-hidden="true">
+                  <div className="pv-row">
+                    <span className="pv-avatar cz-pick-free">
+                      <AvatarGlyph name="crown" size={12} color="#fff" />
+                    </span>
+                    <div>
+                      <div className="pv-who pk-color-cycle">
+                        you <span className="pv-ts">12:04</span>
+                      </div>
+                      <div className="pv-body">this scene goes so hard 🔥</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="perk">
+                <div className="perk-head">
+                  <span className="perk-name">Avatar &amp; profile pic</span>
+                </div>
+                <div className="perk-box" aria-hidden="true">
+                  <div className="cz-picks">
+                    <div className="cz-pick">
+                      <span className="cz-pick-circle cz-pick-free">
+                        <AvatarGlyph name="flag" size={17} color="#fff" />
+                      </span>
+                      <span className="cz-pick-cap">Free</span>
+                    </div>
+                    <div className="cz-pick">
+                      <span className="cz-pick-circle cz-pick-still" />
+                      <span className="cz-pick-cap">Plus</span>
+                    </div>
+                    <div className="cz-pick">
+                      <span className="cz-pick-circle pk-av-gif" />
+                      <span className="cz-pick-cap">Pro</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

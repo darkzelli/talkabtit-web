@@ -1,6 +1,7 @@
 import { AvatarGlyph } from "./Customize";
 
-function PlayerCard() {
+// also rides top-right of every service page's hero (ServicePage.tsx)
+export function PlayerCard() {
   return (
     <div className="player-card" aria-hidden="true">
       <div className="video">
@@ -114,8 +115,8 @@ function SpoilerPanelCard() {
 const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
-    title: "Right on the page you're watching",
-    body: "Add the Chrome extension and open any show. TalkAbtIT layers the conversation straight onto the player.",
+    title: "Leave comments right on the page you're watching",
+    body: "TalkAbtIT adds a comment section to Netflix, Hulu, Disney+, HBO Max, and Crunchyroll — the conversation sits right on the player.",
     visual: <PlayerCard />,
   },
   {

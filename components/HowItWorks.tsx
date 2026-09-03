@@ -3,33 +3,48 @@
 import { useState } from "react";
 
 // Teleparty-style walkthrough: the step list on the left drives the stage on
-// the right. Each step's demo video drops into `video` when it's ready
-// (put the file in public/ and reference it here, e.g. "/how-step-1.webm");
-// until then the stage shows the resting bucket mark. Once videos are in,
-// the stage advances to the next step when one finishes playing.
-const STEPS = [
+// the right. Most steps show real screenshots (public/how-step-*.avif, 1400×788
+// AVIF crops of the store listing and the extension on Netflix); the "click the
+// popcorn bucket" step instead renders a CSS remake of the bucket button riding
+// the right edge of the player, pulsing to be clicked.
+type Step = { title: string; body?: string; img?: string; alt?: string; mock?: boolean };
+
+const STEPS: Step[] = [
   {
     title: "Add it to your browser",
-    body: "Install the extension from the Chrome Web Store, then continue with Google or GitHub — or create an account with your email — and pick the name everyone sees with your comments. Takes seconds.",
-    video: null as string | null,
+    body: "Install the extension from the Chrome Web Store, then continue with Google or GitHub — or create an account with your email — and pick the name everyone sees with your comments.",
+    img: "/how-step-1.avif",
+    alt: "TalkAbtIT extension listing on the Chrome Web Store",
   },
   {
     title: "Open your streaming service",
-    body: "Head to Netflix, Hulu, Disney+, HBO Max, or Crunchyroll and press play — the popcorn bucket pops up over the video. Click it to open the conversation.",
-    video: null,
+    body: "Head to Netflix, Hulu, Disney+, HBO Max, or Crunchyroll.",
+    img: "/how-step-2.avif",
+    alt: "Netflix home page with a TalkAbtIT comment popping up over the featured preview",
+  },
+  {
+    title: "Pick a show or movie",
+    body: "Press play, then hover over the video and the popcorn bucket appears.",
+    img: "/how-step-3.avif",
+    alt: "An episode playing on Netflix with the TalkAbtIT popcorn bucket at the edge of the video",
+  },
+  {
+    title: "Click the popcorn bucket",
+    body: "The comment section slides in beside the video, matched to the exact episode you're watching. Sort by time, top, or newest, and tune how pop-ups behave.",
+    mock: true,
   },
   {
     title: "Join the conversation",
     body: "Comments are pinned to the exact moment in the show. Read reactions as they land, and drop your own.",
-    video: null,
+    img: "/how-step-4.avif",
+    alt: "The TalkAbtIT comment panel open beside an episode on Netflix",
   },
 ];
 
 export default function HowItWorks() {
   const [active, setActive] = useState(0);
-  const step = STEPS[active];
   return (
-    <section id="how" className="how band">
+    <section id="how" className="how band band-elevated">
       <div className="wrap how-grid">
         <div className="how-side">
           <span className="kicker">Getting started</span>
@@ -53,20 +68,37 @@ export default function HowItWorks() {
         </div>
 
         <div className="how-stage">
+          {/* screenshots all stay mounted (stacked in one grid cell, inactive
+              ones hidden), so stepping through never waits on a decode */}
           <div className="how-media">
-            {step.video ? (
-              <video
-                key={step.video}
-                src={step.video}
-                autoPlay
-                muted
-                playsInline
-                onEnded={() => setActive((active + 1) % STEPS.length)}
-              />
-            ) : (
-              <div className="how-media-empty" aria-hidden="true">
-                <img src="/mark.svg" alt="" loading="lazy" decoding="async" />
-              </div>
+            {STEPS.map((s, i) =>
+              s.mock ? (
+                /* mock player surface with the extension's popcorn button
+                   pulsing on the right edge, the way it rides a real video */
+                <div
+                  key={s.title}
+                  className="how-bucket-mock"
+                  style={i === active ? undefined : { visibility: "hidden" }}
+                  aria-hidden={i !== active}
+                >
+                  <div className="bucket-btn">
+                    <img src="/mark.svg" alt="" loading="lazy" decoding="async" />
+                    <span className="bucket-badge">12</span>
+                  </div>
+                </div>
+              ) : (
+                s.img && (
+                  <img
+                    key={s.title}
+                    src={s.img}
+                    alt={s.alt ?? ""}
+                    loading="lazy"
+                    decoding="async"
+                    style={i === active ? undefined : { visibility: "hidden" }}
+                    aria-hidden={i !== active}
+                  />
+                )
+              )
             )}
           </div>
           {/* every caption occupies the same grid cell, so the block always
@@ -81,7 +113,7 @@ export default function HowItWorks() {
                 aria-hidden={i !== active}
               >
                 <h3 className="how-step-title">{s.title}</h3>
-                <p className="how-step-body">{s.body}</p>
+                {s.body && <p className="how-step-body">{s.body}</p>}
               </div>
             ))}
           </div>

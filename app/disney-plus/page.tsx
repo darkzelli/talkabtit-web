@@ -21,8 +21,8 @@ const disneyPlus: ServiceConfig = {
   slug: "disney-plus",
   lede: "TalkAbtIT is a free Chrome extension that adds a time-stamped comment section to every show and movie on Disney+. Premiere night reactions, pinned to the exact moment — there when you watch, whenever that is.",
   pitch: [
-    "Disney+ premieres are events — a new episode lands and the reactions, theories, and freeze-frame details take over the internet within hours. But if you're not watching minute one, you're dodging spoilers everywhere, and the discussion never lives where the episode does.",
-    "TalkAbtIT pins the whole conversation to the Disney+ player. Comments attach to timestamps, so the gasp at the reveal sits exactly on the reveal — you see reactions only for the moment you're at, never for what's coming. Watch premiere night or weeks later; it feels like everyone's on the couch with you.",
+    "The talking happens everywhere except where you watch: the premiere ends and the discussion scatters across the internet.",
+    "TalkAbtIT pins the conversation to the Disney+ player — comments attached to the exact moment they're about, spoiler-tagged comments blurred until you tap them, and likes to lift the best reactions.",
   ],
   steps: [
     {

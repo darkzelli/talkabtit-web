@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Closing from "@/components/Closing";
 import { SITE_URL, CHROME_STORE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -50,7 +49,7 @@ const ROWS: { label: string; us: string; them: string }[] = [
   {
     label: "Price",
     us: "Free — unlimited comments; optional cosmetic Premium",
-    them: "Free, with optional paid upgrades",
+    them: "Free for some services; others require a paid upgrade",
   },
 ];
 
@@ -231,6 +230,12 @@ export default function TelepartyAlternativePage() {
                 better the more people watch, not just while a party is
                 running.
               </p>
+              <p>
+                Better yet, use both. They&apos;re separate extensions for
+                different nights: Teleparty for the planned live hangout,
+                TalkAbtIT for everything in between — so the conversation
+                doesn&apos;t end when the party does.
+              </p>
 
               <h2>TalkAbtIT vs Teleparty FAQ</h2>
             </div>
@@ -247,15 +252,8 @@ export default function TelepartyAlternativePage() {
               ))}
             </div>
 
-            <p className="svc-disclaimer">
-              Teleparty is a trademark of its respective owner. TalkAbtIT is an
-              independent product and is not affiliated with, endorsed by, or
-              sponsored by Teleparty or any streaming service.
-            </p>
           </div>
         </section>
-
-        <Closing />
       </main>
       <Footer sub />
       <script

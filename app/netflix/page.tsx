@@ -21,8 +21,8 @@ const netflix: ServiceConfig = {
   slug: "netflix",
   lede: "TalkAbtIT is a free Chrome extension that adds a time-stamped comment section to every show and movie on Netflix. React to the plot twist the second it lands — and read everyone else's reactions pinned to that exact moment.",
   pitch: [
-    "When a Netflix show drops, the whole internet reacts at once — on X, on Reddit, in group chats — but none of it is attached to the moment you're actually watching. By the time you find the discussion, you've been spoiled or the thread has moved on.",
-    "TalkAbtIT puts the conversation on the Netflix player itself. Every comment is pinned to a timestamp, so at 23:47 you see what everyone said about 23:47 — no spoilers from later in the episode, no digging through threads. Watch on your own schedule and it still feels like watching together.",
+    "The talking happens everywhere except where you watch: the credits roll and you go hunting for the discussion somewhere else.",
+    "TalkAbtIT adds the comment section to the Netflix player itself — every comment pinned to the exact timestamp it's about, spoiler-tagged comments blurred until you tap them, and likes to surface the best reactions.",
   ],
   steps: [
     {

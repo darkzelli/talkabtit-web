@@ -21,8 +21,8 @@ const crunchyroll: ServiceConfig = {
   slug: "crunchyroll",
   lede: "TalkAbtIT is a free Chrome extension that adds a time-stamped comment section to every anime on Crunchyroll. Scream about the hype moment with other fans — pinned to the exact second it happens.",
   pitch: [
-    "Anime fandom is built on shared reactions — episode threads, reaction clips, the whole season-of-the-week conversation. But on Crunchyroll itself, you watch in silence, and the discussion lives somewhere else entirely, usually full of spoilers for arcs you haven't reached.",
-    "TalkAbtIT brings that energy onto the Crunchyroll player. Every comment is pinned to a timestamp, so the hype hits exactly when the moment does — whether you're watching a simulcast the hour it drops or catching up on a series years later. The conversation is always there, always in sync with where you are.",
+    "The talking happens everywhere except where you watch: the episode ends and the reactions live somewhere else entirely.",
+    "TalkAbtIT brings the comments onto the Crunchyroll player — every comment pinned to the exact second, spoiler-tagged comments blurred until you tap them, and likes to push the best hype to the top.",
   ],
   steps: [
     {
