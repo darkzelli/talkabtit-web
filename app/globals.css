@@ -1224,6 +1224,27 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
 .footer-col a { text-decoration: none; transition: color 0.15s ease; }
 .footer-col a:hover { color: var(--text); }
 .footer-col p { font-size: 13px; }
+/* service-page link strip: label + pill links in one wrapping row above the
+   link columns; pills echo the spoiler-chip styling from the player demo */
+.footer-svcs {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 14px 20px;
+  max-width: 1080px; margin: 0 auto; padding: 0 24px 46px;
+}
+.footer-svcs h4 {
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text);
+}
+.footer-svcs ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+.footer-svcs a {
+  display: inline-block; padding: 6px 14px 7px;
+  border: 1px solid var(--hairline); border-radius: 999px;
+  font-size: 13.5px; text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.footer-svcs a:hover {
+  color: var(--gold); border-color: rgba(255, 185, 31, 0.55);
+  background: rgba(255, 185, 31, 0.08);
+}
 
 /* the nav CTA's short label only exists on small phones */
 .nav-cta-short { display: none; }
@@ -1251,9 +1272,27 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .banner-row { flex-direction: column; align-items: center; text-align: center; }
   .closing .btn { margin-right: 0; }
   .banner-copy p { margin-left: auto; margin-right: auto; }
-  /* stacked layout fills the width, and touch has no hover — drop the
-     background wordmarks (the footer keeps the service-page links) */
-  .hero-bg-logos { display: none; }
+  /* stacked layout fills the width, so there are no empty flanks for the
+     scatter — the wordmarks regroup as a wrapping horizontal strip under the
+     CTAs instead (one of each; the second scatter copy stays hidden) */
+  .hero-bg-logos {
+    position: static; order: 1;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 18px 30px; margin-top: 38px; padding: 0 24px;
+  }
+  .hero-bg-logos .bg-logo:nth-child(n + 6) { display: none; }
+  .bg-logo {
+    position: static; transform: none; animation: none;
+    opacity: 0.45;
+  }
+  .bg-logo:hover { transform: none; }
+  /* row heights rebalance each wordmark's optical weight side by side —
+     !important because the scatter heights ride inline from Hero.tsx */
+  .bg-logo { height: 20px !important; }
+  .bg-logo[href="/crunchyroll/"] { height: 15px !important; }
+  .bg-logo[href="/hulu/"] { height: 19px !important; }
+  .bg-logo[href="/disney-plus/"] { height: 30px !important; }
+  .bg-logo[href="/hbo-max/"] { height: 24px !important; }
   /* steps stack into one column */
   .svc-steps { grid-template-columns: 1fr; gap: 44px; }
   /* hero stacks: copy first, player mock full width below */
