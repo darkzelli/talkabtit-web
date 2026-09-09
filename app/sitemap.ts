@@ -53,6 +53,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${SITE_URL}/paramount-plus/`,
+      lastModified: "2026-09-09",
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${SITE_URL}/teleparty-alternative/`,
       lastModified: "2026-09-03",
       changeFrequency: "monthly",

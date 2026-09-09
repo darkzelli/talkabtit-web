@@ -7,6 +7,7 @@ const SERVICE_LINKS = [
   { href: "/hulu/", label: "Hulu comments" },
   { href: "/disney-plus/", label: "Disney+ comments" },
   { href: "/hbo-max/", label: "HBO Max comments" },
+  { href: "/paramount-plus/", label: "Paramount+ comments" },
   { href: "/crunchyroll/", label: "Crunchyroll comments" },
 ];
 

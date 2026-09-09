@@ -18,7 +18,7 @@ const STEPS: Step[] = [
   },
   {
     title: "Open your streaming service",
-    body: "Head to Netflix, Hulu, Disney+, HBO Max, or Crunchyroll.",
+    body: "Head to Netflix, Hulu, Disney+, HBO Max, Paramount+, or Crunchyroll.",
     img: "/how-step-2.avif",
     alt: "Netflix home page with a TalkAbtIT comment popping up over the featured preview",
   },

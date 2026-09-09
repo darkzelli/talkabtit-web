@@ -7,7 +7,7 @@ import { SITE_URL, CHROME_STORE_URL } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "TalkAbtIT vs Teleparty",
   description:
-    "Looking for a Teleparty alternative? TalkAbtIT adds a time-stamped comment section to Netflix, Hulu, Disney+, HBO Max, and Crunchyroll — no scheduling, no synced session. See how the two compare.",
+    "Looking for a Teleparty alternative? TalkAbtIT adds a time-stamped comment section to Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll — no scheduling, no synced session. See how the two compare.",
   alternates: { canonical: "/teleparty-alternative/" },
   openGraph: {
     title: "TalkAbtIT vs Teleparty",
@@ -43,7 +43,7 @@ const ROWS: { label: string; us: string; them: string }[] = [
   },
   {
     label: "Streaming services",
-    us: "Netflix, Hulu, Disney+, HBO Max, Crunchyroll",
+    us: "Netflix, Hulu, Disney+, HBO Max, Paramount+, Crunchyroll",
     them: "Netflix, Hulu, Disney+, HBO Max, and more",
   },
   {

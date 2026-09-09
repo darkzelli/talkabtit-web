@@ -116,7 +116,7 @@ const FEATURES = [
   {
     kicker: "Your favorite streaming sites",
     title: "Leave comments right on the page you're watching",
-    body: "TalkAbtIT adds a comment section to Netflix, Hulu, Disney+, HBO Max, and Crunchyroll — the conversation sits right on the player.",
+    body: "TalkAbtIT adds a comment section to Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll — the conversation sits right on the player.",
     visual: <PlayerCard />,
   },
   {

@@ -49,7 +49,7 @@ export default function TermsPage() {
                 <strong>
                   TalkAbtIT is an independent product and is not affiliated with,
                   endorsed by, or sponsored by Netflix, Hulu, Disney+, HBO Max,
-                  Crunchyroll, or any other streaming service.
+                  Paramount+, Crunchyroll, or any other streaming service.
                 </strong>{" "}
                 All names, trademarks, and logos are the property of their
                 respective owners and are used for identification purposes only.

@@ -38,12 +38,12 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
     q: "Which streaming services work with it?",
     a: (
       <>
-        TalkAbtIT works with Netflix, Hulu, Disney+, HBO Max, and Crunchyroll,
-        with more coming soon. It works right in your browser — start playing
-        any content from them and the comments appear on the page.
+        TalkAbtIT works with Netflix, Hulu, Disney+, HBO Max, Paramount+, and
+        Crunchyroll, with more coming soon. It works right in your browser —
+        start playing any content from them and the comments appear on the page.
       </>
     ),
-    text: "TalkAbtIT works with Netflix, Hulu, Disney+, HBO Max, and Crunchyroll, with more coming soon. It works right in your browser — start playing any content from them and the comments appear on the page.",
+    text: "TalkAbtIT works with Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll, with more coming soon. It works right in your browser — start playing any content from them and the comments appear on the page.",
   },
   {
     q: "Do I need my own subscriptions?",

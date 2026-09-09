@@ -216,20 +216,20 @@ nav {
 }
 .bg-logo img { height: 100%; width: auto; display: block; }
 /* ambient life: the marks take turns glowing up to full brand color — one at a
-   time. All share one 35s cycle; each mark's --gd (set in Hero.tsx) drops its
+   time. All share one 42s cycle; each mark's --gd (set in Hero.tsx) drops its
    glow into its own 3.5s slot, and the glow window fits inside one slot with a
    beat of quiet before the next mark lights. Motion-safe only. */
 @media (prefers-reduced-motion: no-preference) {
   .bg-logo {
-    animation: bg-logo-glow 35s ease-in-out var(--gd, 0s) infinite;
+    animation: bg-logo-glow 42s ease-in-out var(--gd, 0s) infinite;
   }
 }
-/* soft symmetric breathe: ~1.2s up, short hold, ~1.2s down (3.5% of 35s each
+/* soft symmetric breathe: ~1.2s up, short hold, ~1.2s down (2.9% of 42s each
    way); peak sits just under full opacity */
 @keyframes bg-logo-glow {
   0% { filter: grayscale(1) brightness(2.4); opacity: 0.09; }
-  3.5%, 5% { filter: none; opacity: 0.9; }
-  8.5%, 100% { filter: grayscale(1) brightness(2.4); opacity: 0.09; }
+  2.9%, 4.2% { filter: none; opacity: 0.9; }
+  7.1%, 100% { filter: grayscale(1) brightness(2.4); opacity: 0.09; }
 }
 /* hover always wins. !important (not animation: none) so the glow cycle's
    clock keeps running underneath — resetting it would knock the hovered mark
@@ -1280,7 +1280,7 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
     display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
     gap: 18px 30px; margin-top: 38px; padding: 0 24px;
   }
-  .hero-bg-logos .bg-logo:nth-child(n + 6) { display: none; }
+  .hero-bg-logos .bg-logo:nth-child(n + 7) { display: none; }
   .bg-logo {
     position: static; transform: none; animation: none;
     opacity: 0.45;
@@ -1293,6 +1293,7 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .bg-logo[href="/hulu/"] { height: 19px !important; }
   .bg-logo[href="/disney-plus/"] { height: 30px !important; }
   .bg-logo[href="/hbo-max/"] { height: 24px !important; }
+  .bg-logo[href="/paramount-plus/"] { height: 24px !important; }
   /* steps stack into one column */
   .svc-steps { grid-template-columns: 1fr; gap: 44px; }
   /* hero stacks: copy first, player mock full width below */
