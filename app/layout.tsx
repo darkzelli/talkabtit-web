@@ -130,6 +130,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={displayFont.variable}>
+      {REDDIT_PIXEL_ID && (
+        <head>
+          {/* Reddit Ads pixel. A plain inline <script> (not next/script) so it
+              sits in the static HTML where Reddit's pixel checker can see it,
+              and so window.rdt exists before any click. PageVisit fires here;
+              Lead fires from the store-click listener below. */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','${REDDIT_PIXEL_ID}');rdt('track','PageVisit');`,
+            }}
+          />
+        </head>
+      )}
       <body>
         {children}
         <script
@@ -161,14 +174,6 @@ export default function RootLayout({
               if (window.rdt) window.rdt('track', 'Lead');
             });`}
         </Script>
-        {/* Reddit Ads pixel — PageVisit on load; Lead fires from the store-click listener above. */}
-        {REDDIT_PIXEL_ID && (
-          <Script id="reddit-pixel" strategy="afterInteractive">
-            {`!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
-              rdt('init', '${REDDIT_PIXEL_ID}');
-              rdt('track', 'PageVisit');`}
-          </Script>
-        )}
       </body>
     </html>
   );
