@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import FaqList, { type Faq, faqPageJsonLd } from "@/components/FaqList";
 import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 // Each FAQ carries both the rich JSX answer (`a`, rendered on the page) and a
 // plain-text `text` version — Google's FAQPage rich result requires plain text
 // in acceptedAnswer, so the two are kept deliberately in sync.
-const FAQS: { q: string; a: ReactNode; text: string }[] = [
+const FAQS: Faq[] = [
   {
     q: "What is TalkAbtIT?",
     a: (
@@ -197,35 +197,7 @@ const FAQS: { q: string; a: ReactNode; text: string }[] = [
 
 // FAQPage structured data — makes these Q&As eligible for expandable rich
 // results in Google search.
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": `${SITE_URL}/support/#faq`,
-  mainEntity: FAQS.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.text },
-  })),
-};
-
-function Chevron() {
-  return (
-    <svg
-      className="chev"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M6 9l6 6 6-6" />
-    </svg>
-  );
-}
+const faqJsonLd = faqPageJsonLd(FAQS, `${SITE_URL}/support/#faq`);
 
 export default function FAQPage() {
   return (
@@ -246,17 +218,7 @@ export default function FAQPage() {
 
         <section className="content">
           <div className="wrap">
-            <div className="faq-list">
-              {FAQS.map((item) => (
-                <details className="faq-item" key={item.q}>
-                  <summary>
-                    {item.q}
-                    <Chevron />
-                  </summary>
-                  <p className="answer">{item.a}</p>
-                </details>
-              ))}
-            </div>
+            <FaqList faqs={FAQS} />
 
             <div className="contact-card">
               <h3 className="display">Still have a question?</h3>

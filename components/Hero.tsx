@@ -1,4 +1,5 @@
 import BrowserDemo from "./BrowserDemo";
+import MobileReminder from "./MobileReminder";
 import { CHROME_STORE_URL } from "@/lib/seo";
 
 // Streaming wordmarks scattered across the hero as a ghosted background layer.
@@ -72,6 +73,7 @@ export default function Hero() {
           <a
             className="btn-appstore"
             href={CHROME_STORE_URL}
+            data-cta="hero"
             target="_blank"
             rel="noopener"
           >
@@ -90,6 +92,8 @@ export default function Hero() {
             </span>
           </a>
         </div>
+
+        <MobileReminder />
       </div>
     </header>
   );

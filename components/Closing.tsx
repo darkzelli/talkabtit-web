@@ -1,3 +1,4 @@
+import MobileReminder from "./MobileReminder";
 import { CHROME_STORE_URL } from "@/lib/seo";
 
 export default function Closing() {
@@ -15,6 +16,7 @@ export default function Closing() {
         <a
           className="btn btn-brand btn-lg btn-icon"
           href={CHROME_STORE_URL}
+          data-cta="closing"
           target="_blank"
           rel="noopener"
         >
@@ -31,6 +33,9 @@ export default function Closing() {
             Get TalkAbtIT<span className="btn-free"> — Free</span>
           </span>
         </a>
+      </div>
+      <div className="wrap">
+        <MobileReminder />
       </div>
     </section>
   );

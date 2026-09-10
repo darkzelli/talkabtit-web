@@ -2,7 +2,9 @@ import type { ReactNode } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { PlayerCard } from "@/components/Features";
-import { CHROME_STORE_URL } from "@/lib/seo";
+import FaqList, { type Faq, faqPageJsonLd } from "@/components/FaqList";
+import MobileReminder from "@/components/MobileReminder";
+import { CHROME_STORE_URL, SITE_URL } from "@/lib/seo";
 
 // One landing page per streaming service (/netflix/, /hulu/, …), each built
 // around its own query family ("netflix comment section", "crunchyroll
@@ -15,8 +17,8 @@ export type ServiceConfig = {
   /* two short paragraphs on why this service is better with comments */
   pitch: [string, string];
   steps: { title: string; body: string }[];
-  /* written per service but currently not rendered anywhere */
-  faqs: { q: string; a: ReactNode; text: string }[];
+  /* rendered as the page's FAQ accordion + FAQPage structured data */
+  faqs: Faq[];
 };
 
 // big solid glyphs for the step walkthrough, one per step in order:
@@ -86,6 +88,7 @@ export default function ServicePage({ service }: { service: ServiceConfig }) {
                     <a
                       className="btn-appstore svc-step-cta"
                       href={CHROME_STORE_URL}
+                      data-cta="service-step"
                       target="_blank"
                       rel="noopener"
                     >
@@ -100,13 +103,36 @@ export default function ServicePage({ service }: { service: ServiceConfig }) {
                   ) : (
                     <p>{step.body}</p>
                   )}
+                  {i === 0 && (
+                    /* on touch the CTA above hides (no installs on a phone —
+                       the reminder form below the steps stands in), so the
+                       written step body returns */
+                    <p className="svc-step-body-touch">{step.body}</p>
+                  )}
                 </div>
               ))}
             </div>
+
+            <MobileReminder />
+
+            {/* per-service Q&As — real content depth for the page's query
+                family, mirrored into FAQPage structured data below */}
+            <section className="svc-faq-block">
+              <h2>{service.name} comment section FAQ</h2>
+              <FaqList faqs={service.faqs} />
+            </section>
           </div>
         </section>
       </main>
       <Footer sub />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            faqPageJsonLd(service.faqs, `${SITE_URL}/${service.slug}/#faq`),
+          ),
+        }}
+      />
     </>
   );
 }

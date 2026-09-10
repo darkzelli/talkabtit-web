@@ -5,3 +5,6 @@
 next-env.d.ts
 *.tsbuildinfo
 .DS_Store
+
+# Claude Code local overrides (machine-specific paths)
+.claude/settings.local.json

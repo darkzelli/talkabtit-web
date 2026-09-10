@@ -144,7 +144,17 @@ export default function RootLayout({
           {`window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-DNQC3PZSS2');`}
+            gtag('config', 'G-DNQC3PZSS2');
+            // The site's one conversion: a click through to the Chrome Web
+            // Store. Delegated so every store link — current and future — is
+            // counted, tagged with which CTA sent it (data-cta on the link).
+            document.addEventListener('click', function (e) {
+              var el = e.target instanceof Element ? e.target : null;
+              var link = el && el.closest('a[href*="chromewebstore.google.com"]');
+              if (link) gtag('event', 'store_click', {
+                cta_location: link.getAttribute('data-cta') || 'untagged'
+              });
+            });`}
         </Script>
       </body>
     </html>
