@@ -19,6 +19,10 @@ export const SITE_DESCRIPTION =
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/talkabtit/cemkclokkcdemkidbcfgkheaicpinjjh";
 
+// Reddit Ads pixel id (Ads Manager → Events Manager → Reddit Pixel). Looks
+// like "a2_xxxxxxxxxx". Leave empty and the pixel script is not rendered.
+export const REDDIT_PIXEL_ID = "a2_jm2rqobnhx1m";
+
 // The streaming services the product layers onto — reused in copy and schema.
 export const SUPPORTED_SERVICES = [
   "Netflix",

@@ -9,6 +9,7 @@ import {
   SITE_DESCRIPTION,
   SUPPORTED_SERVICES,
   OG_IMAGE,
+  REDDIT_PIXEL_ID,
 } from "@/lib/seo";
 
 // Display face for `.display` headings. Archivo Black ships as a single
@@ -151,11 +152,23 @@ export default function RootLayout({
             document.addEventListener('click', function (e) {
               var el = e.target instanceof Element ? e.target : null;
               var link = el && el.closest('a[href*="chromewebstore.google.com"]');
-              if (link) gtag('event', 'store_click', {
+              if (!link) return;
+              gtag('event', 'store_click', {
                 cta_location: link.getAttribute('data-cta') || 'untagged'
               });
+              // Mirror the conversion to the Reddit pixel (when present) so
+              // Reddit Ads can attribute store clicks to the ad that sent them.
+              if (window.rdt) window.rdt('track', 'Lead');
             });`}
         </Script>
+        {/* Reddit Ads pixel — PageVisit on load; Lead fires from the store-click listener above. */}
+        {REDDIT_PIXEL_ID && (
+          <Script id="reddit-pixel" strategy="afterInteractive">
+            {`!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
+              rdt('init', '${REDDIT_PIXEL_ID}');
+              rdt('track', 'PageVisit');`}
+          </Script>
+        )}
       </body>
     </html>
   );
