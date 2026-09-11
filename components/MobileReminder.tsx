@@ -5,8 +5,9 @@ import { CHROME_STORE_URL } from "@/lib/seo";
 
 // formsubmit.co relays the submission to the support inbox with no backend
 // and auto-replies to the visitor with the install link (_autoresponse).
-// NOTE: the first-ever submission emails support@ an activation link — until
-// that's clicked, nothing is delivered.
+// The endpoint was activated 2026-09-11; a new address would need activating
+// again (first submission emails it an "Activate Form" link) before anything
+// is delivered.
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/support@talkabtit.app";
 
 // Fires a GA event when gtag has loaded; the form works fine without it.
@@ -44,7 +45,15 @@ export default function MobileReminder() {
             "Stop watching alone. Watch with everyone.",
         }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      // FormSubmit answers 200 even when it drops the submission (an
+      // unactivated endpoint, a rate limit), so the body is the real verdict —
+      // trusting res.ok alone tells the visitor "sent" when nothing was.
+      const body: { success?: string; message?: string } | null = await res
+        .json()
+        .catch(() => null);
+      if (!res.ok || body?.success !== "true") {
+        throw new Error(body?.message ?? String(res.status));
+      }
       setStatus("sent");
       track("remind_me_sent");
     } catch {
