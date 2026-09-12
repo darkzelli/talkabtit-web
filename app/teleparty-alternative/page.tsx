@@ -161,6 +161,7 @@ export default function TelepartyAlternativePage() {
             <a
               className="btn-appstore svc-cta"
               href={CHROME_STORE_URL}
+              data-cta="teleparty"
               target="_blank"
               rel="noopener"
             >
