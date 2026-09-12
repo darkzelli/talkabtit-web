@@ -1,0 +1,773 @@
+/* ---------------------------------------------------------------------------
+   /demo — a playable copy of the extension.
+
+   Two halves:
+   • `dm-*` — the player chrome. A generic streaming-service skin (shade
+     gradients, centre play, scrubber, bottom control bar) so the page reads as
+     "a streaming site" without imitating any one service's branding.
+   • `tbx-*` — the comment overlay, lifted from the extension's
+     content/content.css (which lives in a closed shadow root, palette ported
+     from Theme.swift). Same class names on purpose: when the real drawer
+     changes, the diff drops straight in here. The only systematic edit is
+     `position: fixed` → `absolute`, because on the site the overlay is bound to
+     the player stage, not the viewport — in fullscreen the stage *is* the
+     viewport, so it lands in the same place either way.
+--------------------------------------------------------------------------- */
+
+/* ---------- page shell ---------- */
+
+/* the page is the player: no hero copy, no closing band. The h1 is there for
+   search and screen readers only */
+.demo-h1 {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+.demo-stage-col {
+  min-width: 0; max-width: 1180px; margin: 0 auto; padding: 40px 24px 84px;
+}
+
+/* the services the overlay layers onto, ghosted under the player and snapping
+   to full brand color on hover — same treatment as the home hero's marks */
+.demo-services {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 18px 42px; margin-top: 40px;
+}
+.demo-services-label {
+  flex: none; font-size: 12px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+}
+.demo-service {
+  display: block; height: 26px;
+  filter: grayscale(1) brightness(2.4); opacity: 0.16;
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+.demo-service img { height: 100%; width: auto; display: block; }
+/* ambient life, same as the home hero's marks: they take turns glowing up to
+   full brand color, one at a time. All six share one 21s cycle; each mark's
+   --gd (set in page.tsx) drops its glow into its own 3.5s slot, and the glow
+   window fits inside that slot with a beat of quiet before the next mark
+   lights. Motion-safe only — with reduced motion the row just sits ghosted and
+   still answers hover. */
+@media (prefers-reduced-motion: no-preference) {
+  .demo-service {
+    animation: demo-service-glow 21s ease-in-out var(--gd, 0s) infinite;
+  }
+}
+/* soft symmetric breathe: ~1.2s up, short hold, ~1.2s down (5.8% of 21s each
+   way); peak sits just under full opacity */
+@keyframes demo-service-glow {
+  0% { filter: grayscale(1) brightness(2.4); opacity: 0.16; }
+  5.8%, 8.4% { filter: none; opacity: 0.95; }
+  14.2%, 100% { filter: grayscale(1) brightness(2.4); opacity: 0.16; }
+}
+/* hover always wins. !important (not animation: none) so the glow cycle's clock
+   keeps running underneath — resetting it would knock the hovered mark out of
+   its slot and let two marks light at once from then on */
+.demo-service:hover { filter: none !important; opacity: 1 !important; transform: scale(1.08); }
+
+/* the store link, centred above the player: icon and text on one line, no pill */
+.demo-cta { display: flex; justify-content: center; margin-bottom: 28px; }
+.demo-store-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--text); text-decoration: none;
+  font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+  transition: color 0.15s ease;
+}
+.demo-store-link svg { flex-shrink: 0; color: var(--red); }
+.demo-store-link:hover { color: var(--red); }
+
+/* the explainer under the marks: left aligned, measure-capped, sitting flush
+   with the player's left edge */
+.demo-about { max-width: 960px; margin: 46px 0 0; text-align: left; }
+.demo-about h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
+.demo-about p {
+  margin-top: 14px; color: var(--text-dim); font-size: 15.5px; line-height: 1.7;
+}
+.demo-about b { color: var(--gold); }
+
+/* ---------- stage ---------- */
+
+.dm-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  color: #fff;
+  /* the stage owns the player hotkeys; no focus ring on the box itself */
+  outline: none;
+  user-select: none;
+  isolation: isolate;
+}
+/* the stage owns the hotkeys, so it must be focusable — show that it is */
+.dm-stage:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+/* real fullscreen: fill the screen, drop the card chrome */
+.dm-stage:fullscreen { border-radius: 0; border: 0; aspect-ratio: auto; height: 100%; }
+.dm-stage.dm-hide-cursor { cursor: none; }
+
+.dm-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; display: block; }
+
+/* stand-in when the clip isn't on disk (or fails to decode): an empty frame,
+   with nothing in it but the centre play button. The demo still runs, off the
+   virtual clock, so the comment side stays fully playable. */
+.dm-fallback {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 20% 15%, rgba(237, 61, 35, 0.18), transparent 62%),
+    radial-gradient(120% 90% at 85% 80%, rgba(255, 185, 31, 0.12), transparent 62%),
+    #0B0C10;
+}
+
+/* top + bottom scrims: keep the title and the control bar readable on any frame */
+.dm-shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 18%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 30%);
+  opacity: 1; transition: opacity 0.3s ease;
+}
+
+/* title block, top-left, rides with the controls */
+.dm-titlebar {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 18px 20px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* the service chip rides at the far right of the bar, small enough to read as
+   a watermark rather than a label */
+.dm-svc {
+  flex: none; margin-left: auto;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 3px 7px; border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.dm-titles { min-width: 0; }
+.dm-show { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); }
+.dm-ep { margin-top: 2px; font-size: 12.5px; color: rgba(255, 255, 255, 0.72); text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); }
+
+/* centre play — the "start the episode" affordance. Bare glyph, no disc: the
+   drop shadow is what keeps it readable over a bright frame. */
+.dm-bigplay {
+  position: absolute; left: 50%; top: 50%;
+  width: 104px; height: 104px; margin: -52px 0 0 -52px;
+  border: 0; background: none; padding: 0;
+  color: #fff; cursor: pointer;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.18s ease, color 0.18s ease, opacity 0.2s ease;
+}
+.dm-bigplay:hover { transform: scale(1.07); color: #ED3D23; }
+/* no optical nudge here: the triangle's own path already sits right of the
+   viewBox center (centroid x ≈ 11.9 of 24), so the usual few-px shove lands it
+   visibly off to the right inside the circle */
+.dm-bigplay svg { margin-left: 0; }
+
+/* ---------- control bar ---------- */
+
+.dm-controls {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 0 18px 14px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* idle: the whole chrome (and the edge button) fades out with the mouse */
+.dm-stage.dm-idle .dm-controls,
+.dm-stage.dm-idle .dm-titlebar { opacity: 0; transform: translateY(6px); pointer-events: none; }
+.dm-stage.dm-idle .dm-titlebar { transform: translateY(-6px); }
+.dm-stage.dm-idle .dm-shade { opacity: 0.35; }
+
+/* scrubber: a hairline that thickens under the pointer, like every player */
+.dm-bar { position: relative; height: 16px; display: flex; align-items: center; cursor: pointer; touch-action: none; }
+.dm-bar-track {
+  position: relative; width: 100%; height: 4px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.26); overflow: visible;
+  transition: height 0.12s ease;
+}
+.dm-bar:hover .dm-bar-track, .dm-bar.dm-scrubbing .dm-bar-track { height: 7px; }
+.dm-bar-buffered, .dm-bar-hoverfill, .dm-bar-fill {
+  position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px;
+}
+.dm-bar-buffered { background: rgba(255, 255, 255, 0.3); }
+.dm-bar-hoverfill { background: rgba(255, 255, 255, 0.22); }
+.dm-bar-fill { background: #fff; }
+.dm-bar-knob {
+  position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transform: scale(0); transition: transform 0.12s ease;
+}
+.dm-bar:hover .dm-bar-knob, .dm-bar.dm-scrubbing .dm-bar-knob { transform: scale(1); }
+/* time bubble that tracks the pointer along the bar */
+.dm-bar-tip {
+  position: absolute; bottom: 20px; transform: translateX(-50%);
+  padding: 3px 8px; border-radius: 7px;
+  background: rgba(9, 10, 13, 0.9); border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+  pointer-events: none; white-space: nowrap;
+}
+
+.dm-row { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.dm-spacer { flex: 1; }
+.dm-btn {
+  flex: none; width: 38px; height: 38px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: 0; border-radius: 10px;
+  color: #fff; cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.dm-btn:hover { background: rgba(255, 255, 255, 0.16); }
+.dm-btn:active { transform: scale(0.94); }
+.dm-btn.dm-on { color: var(--gold); }
+.dm-btn-wide { width: auto; padding: 0 11px; gap: 7px; font-size: 12.5px; font-weight: 700; }
+
+/* volume: the slider unrolls on hover/focus, like the desktop players */
+.dm-vol { display: flex; align-items: center; }
+.dm-vol-slider {
+  width: 0; opacity: 0; overflow: hidden;
+  transition: width 0.18s ease, opacity 0.18s ease, margin 0.18s ease;
+}
+.dm-vol:hover .dm-vol-slider, .dm-vol:focus-within .dm-vol-slider { width: 76px; opacity: 1; margin-right: 8px; }
+.dm-vol-slider input {
+  width: 76px; height: 4px; margin: 0; padding: 0;
+  -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer;
+}
+.dm-vol-slider input::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.3); }
+.dm-vol-slider input::-moz-range-track { height: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.3); }
+.dm-vol-slider input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 12px; height: 12px; margin-top: -4px;
+  border-radius: 50%; background: #fff; border: 0;
+}
+.dm-vol-slider input::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #fff; }
+
+.dm-time {
+  margin-left: 8px; font-size: 12.5px; font-weight: 700;
+  font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, 0.85);
+}
+.dm-time span { color: rgba(255, 255, 255, 0.5); }
+
+/* speed menu */
+.dm-pop { position: relative; }
+.dm-menu {
+  position: absolute; right: 0; bottom: 46px; min-width: 128px;
+  padding: 6px; border-radius: 12px;
+  background: rgba(9, 10, 13, 0.96); border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  z-index: 5;
+}
+.dm-menu-title {
+  padding: 4px 10px 6px; font-size: 10px; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #9198A6;
+}
+.dm-menu button {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; padding: 7px 10px; border: 0; border-radius: 8px;
+  background: none; color: #F2F4F8; font: inherit; font-size: 13px; cursor: pointer;
+}
+.dm-menu button:hover { background: rgba(255, 255, 255, 0.09); }
+.dm-menu-sep { height: 1px; margin: 5px 8px; background: rgba(255, 255, 255, 0.12); }
+.dm-menu button.dm-sel { color: var(--gold); font-weight: 700; }
+
+/* toast: "liked", "reported", "blocked" — bottom-centre, above the bar */
+.dm-toast {
+  position: absolute; left: 50%; bottom: 78px; transform: translateX(-50%);
+  padding: 8px 16px; border-radius: 999px; z-index: 6;
+  background: rgba(9, 10, 13, 0.92); border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 12.5px; font-weight: 600; white-space: nowrap;
+  animation: dm-toast-in 0.2s ease;
+}
+@keyframes dm-toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+
+/* =========================================================================
+   comment overlay — ported from the extension (content/content.css)
+   ========================================================================= */
+
+.dm-stage :is(.tbx-drawer, .tbx-player-btn, .tbx-popups) * { box-sizing: border-box; }
+
+/* ---------- edge button (right side of the player, vertically centred) ---------- */
+
+.tbx-player-btn {
+  position: absolute;
+  right: 10px;
+  top: calc(50% - 22px);
+  width: 44px; height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  background: rgba(9, 10, 13, 0.45);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 4;
+  transition: opacity 0.25s ease, transform 0.15s ease, background 0.15s ease;
+}
+.tbx-player-btn:hover { transform: scale(1.1); background: rgba(255, 255, 255, 0.12); }
+/* fades out with the controls when the pointer goes idle */
+.dm-stage.dm-idle .tbx-player-btn { opacity: 0; pointer-events: none; }
+.tbx-player-btn .tbx-mark {
+  width: 82%; height: 82%; display: block; pointer-events: none;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.65));
+}
+.tbx-player-btn .tbx-badge {
+  position: absolute; top: -6px; right: -6px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 9px; background: #ED3D23; color: #fff;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+/* the call-out beside the button, up until the first open. Rides to the left of
+   the button and fades away with the chrome when the pointer goes idle */
+.tbx-cta {
+  position: absolute;
+  right: 76px; top: calc(50% - 15px);
+  display: flex; align-items: center; height: 30px;
+  padding: 0 12px; border-radius: 999px;
+  background: rgba(237, 61, 35, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  color: #fff; font-size: 12.5px; font-weight: 700; white-space: nowrap;
+  pointer-events: none; z-index: 4;
+  transition: opacity 0.25s ease;
+}
+/* little arrow pointing at the button */
+.tbx-cta::after {
+  content: ""; position: absolute; right: -5px; top: 50%;
+  width: 9px; height: 9px; margin-top: -4.5px;
+  background: rgba(237, 61, 35, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  transform: rotate(45deg);
+}
+.dm-stage.dm-idle .tbx-cta { opacity: 0; }
+
+/* nudge on the unopened stage: the button breathes bigger and smaller, with a
+   ring pulsing off it, until someone clicks. Runs until then — it is the one
+   thing the page needs you to find */
+@media (prefers-reduced-motion: no-preference) {
+  .tbx-player-btn.tbx-nudge { animation: tbx-nudge 2.2s ease-in-out infinite; }
+  /* hover means it has been found: hand the transform back to :hover */
+  .tbx-player-btn.tbx-nudge:hover { animation: none; }
+  .tbx-cta { animation: tbx-cta-breathe 2.2s ease-in-out infinite; }
+}
+@keyframes tbx-nudge {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(237, 61, 35, 0.55); }
+  30% { transform: scale(1.16); box-shadow: 0 0 0 11px rgba(237, 61, 35, 0); }
+  60% { transform: scale(1); box-shadow: 0 0 0 0 rgba(237, 61, 35, 0); }
+}
+/* the label rides the same beat, a touch shallower so the text stays readable */
+@keyframes tbx-cta-breathe {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.06); }
+  60% { transform: scale(1); }
+}
+
+/* ---------- drawer ---------- */
+
+.tbx-drawer {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  transform: translateX(105%);
+  background: rgba(9, 10, 13, 0.94);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F2F4F8;
+  display: flex; flex-direction: column;
+  z-index: 5;
+  transition: transform 0.25s ease, width 0.2s ease;
+  font-size: 14px;
+  text-align: left;
+  box-shadow: -14px 0 40px rgba(0, 0, 0, 0.5);
+  padding-left: 6px;
+}
+.tbx-drawer.open { transform: translateX(0); }
+.tbx-drawer.tbx-dragging { transition: none; }
+.tbx-drawer button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+/* the drawer's own text stays selectable (the stage around it is not) */
+.tbx-drawer { user-select: text; }
+
+/* grab strip on the drawer's left edge */
+.tbx-grab-row {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 16px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: ew-resize; touch-action: none;
+}
+.tbx-grab { width: 5px; height: 44px; border-radius: 3px; background: rgba(255, 255, 255, 0.28); }
+.tbx-grab-row:hover .tbx-grab { background: rgba(255, 185, 31, 0.75); }
+
+.tbx-head { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.tbx-head-top { display: flex; align-items: center; justify-content: space-between; }
+.tbx-logo { height: 36px; width: auto; display: block; }
+.tbx-drawer .tbx-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F2F4F8; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+}
+.tbx-close:hover { background: rgba(255, 255, 255, 0.14); }
+.tbx-site-name { margin-top: 10px; color: #9198A6; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; }
+.tbx-ep-show { margin-top: 4px; font-weight: 700; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tbx-ep-title { margin-top: 2px; font-weight: 600; font-size: 12.5px; color: #C2C8D4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- sort tabs + pills ---------- */
+
+.tbx-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px; }
+.tbx-drawer .tbx-tab {
+  padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  color: #9198A6; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.tbx-tab:hover { color: #F2F4F8; }
+.tbx-tab.active {
+  color: #F2F4F8;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.20), rgba(255, 185, 31, 0.10));
+  border-color: rgba(255, 185, 31, 0.45);
+}
+.tbx-drawer .tbx-popup-toggle {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  color: #9198A6; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.tbx-popup-toggle.on { color: #F2F4F8; border-color: rgba(255, 185, 31, 0.45); }
+.tbx-plus-tag { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; color: #FFB91F; }
+.tbx-mini-switch {
+  position: relative; width: 24px; height: 14px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18); transition: background 0.15s ease;
+}
+.tbx-mini-switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 10px; height: 10px; border-radius: 50%; background: #F2F4F8;
+  transition: transform 0.15s ease;
+}
+.tbx-popup-toggle.on .tbx-mini-switch, .tbx-popup-bg-toggle.on .tbx-mini-switch { background: #ED3D23; }
+.tbx-popup-toggle.on .tbx-mini-switch::after, .tbx-popup-bg-toggle.on .tbx-mini-switch::after { transform: translateX(10px); }
+
+/* ---------- pop-up linger picker ---------- */
+
+.tbx-popup-secs { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; padding: 0 16px 10px; }
+.tbx-popup-secs-label { font-size: 11px; font-weight: 600; color: #9198A6; margin-right: 3px; white-space: nowrap; }
+.tbx-drawer .tbx-popup-secs-chip {
+  padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  color: #9198A6; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.tbx-popup-secs-chip.active {
+  color: #F2F4F8;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.20), rgba(255, 185, 31, 0.10));
+  border-color: rgba(255, 185, 31, 0.45);
+}
+.tbx-drawer .tbx-popup-bg-toggle {
+  margin-left: auto; display: flex; align-items: center; gap: 5px;
+  padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  color: #9198A6; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.tbx-popup-bg-toggle.on { color: #F2F4F8; border-color: rgba(255, 185, 31, 0.45); }
+
+/* demo-only line under the controls: says this is a sandbox, nothing is posted */
+.tbx-demo-note {
+  margin: 0 16px 10px; padding: 7px 11px; border-radius: 10px;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.16), rgba(255, 185, 31, 0.08));
+  border: 1px solid rgba(255, 185, 31, 0.35);
+  font-size: 11px; line-height: 1.4; color: #C2C8D4;
+}
+.tbx-demo-note b { color: #FFB91F; }
+
+/* ---------- thread list ---------- */
+
+.tbx-list {
+  flex: 1; overflow-y: auto; padding: 4px 12px 12px;
+  scrollbar-width: thin; scrollbar-color: #ED3D23 transparent;
+  overscroll-behavior: contain;
+}
+.tbx-list::-webkit-scrollbar { width: 8px; }
+.tbx-list::-webkit-scrollbar-thumb { background: #ED3D23; border-radius: 4px; }
+.tbx-empty { padding: 28px 12px; text-align: center; color: #9198A6; font-size: 13px; }
+
+.tbx-row { display: flex; gap: 10px; padding: 9px 6px; border-radius: 12px; position: relative; }
+.tbx-row:hover { background: rgba(255, 255, 255, 0.04); }
+.tbx-row-reply {
+  margin-left: 26px; border-left: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0 12px 12px 0; padding-left: 10px;
+}
+.tbx-row-reply-deep { margin-left: 42px; }
+.tbx-thread-toggle {
+  display: block; margin-left: 26px; padding: 4px 10px 6px;
+  color: #FFB91F; font-size: 11.5px; font-weight: 700; text-align: left; border-radius: 8px;
+}
+.tbx-thread-toggle:hover { background: rgba(255, 185, 31, 0.1); }
+.tbx-thread-toggle.open { color: #9198A6; }
+
+.tbx-avatar {
+  width: 32px; height: 32px; border-radius: 50%; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #fff; overflow: hidden; margin-top: 1px;
+}
+.tbx-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tbx-avatar-deleted { background: rgba(255, 255, 255, 0.06); }
+.tbx-body.tbx-deleted { color: #9198A6; font-style: italic; line-height: 32px; }
+
+.tbx-row-main { flex: 1; min-width: 0; }
+.tbx-row-head { display: flex; align-items: center; gap: 6px; min-width: 0; flex-wrap: wrap; }
+.tbx-name { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.tbx-crown, .tbx-plus-badge { flex: none; display: inline-block; }
+.tbx-chip {
+  font-size: 10px; font-weight: 700; color: #9198A6;
+  background: rgba(255, 255, 255, 0.06); border-radius: 999px; padding: 1px 7px; flex: none;
+}
+/* the timestamp chip is a seek button here — the demo's whole point */
+button.tbx-chip { cursor: pointer; }
+button.tbx-chip:hover { color: #FFB91F; background: rgba(255, 185, 31, 0.14); }
+.tbx-first-chip {
+  font-size: 9px; font-weight: 800; color: #FFB91F;
+  background: rgba(255, 185, 31, 0.1); border: 1px solid rgba(255, 185, 31, 0.35);
+  border-radius: 999px; padding: 1px 7px; flex: none; white-space: nowrap;
+}
+.tbx-reply-tag { font-size: 10px; font-weight: 700; color: #9198A6; flex: none; }
+
+.tbx-menu-btn, .tbx-reply-btn { color: #9198A6; font-size: 15px; padding: 0; line-height: 1; flex: none; opacity: 0; }
+.tbx-reply-btn { font-size: 13px; }
+.tbx-row:hover .tbx-menu-btn, .tbx-row:hover .tbx-reply-btn { opacity: 1; }
+.tbx-menu-btn:hover, .tbx-reply-btn:hover { color: #F2F4F8; }
+
+.tbx-body {
+  margin-top: 3px; font-size: 13.5px; line-height: 1.45; color: #E7EAF0;
+  word-wrap: break-word; overflow-wrap: anywhere; white-space: pre-wrap;
+}
+.tbx-mention { color: #FFB91F; font-weight: 700; }
+.tbx-body.tbx-blur { filter: blur(7px); cursor: pointer; user-select: none; }
+.tbx-gif { margin-top: 6px; user-select: none; }
+.tbx-gif img { display: block; max-width: 100%; max-height: 200px; border-radius: 12px; }
+.tbx-gif.tbx-blur { filter: blur(16px); cursor: pointer; }
+.tbx-gif-popup img { max-height: 140px; }
+
+/* the actions ride the first line instead of stacking — a column of three put a
+   ~65px floor under every row, so one-line comments carried 20px of dead air */
+.tbx-row-side {
+  flex: none; display: flex; align-items: center; gap: 8px; height: 33px;
+}
+.tbx-like {
+  display: inline-flex; align-items: center; gap: 5px;
+  color: #9198A6; font-size: 12px; font-weight: 600; padding: 0;
+}
+.tbx-like:hover { color: #F2F4F8; }
+.tbx-like.liked { color: #ED3D23; }
+
+/* row ⋯ menu */
+.tbx-menu {
+  position: absolute; right: 4px; top: 40px;
+  background: rgba(18, 19, 25, 0.98); border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden; z-index: 10; min-width: 150px;
+}
+.tbx-menu button { display: block; width: 100%; text-align: left; padding: 9px 14px; font-size: 13px; color: #F2F4F8; }
+.tbx-menu button:hover { background: rgba(255, 255, 255, 0.07); }
+.tbx-menu button.danger { color: #ED3D23; }
+
+/* ---------- report sheet ---------- */
+
+.tbx-sheet-scrim {
+  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55);
+  display: flex; align-items: flex-end; z-index: 20;
+}
+.tbx-sheet {
+  width: 100%; background: #121319; border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px 18px 0 0; padding: 16px;
+}
+.tbx-sheet h3 { font-size: 15px; margin-bottom: 10px; }
+.tbx-sheet select, .tbx-sheet textarea {
+  width: 100%; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px; color: #F2F4F8; padding: 8px 10px; font-size: 13px; margin-bottom: 10px;
+  font-family: inherit;
+}
+.tbx-sheet textarea { resize: vertical; min-height: 54px; }
+.tbx-sheet .tbx-note { font-size: 12px; line-height: 1.45; color: #9198A6; margin-bottom: 12px; }
+.tbx-sheet-actions { display: flex; gap: 8px; }
+.tbx-btn { flex: 1; padding: 9px 0; border-radius: 999px; font-size: 13px; font-weight: 700; text-align: center; }
+.tbx-btn-primary { background: linear-gradient(135deg, #ED3D23, #FFB91F); color: #fff; }
+.tbx-drawer .tbx-btn-ghost { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #F2F4F8; }
+
+/* ---------- composer ---------- */
+
+.tbx-composer { border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 12px 12px; }
+.tbx-replying, .tbx-gif-attach {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin-bottom: 7px; padding: 5px 10px; border-radius: 10px;
+  background: rgba(237, 61, 35, 0.10); border: 1px solid rgba(237, 61, 35, 0.35);
+  font-size: 11.5px; color: #F2F4F8;
+}
+.tbx-replying-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbx-replying-cancel { color: #9198A6; font-size: 12px; flex: none; }
+.tbx-replying-cancel:hover { color: #F2F4F8; }
+.tbx-compose-row { display: flex; align-items: center; gap: 8px; }
+.tbx-input {
+  flex: 1; min-width: 0;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px; color: #F2F4F8; padding: 9px 12px;
+  font-family: inherit; font-size: 13.5px; line-height: 1.4;
+  resize: none; max-height: 96px; overflow-y: auto; outline: none;
+  scrollbar-width: none;
+}
+.tbx-input::-webkit-scrollbar { display: none; }
+.tbx-input:focus { border-color: rgba(255, 185, 31, 0.5); }
+.tbx-input::placeholder { color: #6B7280; }
+.tbx-ts-chip {
+  font-size: 11px; font-weight: 700; color: #9198A6; font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.06); border-radius: 999px; padding: 4px 9px; flex: none;
+}
+.tbx-spoiler-btn, .tbx-send {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.tbx-drawer .tbx-spoiler-btn {
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 16px; font-weight: 800; color: #9198A6;
+}
+.tbx-drawer .tbx-spoiler-btn.on { color: #FFB91F; border-color: rgba(255, 185, 31, 0.6); background: rgba(255, 185, 31, 0.12); }
+.tbx-drawer .tbx-gif-btn {
+  flex: none; height: 34px; padding: 0 11px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; color: #9198A6;
+  display: flex; align-items: center; justify-content: center;
+}
+.tbx-drawer .tbx-gif-btn.on { color: #FFB91F; border-color: rgba(255, 185, 31, 0.6); background: rgba(255, 185, 31, 0.12); }
+/* the attached GIF's thumbnail, in the strip above the compose row */
+.tbx-gif-attach-thumb { height: 34px; width: auto; border-radius: 6px; display: block; flex: none; }
+/* the label sits with the thumbnail, not centred between it and the ✕ */
+.tbx-gif-attach .tbx-replying-label { flex: 1; }
+.tbx-send { background: #ED3D23; color: #fff; font-size: 15px; }
+.tbx-send:disabled { opacity: 0.4; cursor: default; }
+.tbx-compose-note { margin-top: 7px; font-size: 11px; line-height: 1.4; color: #FFB91F; }
+
+/* the picker: a GIFs tab and an Emoji tab, same as the drawer ships. The GIF
+   half searches the clips bundled in /public/gifs instead of Klipy, so the
+   page stays a static export. */
+.tbx-gif-picker {
+  margin-bottom: 8px; padding: 4px 10px 10px; border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* drag the pill up for a taller picker; both tabs share the height */
+.tbx-gif-drag { display: flex; justify-content: center; padding: 3px 0 5px; cursor: ns-resize; touch-action: none; }
+.tbx-gif-drag-pill { width: 44px; height: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.18); }
+.tbx-gif-drag:hover .tbx-gif-drag-pill { background: rgba(255, 185, 31, 0.5); }
+.tbx-gif-tabs { display: flex; gap: 6px; margin-bottom: 8px; }
+.tbx-drawer .tbx-gif-tab {
+  flex: 1; padding: 6px 0; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; color: #9198A6;
+}
+.tbx-drawer .tbx-gif-tab.on { color: #FFB91F; border-color: rgba(255, 185, 31, 0.6); background: rgba(255, 185, 31, 0.12); }
+.tbx-gif-search-row { display: flex; align-items: center; gap: 8px; }
+.tbx-gif-search {
+  flex: 1; min-width: 0; padding: 7px 10px; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F2F4F8; font-family: inherit; font-size: 12.5px; outline: none;
+}
+.tbx-gif-search:focus { border-color: rgba(255, 185, 31, 0.5); }
+.tbx-gif-search::placeholder { color: #6B7280; }
+.tbx-gif-brand { flex: none; font-size: 9px; font-weight: 800; letter-spacing: 0.5px; color: #9198A6; }
+.tbx-gif-grid {
+  margin-top: 8px; display: grid;
+  /* columns track the drawer width — cells keep their aspect instead of stretching */
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 6px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ED3D23 transparent;
+}
+.tbx-gif-cell {
+  position: relative; height: 86px; padding: 0; border-radius: 10px;
+  overflow: hidden; background: rgba(255, 255, 255, 0.06);
+}
+.tbx-gif-cell:hover { outline: 2px solid rgba(255, 185, 31, 0.6); }
+.tbx-gif-cell-img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.tbx-gif-status { font-size: 11px; color: #9198A6; padding-top: 10px; }
+.tbx-gif-more {
+  margin-top: 6px; width: 100%; padding: 6px 0; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 12px; font-weight: 600; color: #F2F4F8;
+}
+.tbx-gif-more:hover { background: rgba(255, 255, 255, 0.1); }
+.tbx-emoji-pane { overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ED3D23 transparent; }
+.tbx-emoji-cat {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+  color: #9198A6; padding: 8px 2px 4px;
+}
+.tbx-emoji-cat:first-child { padding-top: 0; }
+.tbx-emoji-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 2px; }
+.tbx-emoji-cell { height: 34px; border-radius: 8px; font-size: 21px; line-height: 1; display: flex; align-items: center; justify-content: center; }
+.tbx-emoji-cell:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* ---------- timed pop-ups over the video ---------- */
+
+.tbx-popups {
+  position: absolute;
+  right: 14px; top: 9%;
+  bottom: calc(50% + 32px);
+  width: 280px; max-width: 46%;
+  display: flex; flex-direction: column-reverse; align-items: flex-end; gap: 8px;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+  z-index: 4; pointer-events: none;
+}
+.tbx-popups::-webkit-scrollbar { display: none; }
+.tbx-popup {
+  pointer-events: auto; flex: none; max-width: 100%;
+  background: rgba(18, 19, 25, 0.82);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px; padding: 9px 13px; color: #F2F4F8;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+  animation: tbx-pop-in 0.25s ease;
+  font-size: 13px; text-align: left;
+}
+.tbx-popups.tbx-nobg .tbx-popup {
+  background: none !important; border-color: transparent !important;
+  backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.6);
+}
+.tbx-popup.tbx-fade { opacity: 0; transform: translateX(36px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.tbx-popup-name { font-weight: 700; font-size: 12px; margin-bottom: 2px; display: flex; align-items: center; gap: 5px; }
+.tbx-popup-body { line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tbx-popup-body.tbx-blur { filter: blur(7px); cursor: pointer; }
+@keyframes tbx-pop-in { from { transform: translateX(36px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* reduced motion: no breathing, no pulse — the label alone carries the hint */
+@media (prefers-reduced-motion: reduce) {
+  .tbx-popup { animation: none; }
+  .tbx-player-btn.tbx-nudge { animation: none; }
+  .tbx-cta { animation: none; }
+}
+
+/* ---------- narrow screens ---------- */
+
+/* no pointer to hover with — the row affordances have to be permanent */
+@media (hover: none) {
+  .tbx-menu-btn, .tbx-reply-btn { opacity: 1; }
+}
+
+@media (max-width: 1020px) {
+  .demo-stage-col { padding: 32px 24px 64px; }
+}
+
+@media (max-width: 860px) {
+  .demo-stage-col { padding: 22px 14px 52px; }
+  .demo-services { gap: 12px 24px; margin-top: 30px; }
+  .demo-services-label { font-size: 11px; }
+  .demo-about { margin-top: 34px; }
+  .demo-about p { font-size: 15px; }
+  .demo-service { height: 20px; }
+  .dm-stage { border-radius: 12px; }
+  .dm-controls { padding: 0 10px 10px; }
+  .dm-btn { width: 34px; height: 34px; }
+  .dm-time { font-size: 11px; margin-left: 4px; }
+  .dm-titlebar { padding: 12px 12px; gap: 9px; }
+  .dm-show { font-size: 13px; }
+  .dm-ep { font-size: 11px; }
+  .dm-bigplay { width: 58px; height: 58px; margin: -29px 0 0 -29px; }
+  .tbx-cta {
+    right: 56px; top: calc(50% - 13px); height: 26px;
+    padding: 0 10px; font-size: 11.5px;
+  }
+  /* the volume slider is dead weight without a hover pointer */
+  .dm-vol-slider { display: none; }
+  .tbx-popups { width: 210px; top: 7%; }
+  .tbx-popup { font-size: 12px; padding: 7px 10px; }
+}

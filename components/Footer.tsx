@@ -44,6 +44,9 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
           <h4>Explore</h4>
           <ul>
             <li>
+              <a href="/demo/">Demo</a>
+            </li>
+            <li>
               <a href="/premium/">Premium</a>
             </li>
             <li>
