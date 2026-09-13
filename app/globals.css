@@ -1207,6 +1207,9 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   display: block; width: 100%; height: auto; border-radius: 12px;
   border: 1px solid var(--hairline); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
 }
+/* the Extensions-menu screenshot is portrait: cap its height and center it
+   in the column rather than letting it run the full width */
+.install-step-img-tall { width: auto; max-height: 520px; max-width: 100%; justify-self: center; }
 .install-next { margin-top: 80px; }
 /* comparison table on /teleparty-alternative/ — TalkAbtIT column gets a
    faint gold wash; the wrapper scrolls sideways on narrow screens */

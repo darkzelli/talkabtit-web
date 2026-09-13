@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 // Each step carries the screenshot the homepage walkthrough already ships
 // (public/how-step-*.avif) — step 4 has no screenshot there either, the
 // homepage renders a CSS mock of the bucket button instead.
-type Step = { title: string; body: string; img?: string; alt?: string };
+type Step = { title: string; body: string; img?: string; alt?: string; tall?: boolean };
 
 const STEPS: Step[] = [
   {
@@ -32,8 +32,15 @@ const STEPS: Step[] = [
     alt: "TalkAbtIT extension listing on the Chrome Web Store",
   },
   {
-    title: "Sign in and pick your name",
-    body: "Click the TalkAbtIT icon in your toolbar and continue with Google or GitHub, or create an account with your email. Then choose a username — that's the name everyone sees next to your comments.",
+    title: "Pin it to your toolbar",
+    body: "Click the puzzle-piece button at the top right of Chrome, just to the right of the address bar. Find TalkAbtIT in the list and click the pin next to it so the popcorn icon stays in your toolbar.",
+    img: "/how-step-pin.avif",
+    alt: "Chrome's Extensions menu open from the puzzle-piece button at the top right, with TalkAbtIT pinned to the toolbar",
+    tall: true,
+  },
+  {
+    title: "Click the popcorn icon and sign in",
+    body: "Click the TalkAbtIT popcorn icon in your toolbar and continue with Google or GitHub, or create an account with your email. Then choose a username — that's the name everyone sees next to your comments.",
   },
   {
     title: "Open your streaming service",
@@ -73,11 +80,12 @@ const FAQS: Faq[] = [
     a: (
       <>
         Chrome tucks new extensions behind the puzzle-piece button at the
-        right of the address bar. Click it, find TalkAbtIT, and hit the pin so
-        the icon stays in your toolbar.
+        top right, next to the address bar. Click it, find TalkAbtIT, and hit
+        the pin so the popcorn icon stays in your toolbar — see{" "}
+        <a href="#step-2">step 2</a> above.
       </>
     ),
-    text: "Chrome tucks new extensions behind the puzzle-piece button at the right of the address bar. Click it, find TalkAbtIT, and hit the pin so the icon stays in your toolbar.",
+    text: "Chrome tucks new extensions behind the puzzle-piece button at the top right, next to the address bar. Click it, find TalkAbtIT, and hit the pin so the popcorn icon stays in your toolbar — see step 2 above.",
   },
   {
     q: "Can I install it on my phone or a TV?",
@@ -163,7 +171,7 @@ export default function HowToInstallPage() {
             <span className="kicker">Getting started</span>
             <h1 className="display">How to install TalkAbtIT</h1>
             <p className="lede">
-              Five steps, about a minute. Add the extension to Chrome on your
+              Six steps, about a minute. Add the extension to Chrome on your
               computer, press play on any show, and the comment section is
               waiting beside the video.
             </p>
@@ -201,11 +209,11 @@ export default function HowToInstallPage() {
                   </div>
                   {s.img && (
                     <img
-                      className="install-step-img"
+                      className={s.tall ? "install-step-img install-step-img-tall" : "install-step-img"}
                       src={s.img}
                       alt={s.alt ?? ""}
-                      width={1400}
-                      height={788}
+                      width={s.tall ? 814 : 1400}
+                      height={s.tall ? 1264 : 788}
                       loading={i === 0 ? "eager" : "lazy"}
                       decoding="async"
                     />
