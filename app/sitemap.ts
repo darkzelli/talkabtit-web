@@ -71,6 +71,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${SITE_URL}/how-to-install/`,
+      lastModified: "2026-09-13",
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/support/`,
       lastModified,
       changeFrequency: "monthly",

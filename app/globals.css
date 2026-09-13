@@ -166,7 +166,8 @@ nav {
   /* the store CTAs the reminder replaces (the small nav button stays) */
   .hero .ctas .btn-appstore,
   .closing .banner-row .btn,
-  .svc-step-cta { display: none; }
+  .svc-step-cta,
+  .install-cta { display: none; }
   .svc-step-body-touch { display: block; color: var(--text-dim); font-size: 15.5px; line-height: 1.6; margin: 0; }
   .mobile-reminder {
     display: block; margin: 20px auto 0; max-width: 420px;
@@ -1192,6 +1193,21 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 .svc-step-cta { margin-top: 4px; }
 .svc-step-cta .btn-appstore-text { font-size: 16px; }
 .svc-disclaimer { margin-top: 40px; font-size: 12.5px; color: var(--text-dim); max-width: 780px; }
+/* /how-to-install/: numbered steps stacked down the page, copy on the left
+   and the walkthrough screenshot on the right; single column on narrow screens */
+.install-cta { margin-top: 28px; }
+.install-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(48px, 6vw, 80px); }
+.install-step {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center;
+  gap: clamp(28px, 4vw, 56px); scroll-margin-top: 90px;
+}
+.install-step-copy h2 { font-size: clamp(21px, 2vw, 27px); margin: 8px 0 12px; }
+.install-step-copy p { color: var(--text-dim); font-size: 15.5px; line-height: 1.6; margin: 0; }
+.install-step-img {
+  display: block; width: 100%; height: auto; border-radius: 12px;
+  border: 1px solid var(--hairline); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+.install-next { margin-top: 80px; }
 /* comparison table on /teleparty-alternative/ — TalkAbtIT column gets a
    faint gold wash; the wrapper scrolls sideways on narrow screens */
 .vs-scroll { overflow-x: auto; max-width: 780px; margin: 18px 0 10px; }
@@ -1339,6 +1355,7 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .bg-logo[href="/paramount-plus/"] { height: 24px !important; }
   /* steps stack into one column */
   .svc-steps { grid-template-columns: 1fr; gap: 44px; }
+  .install-step { grid-template-columns: 1fr; gap: 20px; }
   /* hero stacks: copy first, player mock full width below */
   .svc-hero { flex-direction: column; align-items: flex-start; }
   .svc-hero .player-card { width: 100%; }

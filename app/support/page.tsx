@@ -110,7 +110,9 @@ const FAQS: Faq[] = [
         Add the extension from the Chrome Web Store, then continue with Google
         or GitHub — or create an account with your email — and pick a username:
         that&apos;s the name everyone sees next to your comments. The whole
-        thing takes a few seconds.
+        thing takes a few seconds. See the{" "}
+        <a href="/how-to-install/">step-by-step install guide</a> for
+        screenshots.
       </>
     ),
     text: "Add the extension from the Chrome Web Store, then continue with Google or GitHub — or create an account with your email — and pick a username: that's the name everyone sees next to your comments. The whole thing takes a few seconds.",

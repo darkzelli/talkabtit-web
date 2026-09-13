@@ -53,6 +53,9 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
               <a href={`${base}#how`}>How it works</a>
             </li>
             <li>
+              <a href="/how-to-install/">How to install</a>
+            </li>
+            <li>
               <a href="/support/">FAQ</a>
             </li>
             <li>
