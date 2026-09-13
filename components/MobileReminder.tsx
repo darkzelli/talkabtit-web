@@ -41,7 +41,7 @@ export default function MobileReminder() {
           _template: "table",
           _autoresponse:
             "Here's TalkAbtIT, ready for when you're at your computer.\n\n" +
-            `Open this link in Chrome on your desktop to install — it's free:\n${CHROME_STORE_URL}\n\n` +
+            `It's a Chrome extension, so open this link in Chrome on your computer to install — it's free:\n${CHROME_STORE_URL}\n\n` +
             "Stop watching alone. Watch with everyone.",
         }),
       });
@@ -65,8 +65,9 @@ export default function MobileReminder() {
     <div className="mobile-reminder">
       <p className="mr-label">Remind me later</p>
       <p className="mr-sub">
-        TalkAbtIT installs on desktop Chrome. Drop your email and we&apos;ll
-        send you the link for when you&apos;re at your computer.
+        TalkAbtIT is a Chrome extension, so it runs in the Chrome browser on
+        your computer. Drop your email and we&apos;ll send you the link for
+        when you&apos;re on your computer.
       </p>
       {status === "sent" ? (
         <p className="mr-done">Sent — check your inbox for the install link.</p>
