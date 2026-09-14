@@ -1196,6 +1196,13 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
 /* /how-to-install/: numbered steps stacked down the page, copy on the left
    and the walkthrough screenshot on the right; single column on narrow screens */
 .install-cta { margin-top: 28px; }
+/* each step links to itself: the "Step N" kicker is the permalink and the #
+   fades in on hover or keyboard focus, so it stays quiet when unused */
+.step-anchor { width: fit-content; text-decoration: none; }
+.step-anchor-hash { margin-left: 6px; opacity: 0; transition: opacity 0.15s ease; }
+.step-anchor:hover .step-anchor-hash,
+.step-anchor:focus-visible .step-anchor-hash { opacity: 1; }
+@media (hover: none) { .step-anchor-hash { opacity: 0.55; } }
 .install-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(48px, 6vw, 80px); }
 .install-step {
   display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center;
@@ -1207,9 +1214,11 @@ section .lede { color: var(--text-dim); font-size: 18px; margin-top: 16px; max-w
   display: block; width: 100%; height: auto; border-radius: 12px;
   border: 1px solid var(--hairline); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
 }
-/* the Extensions-menu screenshot is portrait: cap its height and center it
-   in the column rather than letting it run the full width */
-.install-step-img-tall { width: auto; max-height: 520px; max-width: 100%; justify-self: center; }
+/* two install shots aren't 16:9 captures — the extension popup is portrait,
+   the Extensions menu is a small square crop. Cap them and center them in
+   the column instead of stretching either past its captured resolution. */
+.install-step-img-tall { width: auto; max-height: 560px; max-width: 100%; justify-self: center; }
+.install-step-img-narrow { width: auto; max-width: min(100%, 420px); justify-self: center; }
 .install-next { margin-top: 80px; }
 /* comparison table on /teleparty-alternative/ — TalkAbtIT column gets a
    faint gold wash; the wrapper scrolls sideways on narrow screens */
@@ -1402,3 +1411,29 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
   .pv-track { height: 8px; margin-top: 12px; }
   .pv-thumb { width: 17px; height: 17px; }
 }
+
+/* /early/ — the invite landing page: the code big enough to read off a
+   phone, a copy button beside it, the ticket inline with the headline */
+.invite-ticket {
+  width: 0.9em; height: 0.9em; color: #2FA35C;
+  vertical-align: -0.12em; margin-right: 0.12em;
+}
+.invite-code-box {
+  margin-top: 28px; max-width: 520px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--hairline);
+  border-radius: 16px; padding: 22px 24px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+}
+.invite-code-label {
+  flex-basis: 100%; color: var(--text-dim);
+  font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.invite-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: clamp(26px, 4vw, 34px); font-weight: 700; letter-spacing: 0.12em;
+  color: var(--gold); user-select: all;
+}
+.invite-copy { cursor: pointer; border: 0; font: inherit; font-weight: 600; font-size: 14px; }
+.invite-limit { flex-basis: 100%; color: var(--text-dim); font-size: 14px; line-height: 1.5; margin: 0; }
+.invite-limit code { color: var(--text); }
+.invite-steps .install-step-copy p a { color: var(--gold); }

@@ -3,6 +3,8 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import FaqList, { type Faq, faqPageJsonLd } from "@/components/FaqList";
 import MobileReminder from "@/components/MobileReminder";
+import InstallSteps from "@/components/InstallSteps";
+import { INSTALL_STEPS as STEPS } from "@/lib/install-steps";
 import { CHROME_STORE_URL, OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -18,49 +20,6 @@ export const metadata: Metadata = {
     images: [OG_IMAGE],
   },
 };
-
-// Each step carries the screenshot the homepage walkthrough already ships
-// (public/how-step-*.avif) — step 4 has no screenshot there either, the
-// homepage renders a CSS mock of the bucket button instead.
-type Step = { title: string; body: string; img?: string; alt?: string; tall?: boolean };
-
-const STEPS: Step[] = [
-  {
-    title: "Add TalkAbtIT from the Chrome Web Store",
-    body: "Open the listing in Chrome (or Edge, Brave, or another Chromium browser) on your computer and click Add to Chrome, then Add extension in the confirmation. It's free and there's nothing else to download.",
-    img: "/how-step-1.avif",
-    alt: "TalkAbtIT extension listing on the Chrome Web Store",
-  },
-  {
-    title: "Pin it to your toolbar",
-    body: "Click the puzzle-piece button at the top right of Chrome, just to the right of the address bar. Find TalkAbtIT in the list and click the pin next to it so the popcorn icon stays in your toolbar.",
-    img: "/how-step-pin.avif",
-    alt: "Chrome's Extensions menu open from the puzzle-piece button at the top right, with TalkAbtIT pinned to the toolbar",
-    tall: true,
-  },
-  {
-    title: "Click the popcorn icon and sign in",
-    body: "Click the TalkAbtIT popcorn icon in your toolbar and continue with Google or GitHub, or create an account with your email. Then choose a username — that's the name everyone sees next to your comments.",
-  },
-  {
-    title: "Open your streaming service",
-    body: "Head to Netflix, Hulu, Disney+, HBO Max, Paramount+, or Crunchyroll and sign in like you always do. TalkAbtIT never asks for your streaming login.",
-    img: "/how-step-2.avif",
-    alt: "Netflix home page with a TalkAbtIT comment popping up over the featured preview",
-  },
-  {
-    title: "Press play and find the popcorn bucket",
-    body: "Start any show or movie. Hover over the video and the popcorn bucket appears on the right edge of the player, with a count of the comments waiting on that episode.",
-    img: "/how-step-3.avif",
-    alt: "An episode playing on Netflix with the TalkAbtIT popcorn bucket at the edge of the video",
-  },
-  {
-    title: "Click the bucket and join in",
-    body: "The comment section slides in beside the video, matched to the exact episode. Comments are pinned to the moment they were written, so read along as they land and drop your own.",
-    img: "/how-step-4.avif",
-    alt: "The TalkAbtIT comment panel open beside an episode on Netflix",
-  },
-];
 
 const FAQS: Faq[] = [
   {
@@ -199,40 +158,13 @@ export default function HowToInstallPage() {
 
         <section className="content">
           <div className="wrap">
-            <ol className="install-steps">
-              {STEPS.map((s, i) => (
-                <li className="install-step" key={s.title} id={`step-${i + 1}`}>
-                  <div className="install-step-copy">
-                    <span className="svc-step-kicker">Step {i + 1}</span>
-                    <h2 className="display">{s.title}</h2>
-                    <p>{s.body}</p>
-                  </div>
-                  {s.img && (
-                    <img
-                      className={s.tall ? "install-step-img install-step-img-tall" : "install-step-img"}
-                      src={s.img}
-                      alt={s.alt ?? ""}
-                      width={s.tall ? 814 : 1400}
-                      height={s.tall ? 1264 : 788}
-                      loading={i === 0 ? "eager" : "lazy"}
-                      decoding="async"
-                    />
-                  )}
-                </li>
-              ))}
-            </ol>
+            <InstallSteps steps={STEPS} />
 
             <div className="prose install-next">
               <h2>That&apos;s it</h2>
-              <p>
-                Not sure what to watch first? The extension&apos;s New Releases
-                picks link straight to fresh episodes where the conversation
-                is just getting started. Want to see the comment section
-                before you install? Try the <a href="/demo/">live demo</a>.
-              </p>
             </div>
 
-            <section className="svc-faq-block">
+            <section className="svc-faq-block" id="faq">
               <h2>Install troubleshooting</h2>
               <FaqList faqs={FAQS} />
             </section>
