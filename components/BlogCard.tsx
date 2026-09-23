@@ -2,6 +2,7 @@
 // the season/episode line under it, the date · read-time line, and the
 // compact card used for earlier posts.
 import { episodeLabel, readingTime, type BlogPost } from "@/lib/blog";
+import type { Author } from "@/lib/authors";
 import { formatDate } from "@/lib/tv-format";
 
 export function BlogPoster({
@@ -39,13 +40,40 @@ export function BlogPoster({
   );
 }
 
-export function PostMeta({ post }: { post: BlogPost }) {
+// "By Ozani Cre · September 23, 2026 · 3 min read". `byline` off drops the
+// author (the compact cards have no room for it).
+export function PostMeta({ post, byline = true }: { post: BlogPost; byline?: boolean }) {
   return (
     <div className="blog-meta">
+      {byline && (
+        <>
+          <span className="blog-byline">
+            By <a href={`/blog/author/${post.author.slug}/`} rel="author">{post.author.name}</a>
+          </span>
+          <span className="dot" aria-hidden="true">·</span>
+        </>
+      )}
       <time dateTime={post.date}>{formatDate(post.date)}</time>
       <span className="dot" aria-hidden="true">·</span>
       <span>{readingTime(post)}</span>
     </div>
+  );
+}
+
+// The "Written by" box at the foot of a post, linking to the author page.
+export function AuthorBox({ author }: { author: Author }) {
+  return (
+    <aside className="author-box">
+      <a className="author-avatar" href={`/blog/author/${author.slug}/`} aria-hidden="true" tabIndex={-1}>
+        {author.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+      </a>
+      <div className="author-box-copy">
+        <span className="author-box-label">Written by</span>
+        <a className="author-box-name" href={`/blog/author/${author.slug}/`} rel="author">{author.name}</a>
+        <span className="author-box-title">{author.title}</span>
+        <a className="author-box-more" href={`/blog/author/${author.slug}/`}>More about {author.name.split(" ")[0]} →</a>
+      </div>
+    </aside>
   );
 }
 
@@ -90,7 +118,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           </span>
         )}
         <h3>{post.title}</h3>
-        <PostMeta post={post} />
+        <PostMeta post={post} byline={false} />
       </span>
     </a>
   );

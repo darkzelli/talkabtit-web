@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import BlogCard, { BlogPoster, PostMeta } from "@/components/BlogCard";
+import BlogCard, { AuthorBox, BlogPoster, PostMeta } from "@/components/BlogCard";
 import ToolCta from "@/components/ToolCta";
 import { SITE_URL, SITE_NAME, OG_IMAGE } from "@/lib/seo";
 import { episodeLabel, loadPost, loadPosts } from "@/lib/blog";
@@ -24,12 +24,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.title,
     description: post.description,
     alternates: { canonical: `/blog/${slug}/` },
+    authors: [{ name: post.author.name, url: `${SITE_URL}/blog/author/${post.author.slug}/` }],
     openGraph: {
       type: "article",
       title: post.title,
       description: post.description,
       url: `/blog/${slug}/`,
       publishedTime: post.date,
+      authors: [`${SITE_URL}/blog/author/${post.author.slug}/`],
       // The poster is portrait, so the site card stays the share image; the
       // poster rides along as a second option for platforms that pick.
       images: post.poster ? [OG_IMAGE, { url: post.poster, alt: `${post.showName} poster` }] : [OG_IMAGE],
@@ -57,7 +59,13 @@ export default async function BlogPostPage({ params }: Props) {
     wordCount: post.wordCount,
     inLanguage: "en-US",
     ...(post.poster ? { image: `${SITE_URL}${post.poster}` } : {}),
-    author: { "@id": `${SITE_URL}/#organization` },
+    author: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/blog/author/${post.author.slug}/#person`,
+      name: post.author.name,
+      jobTitle: post.author.title,
+      url: `${SITE_URL}/blog/author/${post.author.slug}/`,
+    },
     publisher: { "@id": `${SITE_URL}/#organization` },
     isPartOf: { "@id": `${SITE_URL}/blog/` },
     ...(post.showName
@@ -107,6 +115,8 @@ export default async function BlogPostPage({ params }: Props) {
         <section className="content">
           <div className="wrap">
             <article className="post-body" dangerouslySetInnerHTML={{ __html: post.html }} />
+
+            <AuthorBox author={post.author} />
 
             {show && (
               <div className="tool-xlinks">

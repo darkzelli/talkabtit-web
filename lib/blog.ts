@@ -11,21 +11,30 @@
 //   show: the-bear          # slug under data/tv/ → poster + name come for free
 //   season: 4
 //   episode: 10             # optional; leave out for a whole-season post
+//   author: ozani-cre       # optional; a slug from lib/authors.ts (defaults to Ozani)
 //   poster: /blog/my.jpg    # optional override; needed only for shows not in data/tv/
 //   showName: My Show       # optional override, same reason
 //   ---
 //
 //   Body in Markdown: paragraphs, ## headings, **bold**, *italic*, [links](…),
-//   - bullets, 1. numbered lists, > quotes.
+//   - bullets, 1. numbered lists, > quotes, plus three extras:
+//     :::highlights … :::                                  boxed callout with a label
+//     ![caption](/blog/show/still.jpg "Paramount+")     image with a credit line
+//     > @handle: what they posted                        social-post card: the quote,
+//     > https://x.com/handle/status/123                  the handle linked to the post,
+//     > likes: 1815                                      and the like count (both lines
+//                                                        optional)
 import fs from "node:fs";
 import path from "node:path";
 import { loadIndex } from "./tv";
+import { getAuthor, type Author } from "./authors";
 
 export type BlogPost = {
   slug: string;
   title: string;
   description: string;
   date: string; // YYYY-MM-DD
+  author: Author;
   show: string | null; // slug in data/tv/, when it is one
   showName: string;
   poster: string | null;
@@ -87,9 +96,40 @@ export function renderMarkdown(md: string): string {
       i++; continue;
     }
     if (/^(-{3,}|\*{3,})$/.test(line.trim())) { out.push("<hr />"); i++; continue; }
+    // :::highlights … ::: → a boxed callout with a small label, for the
+    // "Highlights" bullets under the lead image
+    if ((m = line.match(/^:::\s*([A-Za-z][\w-]*)?\s*$/))) {
+      const name = (m[1] || "note").toLowerCase();
+      const inner: string[] = [];
+      i++;
+      while (i < lines.length && !/^:::\s*$/.test(lines[i])) { inner.push(lines[i]); i++; }
+      i++; // closing :::
+      const label = name.charAt(0).toUpperCase() + name.slice(1);
+      out.push(`<aside class="post-box post-box-${name}"><span class="post-box-label">${escapeHtml(label)}</span>${renderMarkdown(inner.join("\n"))}</aside>`);
+      continue;
+    }
     if (/^>/.test(line)) {
       const q: string[] = [];
       while (i < lines.length && /^>/.test(lines[i])) { q.push(lines[i].replace(/^>\s?/, "")); i++; }
+      // > @handle: text            → a social-post card. A following line
+      // > https://x.com/…/status/…   holding the post's URL links the handle.
+      const t = q[0].match(/^@([A-Za-z0-9_.]+):?\s+(.*)$/);
+      if (t) {
+        const rest = q.slice(1).map((l) => l.trim());
+        const url = rest.find((l) => /^https?:\/\/(x\.com|twitter\.com|www\.reddit\.com|reddit\.com|old\.reddit\.com|www\.threads\.net|threads\.net|www\.tiktok\.com)\//.test(l));
+        const likesLine = rest.find((l) => /^likes:\s*[\d,]+$/i.test(l));
+        const likes = likesLine ? Number(likesLine.replace(/\D/g, "")) : null;
+        const text = inline(escapeHtml([t[2], ...rest.filter((l) => l !== url && l !== likesLine)].join(" ").trim()));
+        const handle = escapeHtml(t[1]);
+        const site = !url ? "" : /reddit\.com/.test(url) ? "Reddit" : /threads\.net/.test(url) ? "Threads" : /tiktok\.com/.test(url) ? "TikTok" : "X";
+        const name = url ? `<a href="${url}" target="_blank" rel="noopener">@${handle}</a>` : `<span>@${handle}</span>`;
+        const meta = [
+          likes != null ? `<span class="post-social-likes"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>${likes.toLocaleString("en-US")}</span>` : "",
+          url ? `<a class="post-social-link" href="${url}" target="_blank" rel="noopener">View on ${site} →</a>` : "",
+        ].filter(Boolean).join("");
+        out.push(`<figure class="post-social"><span class="post-social-head"><span class="post-social-avatar" aria-hidden="true">${handle.slice(0, 1).toUpperCase()}</span><strong>${name}</strong>${meta ? `<span class="post-social-meta">${meta}</span>` : ""}</span><blockquote>${text}</blockquote></figure>`);
+        continue;
+      }
       out.push(`<blockquote>${renderMarkdown(q.join("\n"))}</blockquote>`);
       continue;
     }
@@ -105,8 +145,18 @@ export function renderMarkdown(md: string): string {
       out.push(`<ol>${items.map((t) => `<li>${inline(escapeHtml(t))}</li>`).join("")}</ol>`);
       continue;
     }
-    if ((m = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
-      out.push(`<figure><img src="${m[2]}" alt="${escapeHtml(m[1])}" loading="lazy" decoding="async" />${m[1] ? `<figcaption>${escapeHtml(m[1])}</figcaption>` : ""}</figure>`);
+    // ![caption](/blog/x.jpg "Credit") or ![caption](/blog/x.jpg "Credit|https://…")
+    // → figure with the caption and an "Image credits: Credit" line
+    if ((m = line.match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/))) {
+      const [, alt, src, creditRaw] = m;
+      let credit = "";
+      if (creditRaw) {
+        const [text, href] = creditRaw.split("|");
+        const inner = escapeHtml(text.trim());
+        credit = `<span class="post-credit">Image credits: ${href ? `<a href="${href.trim()}" target="_blank" rel="noopener">${inner}</a>` : inner}</span>`;
+      }
+      const cap = alt ? `<span>${inline(escapeHtml(alt))}</span>` : "";
+      out.push(`<figure><img src="${src}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" />${cap || credit ? `<figcaption>${cap}${credit}</figcaption>` : ""}</figure>`);
       i++; continue;
     }
     // paragraph: consecutive non-blank lines
@@ -130,8 +180,9 @@ function plainText(md: string): string {
 }
 
 export function excerptOf(md: string, words = 100): string {
-  // headings and quotes read badly mid-sentence, so the excerpt is body copy only
-  const body = md.split(/\r?\n/).filter((l) => !/^\s*(#{1,6}\s|>)/.test(l)).join("\n");
+  // headings, quotes, and list items read badly mid-sentence, so the excerpt
+  // is paragraph copy only
+  const body = md.split(/\r?\n/).filter((l) => !/^\s*(#{1,6}\s|>|[-*]\s|\d+[.)]\s|:::)/.test(l)).join("\n");
   const w = plainText(body).split(" ");
   if (w.length <= words) return w.join(" ");
   // cut at the sentence end nearest the word budget when there is one close by
@@ -166,6 +217,7 @@ export function loadPosts(): BlogPost[] {
       title: meta.title,
       description: meta.description || excerptOf(body, 28),
       date: meta.date,
+      author: getAuthor(meta.author),
       show: show?.slug ?? null,
       showName: meta.showName || show?.name || "",
       poster: meta.poster || show?.poster || null,

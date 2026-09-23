@@ -38,6 +38,7 @@ export default function BlogIndex() {
       headline: p.title,
       url: `${SITE_URL}/blog/${p.slug}/`,
       datePublished: p.date,
+      author: { "@type": "Person", name: p.author.name, url: `${SITE_URL}/blog/author/${p.author.slug}/` },
       ...(p.poster ? { image: `${SITE_URL}${p.poster}` } : {}),
     })),
   };

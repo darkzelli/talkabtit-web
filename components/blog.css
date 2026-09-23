@@ -25,6 +25,8 @@
 .blog-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: 13px; color: var(--text-dim); }
 .blog-meta time { color: var(--text); font-weight: 600; }
 .blog-meta .dot { opacity: 0.45; }
+.blog-byline a { color: var(--text); font-weight: 600; text-decoration: none; }
+.blog-byline a:hover { color: var(--gold); }
 
 /* --- earlier posts: a grid of cards, poster thumb beside the copy --- */
 .blog-grid {
@@ -102,6 +104,76 @@
 .post-body figure { margin: 0 0 26px; }
 .post-body figure img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--hairline); }
 .post-body figcaption { margin-top: 8px; font-size: 13.5px; color: var(--text-dim); text-align: center; }
+.post-body figcaption > span { display: block; }
+.post-credit { font-size: 12.5px; opacity: 0.85; margin-top: 2px; }
+.post-credit a { color: var(--text-dim); }
+/* a quoted social post: the handle (linked to the post when a URL is given),
+   the text, and a "View on X" link on the right */
+.post-social {
+  margin: 0 0 14px; padding: 16px 18px 14px; border-radius: 14px;
+  border: 1px solid var(--hairline); background: rgba(255, 255, 255, 0.04);
+}
+.post-social-head { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
+.post-social-head strong { font-weight: 700; color: var(--text); }
+.post-social-head strong a { color: var(--text); text-decoration: none; }
+.post-social-head strong a:hover { color: var(--gold); }
+.post-social-avatar {
+  flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 13px; font-weight: 800; color: #000; background: var(--gold);
+}
+.post-social-meta { margin-left: auto; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+.post-social-likes { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--text-dim); }
+.post-social-likes svg { color: var(--red); }
+.post-social-link { font-size: 13px; font-weight: 600; color: var(--gold) !important; text-decoration: none; }
+.post-social-link:hover { text-decoration: underline; }
+.post-social blockquote {
+  margin: 10px 0 0; padding: 0; border: 0; font-style: normal; font-size: 16.5px; color: var(--text); line-height: 1.55;
+}
+.post-social + .post-social { margin-top: 0; }
+/* boxed callout (:::highlights … :::) */
+.post-body .post-box {
+  margin: 0 0 26px; padding: 18px 22px 8px; border-radius: 16px;
+  border: 1px solid rgba(255, 185, 31, 0.35);
+  background: linear-gradient(135deg, rgba(255, 185, 31, 0.08), rgba(255, 255, 255, 0.03));
+}
+.post-box-label {
+  display: block; margin: 0 0 10px; font-size: 12px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+}
+.post-body .post-box ul, .post-body .post-box ol { margin: 0 0 12px; padding-left: 20px; }
+.post-body .post-box li { margin-bottom: 8px; font-size: 16.5px; line-height: 1.5; }
+.post-body .post-box p { margin: 0 0 12px; font-size: 16.5px; }
+.post-body .post-box p:first-of-type { font-size: 16.5px; }
+
+/* --- "Written by" box at the foot of a post --- */
+.author-box {
+  display: flex; gap: 18px; align-items: center; max-width: 780px; margin: 44px 0 0;
+  padding: 22px; border-radius: 16px; border: 1px solid var(--hairline); background: rgba(255, 255, 255, 0.03);
+}
+.author-avatar {
+  flex: none; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-display), 'Arial Black', sans-serif; font-size: 20px; color: #000;
+  background: linear-gradient(135deg, var(--gold), #f5a300); text-decoration: none;
+}
+.author-box-copy { min-width: 0; }
+.author-box-label { display: block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+.author-box-name { display: inline-block; margin-top: 4px; font-size: 19px; font-weight: 700; color: var(--text); text-decoration: none; }
+.author-box-name:hover { color: var(--gold); }
+.author-box-title { display: block; font-size: 13.5px; color: var(--text-dim); margin-top: 1px; }
+.author-box-more { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--gold); text-decoration: none; }
+.author-box-more:hover { text-decoration: underline; }
+
+/* --- author page --- */
+.author-hero { display: flex; gap: 28px; align-items: center; }
+.author-hero .author-avatar { width: 88px; height: 88px; font-size: 30px; }
+.author-hero h1 { margin: 0; }
+.author-hero .author-title { display: block; margin-top: 8px; font-size: 17px; color: var(--text-dim); }
+.author-beats { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+.author-beats li { font-size: 13px; font-weight: 600; color: var(--text); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--hairline); border-radius: 999px; padding: 6px 13px; }
+.author-bio { max-width: 780px; }
+.author-bio p { font-size: 17px; line-height: 1.7; color: var(--text); margin: 0 0 18px; }
+.author-contact { font-size: 15px; color: var(--text-dim); margin: 0; }
+.author-contact a { color: var(--gold); }
 
 /* --- tablets --- */
 @media (max-width: 860px) {
@@ -134,4 +206,17 @@
   .post-body { font-size: 16.5px; }
   .post-body p:first-child { font-size: 17.5px; }
   .post-body h2 { font-size: 22px; margin-top: 36px; }
+  .post-body figure { margin-left: -24px; margin-right: -24px; }
+  .post-body figure img { border-radius: 0; border-left: 0; border-right: 0; }
+  .post-body figcaption { padding: 0 24px; }
+  .post-social { margin-left: 0; margin-right: 0; padding: 14px 14px 12px; }
+  .post-body .post-box { padding: 16px 16px 6px; }
+  .author-box { padding: 18px; gap: 14px; }
+  .author-avatar { width: 48px; height: 48px; font-size: 17px; }
+  .author-hero { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .author-hero .author-avatar { width: 72px; height: 72px; font-size: 26px; }
+  .post-body .post-box li, .post-body .post-box p { font-size: 15.5px; }
+  .post-social-head { flex-wrap: wrap; }
+  .post-social-meta { margin-left: 40px; width: 100%; gap: 12px; }
+  .post-social blockquote { font-size: 15.5px; }
 }

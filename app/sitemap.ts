@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { loadIndex } from "@/lib/tv";
 import { loadPosts } from "@/lib/blog";
+import { AUTHORS } from "@/lib/authors";
 
 // Required to emit a static file under output: "export".
 export const dynamic = "force-static";
@@ -45,6 +46,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: p.date,
       changeFrequency: "monthly" as const,
       priority: 0.7,
+    })),
+    ...Object.values(AUTHORS).map((a) => ({
+      url: `${SITE_URL}/blog/author/${a.slug}/`,
+      lastModified: posts.find((p) => p.author.slug === a.slug)?.date ?? lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.4,
     })),
   ];
   return [
