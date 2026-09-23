@@ -28,9 +28,6 @@ export default function ToolCta({
       <p>
         TalkAbtIT is a free Chrome extension that adds a time-stamped comment
         section to {svc ? <a href={svc.href}>{svc.label}</a> : "Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll"}.
-        Every reaction is pinned to the exact moment it&apos;s about, spoilers
-        stay blurred until you reach them, and the conversation is waiting on
-        every episode whenever you press play.
       </p>
       <a className="btn-appstore" href={CHROME_STORE_URL} data-cta={cta} target="_blank" rel="noopener">
         <ExtensionIcon />
