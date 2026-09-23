@@ -23,7 +23,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
           <a href="/premium/">Premium</a>
           {/* Dropdowns: native <details> so they open on click/keyboard
               with no JS; CSS also opens them on hover for mouse users. */}
-          <details className="nav-dd">
+          <details className="nav-dd" name="nav-dd">
             <summary>
               How it works
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -36,7 +36,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
               <a href="/support/">FAQ</a>
             </div>
           </details>
-          <details className="nav-dd">
+          <details className="nav-dd" name="nav-dd">
             <summary>
               Tools
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -55,6 +55,34 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
           <span className="nav-cta-full">Get TalkAbtIT</span>
           <span className="nav-cta-short">Get now</span>
         </a>
+        {/* Phone/tablet menu: the inline links are hidden under 860px, so a
+            hamburger (again a native <details>, no JS) exposes the same set
+            as a flat list beneath the bar. */}
+        <details className="nav-menu">
+          <summary aria-label="Open menu">
+            <svg className="nav-menu-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            <svg className="nav-menu-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </summary>
+          <div className="nav-menu-panel">
+            <a href="/premium/">Premium</a>
+            <div className="nav-menu-group">
+              <span className="nav-menu-label">How it works</span>
+              <a href={`${base}#how`}>Overview</a>
+              <a href="/demo/">Demo</a>
+              <a href="/support/">FAQ</a>
+            </div>
+            <div className="nav-menu-group">
+              <span className="nav-menu-label">Tools</span>
+              <a href="/tools/binge-calculator/">Binge time calculator</a>
+              <a href="/tools/countdown/">Release countdowns</a>
+              <a href="/tools/">All tools</a>
+            </div>
+          </div>
+        </details>
       </div>
     </nav>
   );
