@@ -160,6 +160,19 @@ export default function RootLayout({
               if (window.rdt) window.rdt('track', 'Lead');
             });`}
         </Script>
+        {/* Nav dropdowns are exclusive via <details name="nav-dd">; this is
+            the fallback for browsers that predate the name attribute (Chrome
+            <120, Safari <17.2, Firefox <130). toggle doesn't bubble, so it's
+            caught in the capture phase. */}
+        <Script id="nav-dd-exclusive" strategy="afterInteractive">
+          {`document.addEventListener('toggle', function (e) {
+              var d = e.target;
+              if (!(d instanceof HTMLDetailsElement) || !d.open || !d.classList.contains('nav-dd')) return;
+              document.querySelectorAll('details.nav-dd[open]').forEach(function (o) {
+                if (o !== d) o.open = false;
+              });
+            }, true);`}
+        </Script>
       </body>
     </html>
   );

@@ -72,7 +72,7 @@ export default function ToolsPage() {
           <div className="wrap">
             <span className="kicker">Free tools</span>
             <h1 className="display">
-              Tools for <span className="accent">TV people</span>
+              Tools for <span className="accent">binge watchers</span>
             </h1>
             <p className="lede">
               Binge math, total watch times, and release countdowns for

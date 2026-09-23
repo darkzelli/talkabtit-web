@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 // Trailing slashes match next.config's `trailingSlash: true` so the sitemap
 // URLs are the canonical ones search engines will crawl.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = "2026-07-19";
+  const lastModified = "2026-09-23"; // homepage: tools section added
   // Tool pages (/tools/, /tools/binge-calculator/, /tools/countdown/ and the
   // per-show pages under each) are generated from data/tv/, refreshed weekly
   // by the refresh-shows workflow, so their lastModified is the data date.
