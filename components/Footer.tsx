@@ -64,6 +64,9 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
             <li>
               <a href="/teleparty-alternative/">Teleparty alternative</a>
             </li>
+            <li>
+              <a href="/blog/">Blog</a>
+            </li>
           </ul>
         </div>
         <div className="footer-col">

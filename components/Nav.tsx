@@ -49,6 +49,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
               <a href="/tools/">All tools</a>
             </div>
           </details>
+          <a href="/blog/">Blog</a>
         </div>
         <a className="btn btn-brand btn-sm btn-icon" href={CHROME_STORE_URL} data-cta="nav" target="_blank" rel="noopener">
           <ExtensionIcon size={15} />
@@ -80,6 +81,9 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
               <a href="/tools/binge-calculator/">Binge time calculator</a>
               <a href="/tools/countdown/">Release countdowns</a>
               <a href="/tools/">All tools</a>
+            </div>
+            <div className="nav-menu-group">
+              <a href="/blog/">Blog</a>
             </div>
           </div>
         </details>

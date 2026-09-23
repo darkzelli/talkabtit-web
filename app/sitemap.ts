@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { loadIndex } from "@/lib/tv";
+import { loadPosts } from "@/lib/blog";
 
 // Required to emit a static file under output: "export".
 export const dynamic = "force-static";
@@ -29,6 +30,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/tools/how-long-to-watch/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.6 },
     { url: `${SITE_URL}/tools/countdown/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.5 },
   ]);
+  // Blog: the index moves whenever a post lands, so it takes the newest
+  // post's date; each post takes its own.
+  const posts = loadPosts();
+  const blog: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/blog/`,
+      lastModified: posts[0]?.date ?? lastModified,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...posts.map((p) => ({
+      url: `${SITE_URL}/blog/${p.slug}/`,
+      lastModified: p.date,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
   return [
     {
       url: `${SITE_URL}/`,
@@ -114,6 +132,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...blog,
     ...toolIndexes,
     ...toolPages,
   ];
