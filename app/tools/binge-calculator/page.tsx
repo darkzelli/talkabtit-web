@@ -106,14 +106,6 @@ export default function BingeCalculatorPage() {
             <>
               <div className="tool-sec">
                 <div>
-                  <h2>How long will it take me to watch a show?</h2>
-                  <p>Enter the episode count and runtime for any show, pick your pace and playback speed, and get the total hours and how many days it takes.</p>
-                </div>
-              </div>
-              <BingeCalculator />
-
-              <div className="tool-sec">
-                <div>
                   <h2>Binge calculator FAQ</h2>
                 </div>
               </div>
@@ -124,6 +116,15 @@ export default function BingeCalculatorPage() {
             </>
           }
         >
+              {/* the calculator leads the page; searching swaps it out with the rest of the browse sections */}
+              <div className="tool-sec">
+                <div>
+                  <h2>How long will it take me to watch a show?</h2>
+                  <p>Enter the episode count and runtime for any show, pick your pace and playback speed, and get the total hours and how many days it takes.</p>
+                </div>
+              </div>
+              <BingeCalculator />
+
               {thisWeek.length > 0 && (
                 <>
                   <div className="tool-sec">

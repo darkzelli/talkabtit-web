@@ -6,7 +6,7 @@ import PosterCard, { type PosterItem } from "./PosterCard";
 // The search band under a tool page's hero. Sticky beneath the nav; while a
 // query is typed the browse sections (`children`) are swapped for matching
 // poster cards, and cleared they come back. `persistent` renders beneath
-// either way — the calculator and FAQ on the binge page. Everything is
+// either way — the FAQ and CTA on the binge page. Everything is
 // server-rendered with every show link, so crawlers see the full list.
 export default function ShowFinder({
   items,
