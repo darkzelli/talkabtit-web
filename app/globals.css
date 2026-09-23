@@ -123,6 +123,41 @@ nav {
 .nav-links { display: flex; gap: 26px; margin-right: auto; margin-left: 34px; }
 .nav-links a { text-decoration: none; font-size: 14.5px; font-weight: 500; color: var(--text-dim); transition: color 0.15s ease; }
 .nav-links a:hover { color: var(--text); }
+/* Nav dropdowns (How it works, Tools) — a <details> styled as a link with a menu
+   beneath it that reads as part of the nav bar: same near-black, same
+   hairline, same link styling. Opens on click (and keyboard) natively, on hover
+   via :hover. */
+.nav-dd { position: relative; }
+.nav-dd summary {
+  list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+  font-size: 14.5px; font-weight: 500; color: var(--text-dim); line-height: 1;
+  transition: color 0.15s ease; user-select: none;
+}
+.nav-dd summary::-webkit-details-marker { display: none; }
+.nav-dd summary svg { transition: transform 0.15s ease; opacity: 0.7; }
+.nav-dd:hover summary, .nav-dd[open] summary { color: var(--text); }
+.nav-dd[open] summary svg { transform: rotate(180deg); }
+.nav-dd-menu {
+  position: absolute; top: calc(100% + 20px); left: -12px; z-index: 20;
+  min-width: 220px; padding: 6px;
+  /* solid, one notch above the page black — a blurred backdrop inside the
+     nav's own blurred backdrop composites badly in Chrome */
+  background: #161515;
+  border: 1px solid var(--hairline); border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+/* invisible bridge so the pointer can travel from the label to the menu */
+.nav-dd-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -20px; height: 20px; }
+.nav-links .nav-dd-menu a {
+  display: block; padding: 9px 12px; border-radius: 8px; white-space: nowrap;
+  font-size: 14.5px; font-weight: 500; color: var(--text-dim); line-height: 1.2;
+}
+.nav-links .nav-dd-menu a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+@media (hover: hover) {
+  /* hover opens the menu without toggling the details state */
+  .nav-dd:not([open]):hover .nav-dd-menu { display: block; }
+  .nav-dd:not([open]) .nav-dd-menu { display: none; }
+}
 
 .btn {
   display: inline-block; text-decoration: none; font-weight: 600; font-size: 16px;
@@ -1288,6 +1323,9 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
 }
 .footer-brand img { height: 30px; display: block; margin-bottom: 14px; }
 .footer-brand p { font-size: 13.5px; max-width: 260px; }
+.footer-contact { margin-top: 10px; }
+.footer-brand a { text-decoration: none; transition: color 0.15s ease; }
+.footer-brand a:hover { color: var(--text); }
 .footer-copy { margin-top: 16px; font-size: 13px; }
 .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text); margin-bottom: 14px; }
 .footer-col ul { list-style: none; }

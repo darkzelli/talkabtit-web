@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 // Marks the page as an interactive demo of the extension, linked back to the
-// SoftwareApplication node the root layout publishes.
+// Organization node the root layout publishes.
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -29,7 +29,7 @@ const jsonLd = {
   description:
     "An in-browser demo of the TalkAbtIT comment overlay for streaming services.",
   isPartOf: { "@id": `${SITE_URL}/#website` },
-  about: { "@id": `${SITE_URL}/#app` },
+  about: { "@id": `${SITE_URL}/#organization` },
 };
 
 // The services the overlay layers onto — the same marks (and landing-page

@@ -20,10 +20,34 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
           <img src="/logo.svg" alt="TalkAbtIT" />
         </a>
         <div className="nav-links">
-          <a href="/demo/">Demo</a>
           <a href="/premium/">Premium</a>
-          <a href={`${base}#how`}>How it works</a>
-          <a href="/support/">FAQ</a>
+          {/* Dropdowns: native <details> so they open on click/keyboard
+              with no JS; CSS also opens them on hover for mouse users. */}
+          <details className="nav-dd">
+            <summary>
+              How it works
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </summary>
+            <div className="nav-dd-menu">
+              <a href={`${base}#how`}>Overview</a>
+              <a href="/demo/">Demo</a>
+              <a href="/support/">FAQ</a>
+            </div>
+          </details>
+          <details className="nav-dd">
+            <summary>
+              Tools
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </summary>
+            <div className="nav-dd-menu">
+              <a href="/binge-calculator/">Binge time calculator</a>
+              <a href="/countdown/">Release countdowns</a>
+            </div>
+          </details>
         </div>
         <a className="btn btn-brand btn-sm btn-icon" href={CHROME_STORE_URL} data-cta="nav" target="_blank" rel="noopener">
           <ExtensionIcon size={15} />

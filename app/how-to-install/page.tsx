@@ -96,7 +96,7 @@ const FAQS: Faq[] = [
 ];
 
 // HowTo structured data — the step list as Google reads it, tied to the
-// SoftwareApplication node the root layout publishes.
+// Organization node the root layout publishes.
 const howToJsonLd = {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -106,7 +106,7 @@ const howToJsonLd = {
     "Add the TalkAbtIT Chrome extension, sign in, and open the comment section on Netflix, Hulu, Disney+, HBO Max, Paramount+, or Crunchyroll.",
   totalTime: "PT2M",
   tool: [{ "@type": "HowToTool", name: "Google Chrome or another Chromium browser" }],
-  about: { "@id": `${SITE_URL}/#app` },
+  about: { "@id": `${SITE_URL}/#organization` },
   step: STEPS.map((s, i) => ({
     "@type": "HowToStep",
     position: i + 1,

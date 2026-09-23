@@ -83,9 +83,11 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-// Site-wide structured data. Organization + WebSite describe the brand; the
-// SoftwareApplication node makes the product eligible for app-style rich
-// results (name, category, price, platform) — here a browser extension.
+// Site-wide structured data. Organization + WebSite describe the brand.
+// There is deliberately no SoftwareApplication node: Google requires an
+// aggregateRating or review on that type, and until the Chrome Web Store has
+// enough ratings to show, it only produces "missing rating" warnings on every
+// route. Re-add it (with the rating) once there are ratings worth marking up.
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -105,22 +107,6 @@ const jsonLd = {
       description: SITE_DESCRIPTION,
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en-US",
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": `${SITE_URL}/#app`,
-      name: SITE_NAME,
-      description: SITE_DESCRIPTION,
-      applicationCategory: "BrowserApplication",
-      operatingSystem: "Chrome",
-      url: SITE_URL,
-      publisher: { "@id": `${SITE_URL}/#organization` },
-      // Core experience is free; the optional paid tiers are documented on-page.
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
     },
   ],
 };

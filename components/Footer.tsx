@@ -38,6 +38,9 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
         <div className="footer-brand">
           <img src="/logo.svg" alt="TalkAbtIT" loading="lazy" decoding="async" />
           <p>A comment section for streaming services.</p>
+          <p className="footer-contact">
+            <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>
+          </p>
           <p className="footer-copy">© 2026 TalkAbtIT</p>
         </div>
         <div className="footer-col">
@@ -60,6 +63,17 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
             </li>
             <li>
               <a href="/teleparty-alternative/">Teleparty alternative</a>
+            </li>
+          </ul>
+        </div>
+        <div className="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li>
+              <a href="/binge-calculator/">Binge time calculator</a>
+            </li>
+            <li>
+              <a href="/countdown/">Release countdowns</a>
             </li>
           </ul>
         </div>
@@ -91,14 +105,6 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
               <a href="https://www.instagram.com/TalkAbtItapp" target="_blank" rel="noopener noreferrer">
                 Instagram
               </a>
-            </li>
-          </ul>
-        </div>
-        <div className="footer-col">
-          <h4>Contact</h4>
-          <ul>
-            <li>
-              <a href="mailto:support@talkabtit.app">support@talkabtit.app</a>
             </li>
           </ul>
         </div>
