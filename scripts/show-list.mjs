@@ -1,4 +1,4 @@
-// The curated set of shows the tool pages (/how-long-to-watch/ and /countdown/)
+// The curated set of shows the tool pages (/tools/how-long-to-watch/ and /tools/countdown/)
 // are generated for. Curated on purpose: these are the titles
 // people actually search "how long to watch" / "random episode" for, and a
 // fixed list keeps the build deterministic and the data folder small.

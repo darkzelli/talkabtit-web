@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { daysAtPace, formatDuration, formatHours } from "@/lib/tv-format";
 
-// The manual calculator on /binge-calculator/: episodes × runtime, then how
+// The manual calculator on /tools/binge-calculator/: episodes × runtime, then how
 // many days that is at the viewer's pace. Pure client state; no data needed.
 export default function BingeCalculator() {
   const [episodes, setEpisodes] = useState(50);

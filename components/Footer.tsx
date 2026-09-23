@@ -70,10 +70,13 @@ export default function Footer({ sub = false }: { sub?: boolean }) {
           <h4>Tools</h4>
           <ul>
             <li>
-              <a href="/binge-calculator/">Binge time calculator</a>
+              <a href="/tools/binge-calculator/">Binge time calculator</a>
             </li>
             <li>
-              <a href="/countdown/">Release countdowns</a>
+              <a href="/tools/countdown/">Release countdowns</a>
+            </li>
+            <li>
+              <a href="/tools/">All tools</a>
             </li>
           </ul>
         </div>

@@ -1,0 +1,79 @@
+{
+  "fetchedAt": "2026-09-23",
+  "source": "JustWatch",
+  "sourceUrl": "https://www.justwatch.com/us",
+  "shows": [
+    {
+      "rank": 1,
+      "slug": "lanterns",
+      "title": "Lanterns",
+      "url": "https://www.justwatch.com/us/tv-show/lanterns"
+    },
+    {
+      "rank": 2,
+      "slug": "reacher",
+      "title": "Reacher",
+      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
+    },
+    {
+      "rank": 3,
+      "slug": "furious",
+      "title": "Furious",
+      "url": "https://www.justwatch.com/us/tv-show/furious"
+    },
+    {
+      "rank": 4,
+      "slug": "lioness",
+      "title": "Lioness",
+      "url": "https://www.justwatch.com/us/tv-show/special-ops-lioness"
+    },
+    {
+      "rank": 5,
+      "slug": "ted-lasso",
+      "title": "Ted Lasso",
+      "url": "https://www.justwatch.com/us/tv-show/ted-lasso"
+    },
+    {
+      "rank": 6,
+      "slug": "silo",
+      "title": "Silo",
+      "url": "https://www.justwatch.com/us/tv-show/silo"
+    },
+    {
+      "rank": 7,
+      "slug": "chad-powers",
+      "title": "Chad Powers",
+      "url": "https://www.justwatch.com/us/tv-show/chad-powers"
+    },
+    {
+      "rank": 8,
+      "slug": "widow-s-bay",
+      "title": "Widow's Bay",
+      "url": "https://www.justwatch.com/us/tv-show/widows-bay"
+    },
+    {
+      "rank": 9,
+      "slug": "dark-matter",
+      "title": "Dark Matter",
+      "url": "https://www.justwatch.com/us/tv-show/dark-matter-2024"
+    },
+    {
+      "rank": 10,
+      "slug": "the-gentlemen",
+      "title": "The Gentlemen",
+      "url": "https://www.justwatch.com/us/tv-show/the-gentlemen"
+    },
+    {
+      "rank": 11,
+      "slug": "adults",
+      "title": "Adults",
+      "url": "https://www.justwatch.com/us/tv-show/adults"
+    },
+    {
+      "rank": 12,
+      "slug": "line-of-fire",
+      "title": "Line of Fire",
+      "url": "https://www.justwatch.com/us/tv-show/line-of-fire-2026"
+    }
+  ]
+}

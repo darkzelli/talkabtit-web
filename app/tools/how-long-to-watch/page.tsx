@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   title: "How Long to Watch — binge times for every show",
   description:
     "Total watch time for hundreds of TV shows: how many hours, how many days at your pace, and a season-by-season breakdown.",
-  alternates: { canonical: "/how-long-to-watch/" },
+  alternates: { canonical: "/tools/how-long-to-watch/" },
   openGraph: {
     title: "How Long to Watch",
     description: "Total watch time for hundreds of TV shows.",
-    url: "/how-long-to-watch/",
+    url: "/tools/how-long-to-watch/",
   },
 };
 
@@ -47,14 +47,14 @@ export default function HowLongToWatchIndexPage() {
             </p>
           </div>
         </header>
-        <ShowFinder items={items} base="/how-long-to-watch/" placeholder="Search a show, e.g. Breaking Bad">
+        <ShowFinder items={items} base="/tools/how-long-to-watch/" placeholder="Search a show, e.g. Breaking Bad">
               <div className="tool-sec">
                 <div>
                   <h2>All shows</h2>
-                  <p>{items.length} shows. Show not listed? Work out how long it takes with the <a href="/binge-calculator/">binge calculator</a>.</p>
+                  <p>{items.length} shows. Show not listed? Work out how long it takes with the <a href="/tools/binge-calculator/">binge calculator</a>.</p>
                 </div>
               </div>
-              <PosterGrid items={items} base="/how-long-to-watch/" />
+              <PosterGrid items={items} base="/tools/how-long-to-watch/" />
               <ToolCta cta="how-long-index" />
               <ToolAttribution fetchedAt={fetchedAt} />
         </ShowFinder>

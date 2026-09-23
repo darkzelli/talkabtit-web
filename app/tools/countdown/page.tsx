@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   title: "TV Release Countdowns — next episode and new season dates",
   description:
     "Live countdowns to the next episode and next season of your shows: premiere dates, what's airing this week, and which shows have no return date yet.",
-  alternates: { canonical: "/countdown/" },
+  alternates: { canonical: "/tools/countdown/" },
   openGraph: {
     title: "TV Release Countdowns",
     description: "Live countdowns to the next episode and next season of your shows.",
-    url: "/countdown/",
+    url: "/tools/countdown/",
   },
 };
 
@@ -71,7 +71,7 @@ export default function CountdownIndexPage() {
           </div>
         </header>
 
-        <ShowFinder items={all} base="/countdown/" placeholder="Search a show, e.g. Stranger Things">
+        <ShowFinder items={all} base="/tools/countdown/" placeholder="Search a show, e.g. Stranger Things">
               <div className="tool-sec">
                 <div>
                   <h2>Coming up</h2>
@@ -79,7 +79,7 @@ export default function CountdownIndexPage() {
                 </div>
               </div>
               {upcoming.length ? (
-                <PosterGrid items={upcoming.map(toItem)} base="/countdown/" />
+                <PosterGrid items={upcoming.map(toItem)} base="/tools/countdown/" />
               ) : (
                 <p className="finder-count">No scheduled episodes in the list right now.</p>
               )}
@@ -95,7 +95,7 @@ export default function CountdownIndexPage() {
                   <ul className="row-list row-list-compact row-list-cols">
                     {waiting.map((s) => (
                       <li key={s.slug}>
-                        <a href={`/countdown/${s.slug}/`}>
+                        <a href={`/tools/countdown/${s.slug}/`}>
                           {s.poster ? <img className="row-thumb" src={s.poster} alt="" loading="lazy" decoding="async" /> : <span className="row-thumb-empty" />}
                           <span className="row-name">
                             {s.name}
@@ -114,9 +114,9 @@ export default function CountdownIndexPage() {
                   <h2>Finished shows</h2>
                   <p>No new episodes scheduled. Still worth a rewatch.</p>
                 </div>
-                <a href="/binge-calculator/">How long to binge them →</a>
+                <a href="/tools/binge-calculator/">How long to binge them →</a>
               </div>
-              <PosterGrid items={ended.map(toItem)} base="/countdown/" />
+              <PosterGrid items={ended.map(toItem)} base="/tools/countdown/" />
 
               <ToolCta cta="countdown-index" />
               <ToolAttribution fetchedAt={fetchedAt} />

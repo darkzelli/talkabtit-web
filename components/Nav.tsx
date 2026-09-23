@@ -44,8 +44,9 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
               </svg>
             </summary>
             <div className="nav-dd-menu">
-              <a href="/binge-calculator/">Binge time calculator</a>
-              <a href="/countdown/">Release countdowns</a>
+              <a href="/tools/binge-calculator/">Binge time calculator</a>
+              <a href="/tools/countdown/">Release countdowns</a>
+              <a href="/tools/">All tools</a>
             </div>
           </details>
         </div>

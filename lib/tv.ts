@@ -22,3 +22,20 @@ export function loadShow(slug: string): Show {
   return JSON.parse(fs.readFileSync(path.join(DIR, "shows", `${slug}.json`), "utf8"));
 }
 
+// This week's most-watched shows (data/tv/trending.json, written by
+// scripts/fetch-trending.mjs from JustWatch's US popularity chart). Null when
+// the file is missing so pages can simply skip the section.
+export type TrendingShow = { rank: number; slug: string; title: string; url: string };
+export type Trending = { fetchedAt: string; source: string; sourceUrl: string; shows: TrendingShow[] };
+
+let trendingCache: Trending | null | undefined;
+export function loadTrending(): Trending | null {
+  if (trendingCache === undefined) {
+    try {
+      trendingCache = JSON.parse(fs.readFileSync(path.join(DIR, "trending.json"), "utf8"));
+    } catch {
+      trendingCache = null;
+    }
+  }
+  return trendingCache ?? null;
+}

@@ -44,7 +44,15 @@ export default function ToolCta({
 }
 
 // TVmaze asks for a link back in exchange for the free API.
-export function ToolAttribution({ fetchedAt, tvmazeUrl }: { fetchedAt: string; tvmazeUrl?: string }) {
+export function ToolAttribution({
+  fetchedAt,
+  tvmazeUrl,
+  trendingAt,
+}: {
+  fetchedAt: string;
+  tvmazeUrl?: string;
+  trendingAt?: string; // set when the page shows the JustWatch weekly chart
+}) {
   return (
     <p className="tool-attrib">
       Episode data from{" "}
@@ -53,6 +61,16 @@ export function ToolAttribution({ fetchedAt, tvmazeUrl }: { fetchedAt: string; t
       </a>
       , refreshed weekly (last update {fetchedAt}). Runtimes are as listed
       per episode, so totals exclude recaps you skip and credits you don&apos;t.
+      {trendingAt && (
+        <>
+          {" "}
+          Weekly popularity from{" "}
+          <a href="https://www.justwatch.com/us" target="_blank" rel="noopener noreferrer">
+            JustWatch
+          </a>{" "}
+          (week of {trendingAt}).
+        </>
+      )}
     </p>
   );
 }

@@ -1,5 +1,5 @@
-/* Styles for the tool pages — /binge-calculator/, /how-long-to-watch/,
-   /countdown/. Imported by the pages that need it (same
+/* Styles for the tool pages — /tools/binge-calculator/, /tools/how-long-to-watch/,
+   /tools/countdown/. Imported by the pages that need it (same
    pattern as demo.css) so the global sheet stays untouched. */
 
 /* --- headline number in the hero (total binge time, days-until) --- */
@@ -203,3 +203,15 @@
   .tool-card, .tool-pitch { padding: 20px; }
   .cd-unit { min-width: calc(50% - 6px); }
 }
+
+/* --- /tools/ hub cards --- */
+.tool-hub { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 0 0 12px; }
+.tool-hub-card {
+  display: flex; flex-direction: column; gap: 8px; padding: 22px;
+  border-radius: 16px; border: 1px solid var(--hairline); background: rgba(255, 255, 255, 0.03);
+  color: inherit; text-decoration: none; transition: border-color 0.15s, background 0.15s;
+}
+.tool-hub-card:hover { border-color: rgba(255, 185, 31, 0.5); background: rgba(255, 185, 31, 0.06); }
+.tool-hub-card h2 { font-size: 19px; margin: 0; letter-spacing: 0.2px; }
+.tool-hub-card p { color: var(--text-dim); font-size: 14.5px; line-height: 1.55; margin: 0; flex: 1; }
+.tool-hub-card span { color: var(--gold); font-size: 14px; font-weight: 600; }

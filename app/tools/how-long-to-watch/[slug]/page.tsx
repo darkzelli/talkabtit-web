@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/how-long-to-watch/${slug}/` },
-    openGraph: { title, description, url: `/how-long-to-watch/${slug}/` },
+    alternates: { canonical: `/tools/how-long-to-watch/${slug}/` },
+    openGraph: { title, description, url: `/tools/how-long-to-watch/${slug}/` },
   };
 }
 
@@ -79,7 +79,7 @@ export default async function HowLongToWatchPage({ params }: Props) {
       q: `Is ${show.name} still running?`,
       a: show.status === "Ended"
         ? <>No. {show.name} ended{endedOn(show) ? ` on ${formatDate(endedOn(show))}` : ""} after {show.seasonCount} {plural}.</>
-        : <>TVmaze lists {show.name} as &ldquo;{show.status}&rdquo;. {show.nextEpisode ? `The next episode is scheduled for ${formatDate(show.nextEpisode.airdate)}.` : "No next episode date is listed yet."} See the <a href={`/countdown/${show.slug}/`}>release countdown</a>.</>,
+        : <>TVmaze lists {show.name} as &ldquo;{show.status}&rdquo;. {show.nextEpisode ? `The next episode is scheduled for ${formatDate(show.nextEpisode.airdate)}.` : "No next episode date is listed yet."} See the <a href={`/tools/countdown/${show.slug}/`}>release countdown</a>.</>,
       text: show.status === "Ended"
         ? `No. ${show.name} ended${endedOn(show) ? ` on ${formatDate(endedOn(show))}` : ""} after ${show.seasonCount} ${plural}.`
         : `TVmaze lists ${show.name} as "${show.status}". ${show.nextEpisode ? `The next episode is scheduled for ${formatDate(show.nextEpisode.airdate)}.` : "No next episode date is listed yet."}`,
@@ -110,8 +110,8 @@ export default async function HowLongToWatchPage({ params }: Props) {
               <div className="tool-stat"><span className="tool-stat-num">{show.network || "—"}</span><span className="tool-stat-label">Network</span></div>
             </div>
             <div className="tool-xlinks">
-              <a href={`/countdown/${show.slug}/`}>When is the next episode of {show.name}?</a>
-              <a href="/binge-calculator/">All shows</a>
+              <a href={`/tools/countdown/${show.slug}/`}>When is the next episode of {show.name}?</a>
+              <a href="/tools/binge-calculator/">All shows</a>
             </div>
             </div>
             {show.poster && <img className="tool-poster" src={show.poster} alt={`${show.name} poster`} width={210} height={295} />}
@@ -210,7 +210,7 @@ export default async function HowLongToWatchPage({ params }: Props) {
               <h2>More binge times</h2>
             </div>
             <PosterGrid
-              base="/how-long-to-watch/"
+              base="/tools/how-long-to-watch/"
               items={related.map((s) => ({
                 slug: s.slug,
                 name: s.name,
@@ -228,7 +228,7 @@ export default async function HowLongToWatchPage({ params }: Props) {
       <Footer sub />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/how-long-to-watch/${show.slug}/#faq`)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/tools/how-long-to-watch/${show.slug}/#faq`)) }}
       />
     </>
   );

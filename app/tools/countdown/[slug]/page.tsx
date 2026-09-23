@@ -39,8 +39,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/countdown/${slug}/` },
-    openGraph: { title, description, url: `/countdown/${slug}/` },
+    alternates: { canonical: `/tools/countdown/${slug}/` },
+    openGraph: { title, description, url: `/tools/countdown/${slug}/` },
   };
 }
 
@@ -82,7 +82,7 @@ export default async function CountdownPage({ params }: Props) {
         },
     {
       q: `How many seasons of ${show.name} are there?`,
-      a: <>{show.seasonCount} {plural} and {show.episodeCount} episodes so far, about {formatHours(show.totalMinutes)} in total. See <a href={`/how-long-to-watch/${show.slug}/`}>how long it takes to watch {show.name}</a>.</>,
+      a: <>{show.seasonCount} {plural} and {show.episodeCount} episodes so far, about {formatHours(show.totalMinutes)} in total. See <a href={`/tools/how-long-to-watch/${show.slug}/`}>how long it takes to watch {show.name}</a>.</>,
       text: `${show.seasonCount} ${plural} and ${show.episodeCount} episodes so far, about ${formatHours(show.totalMinutes)} in total.`,
     },
   ];
@@ -124,8 +124,8 @@ export default async function CountdownPage({ params }: Props) {
               <div className="tool-stat"><span className="tool-stat-num">{show.network || "—"}</span><span className="tool-stat-label">Network</span></div>
             </div>
             <div className="tool-xlinks">
-              <a href={`/how-long-to-watch/${show.slug}/`}>How long does it take to watch {show.name}?</a>
-              <a href="/countdown/">All countdowns</a>
+              <a href={`/tools/how-long-to-watch/${show.slug}/`}>How long does it take to watch {show.name}?</a>
+              <a href="/tools/countdown/">All countdowns</a>
             </div>
             </div>
             {show.poster && <img className="tool-poster" src={show.poster} alt={`${show.name} poster`} width={210} height={295} />}
@@ -198,7 +198,7 @@ export default async function CountdownPage({ params }: Props) {
               <h2>More countdowns</h2>
             </div>
             <PosterGrid
-              base="/countdown/"
+              base="/tools/countdown/"
               items={related.map((s) => ({
                 slug: s.slug,
                 name: s.name,
@@ -216,7 +216,7 @@ export default async function CountdownPage({ params }: Props) {
       <Footer sub />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/countdown/${show.slug}/#faq`)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/tools/countdown/${show.slug}/#faq`)) }}
       />
     </>
   );

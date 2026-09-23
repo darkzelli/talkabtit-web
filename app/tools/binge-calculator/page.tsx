@@ -7,18 +7,18 @@ import { PosterGrid, type PosterItem } from "@/components/PosterCard";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
 import { SITE_URL } from "@/lib/seo";
-import { formatHours, loadIndex, yearSpan, type ShowSummary } from "@/lib/tv";
+import { formatHours, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const metadata: Metadata = {
   title: "Binge Time Calculator — how long to watch any show",
   description:
     "Find out exactly how long it takes to binge-watch any TV show. Total hours, days at your pace, and a per-season breakdown for hundreds of shows, or plug in your own numbers.",
-  alternates: { canonical: "/binge-calculator/" },
+  alternates: { canonical: "/tools/binge-calculator/" },
   openGraph: {
     title: "Binge Time Calculator",
     description: "How long does it take to watch every episode? Look up a show or plug in your own numbers.",
-    url: "/binge-calculator/",
+    url: "/tools/binge-calculator/",
   },
 };
 
@@ -42,6 +42,7 @@ const FAQS: Faq[] = [
 
 export default function BingeCalculatorPage() {
   const { fetchedAt, shows } = loadIndex();
+  const trending = loadTrending();
   const toItem = (s: ShowSummary): PosterItem => ({
     slug: s.slug,
     name: s.name,
@@ -56,6 +57,27 @@ export default function BingeCalculatorPage() {
     .sort((a, b) => (b.rating || 0) - (a.rating || 0))
     .slice(0, 12);
   const byName = [...shows].sort((a, b) => a.name.localeCompare(b.name));
+  // JustWatch's chart order, dropping anything the index no longer carries.
+  const thisWeek = (trending?.shows || [])
+    .map((t) => shows.find((s) => s.slug === t.slug))
+    .filter((s): s is ShowSummary => Boolean(s));
+  // Structured data for the weekly chart: an ordered ItemList of the show
+  // pages, so the ranking is machine-readable alongside the FAQ markup.
+  const weekJsonLd = thisWeek.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: `Most watched TV shows this week (${trending?.fetchedAt})`,
+        itemListOrder: "https://schema.org/ItemListOrderDescending",
+        numberOfItems: thisWeek.length,
+        itemListElement: thisWeek.map((s, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: s.name,
+          url: `${SITE_URL}/tools/how-long-to-watch/${s.slug}/`,
+        })),
+      }
+    : null;
 
   return (
     <>
@@ -78,7 +100,7 @@ export default function BingeCalculatorPage() {
 
         <ShowFinder
           items={byName.map(toItem)}
-          base="/how-long-to-watch/"
+          base="/tools/how-long-to-watch/"
           placeholder="Search a show, e.g. The Office"
           persistent={
             <>
@@ -98,18 +120,36 @@ export default function BingeCalculatorPage() {
               <FaqList faqs={FAQS} />
 
               <ToolCta cta="binge-calculator" />
-              <ToolAttribution fetchedAt={fetchedAt} />
+              <ToolAttribution fetchedAt={fetchedAt} trendingAt={thisWeek.length > 0 ? trending?.fetchedAt : undefined} />
             </>
           }
         >
+              {thisWeek.length > 0 && (
+                <>
+                  <div className="tool-sec">
+                    <div>
+                      <h2>Most watched this week</h2>
+                      <p>What everyone is streaming right now, by JustWatch&apos;s US popularity chart. Updated every Monday.</p>
+                    </div>
+                  </div>
+                  <PosterGrid
+                    items={thisWeek.map((s, i) => {
+                      const item = toItem(s);
+                      return { ...item, meta: `#${i + 1} · ${item.meta}` };
+                    })}
+                    base="/tools/how-long-to-watch/"
+                  />
+                </>
+              )}
+
               <div className="tool-sec">
                 <div>
                   <h2>Highest rated</h2>
                   <p>The shows most worth the hours, by TVmaze user rating.</p>
                 </div>
-                <a href="/how-long-to-watch/">All shows A–Z →</a>
+                <a href="/tools/how-long-to-watch/">All shows A–Z →</a>
               </div>
-              <PosterGrid items={popular.map(toItem)} base="/how-long-to-watch/" />
+              <PosterGrid items={popular.map(toItem)} base="/tools/how-long-to-watch/" />
 
               <div className="tool-sec">
                 <div>
@@ -120,7 +160,7 @@ export default function BingeCalculatorPage() {
               <ol className="row-list">
                 {longest.map((s, i) => (
                   <li key={s.slug}>
-                    <a href={`/how-long-to-watch/${s.slug}/`}>
+                    <a href={`/tools/how-long-to-watch/${s.slug}/`}>
                       <span className="row-rank">{i + 1}</span>
                       {s.poster ? <img className="row-thumb" src={s.poster} alt="" loading="lazy" decoding="async" /> : <span className="row-thumb-empty" />}
                       <span className="row-name">
@@ -144,7 +184,7 @@ export default function BingeCalculatorPage() {
                       <p>Complete shows you can clear in ten hours or less.</p>
                     </div>
                   </div>
-                  <PosterGrid items={weekend.map(toItem)} base="/how-long-to-watch/" />
+                  <PosterGrid items={weekend.map(toItem)} base="/tools/how-long-to-watch/" />
                 </>
               )}
 
@@ -153,8 +193,11 @@ export default function BingeCalculatorPage() {
       <Footer sub />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/binge-calculator/#faq`)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/tools/binge-calculator/#faq`)) }}
       />
+      {weekJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(weekJsonLd) }} />
+      )}
     </>
   );
 }

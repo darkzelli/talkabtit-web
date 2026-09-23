@@ -1,18 +1,24 @@
-// Pulls episode data for every show in scripts/show-list.mjs from the TVmaze
+// Pulls episode data for every show in scripts/show-list.mjs (plus the
+// JustWatch-trending extras in data/tv/extra-shows.json) from the TVmaze
 // API and writes it to data/tv/ — one JSON per show plus an index — which the
-// /how-long-to-watch/ and /countdown/ pages are prerendered from. No API key needed. Run by hand (`node scripts/fetch-shows.mjs`) or by
+// /tools/how-long-to-watch/ and /tools/countdown/ pages are prerendered from. No API key needed. Run by hand (`node scripts/fetch-shows.mjs`) or by
 // the weekly refresh-shows workflow. TVmaze asks for attribution in return;
 // the tool pages link back to tvmaze.com.
 //
 // Prints a review table (name / year / network / episodes) so a bad search
 // match — the wrong "The Office" — is easy to spot and pin with `year` or `id`.
 
-import { mkdir, writeFile, readdir, unlink, access } from "node:fs/promises";
+import { mkdir, writeFile, readFile, readdir, unlink, access } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { SHOWS } from "./show-list.mjs";
 
 const API = "https://api.tvmaze.com";
-const OUT = path.join(process.cwd(), "data", "tv");
+export const OUT = path.join(process.cwd(), "data", "tv");
+// Shows added automatically by scripts/fetch-trending.mjs (whatever is popular
+// on JustWatch that week but not in show-list.mjs). Kept for good once added so
+// their /tools/how-long-to-watch/ URLs stay stable after they fall off the chart.
+export const EXTRA_FILE = path.join(OUT, "extra-shows.json");
 // Show posters (TVmaze's 210x295 "medium" cut) are downloaded once into
 // public/posters/<slug>.jpg and committed, so the pages never hotlink and the
 // weekly refresh only fetches posters for newly added shows.
@@ -20,9 +26,9 @@ const POSTERS = path.join(process.cwd(), "public", "posters");
 // TVmaze allows ~20 requests per 10 seconds; stay under it.
 const GAP_MS = 600;
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function get(url, attempt = 0) {
+export async function get(url, attempt = 0) {
   const res = await fetch(url);
   if (res.status === 429 && attempt < 5) {
     await sleep(3000 * (attempt + 1));
@@ -44,7 +50,7 @@ export function slugify(name) {
     .replace(/^-+|-+$/g, "");
 }
 
-const norm = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+export const norm = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
 
 // Strip TVmaze's HTML summaries to plain text, capped for the page payload.
 function plain(html, max) {
@@ -64,7 +70,7 @@ function plain(html, max) {
 
 // Resolve a list entry to a TVmaze show id. Exact-name matches win; among
 // those, the premiere-year hint wins, then TVmaze's popularity weight.
-async function resolve(entry) {
+export async function resolve(entry) {
   if (entry.id) return entry.id;
   const results = await get(`${API}/search/shows?q=${encodeURIComponent(entry.q)}`);
   if (!results?.length) return null;
@@ -91,7 +97,7 @@ async function downloadPoster(url, slug) {
   return `/posters/${slug}.jpg`;
 }
 
-async function fetchShow(id, displayName) {
+export async function fetchShow(id, displayName) {
   const show = await get(`${API}/shows/${id}?embed[]=episodes&embed[]=nextepisode`);
   if (!show) return null;
   const all = show._embedded?.episodes || [];
@@ -170,8 +176,9 @@ async function main() {
   const index = [];
   const rows = [];
   const problems = [];
+  const extra = await loadExtraShows();
 
-  for (const entry of SHOWS) {
+  for (const entry of [...SHOWS, ...extra]) {
     try {
       const id = await resolve(entry);
       await sleep(GAP_MS);
@@ -188,8 +195,7 @@ async function main() {
         continue;
       }
       await writeFile(path.join(OUT, "shows", `${show.slug}.json`), JSON.stringify(show));
-      const { seasons, summary, ...summaryRow } = show;
-      index.push(summaryRow);
+      index.push(toIndexRow(show));
       rows.push(
         `${show.name.padEnd(42)} ${(show.premiered || "").slice(0, 4)}  ${(show.network || "").padEnd(18)} ${String(show.episodeCount).padStart(5)} eps  ${show.status}${show.nextEpisode ? "  next " + show.nextEpisode.airdate : ""}`,
       );
@@ -219,7 +225,23 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+export async function loadExtraShows() {
+  try {
+    return JSON.parse(await readFile(EXTRA_FILE, "utf8"));
+  } catch {
+    return [];
+  }
+}
+
+// Strip the per-show detail down to the row the index carries.
+export function toIndexRow(show) {
+  const { seasons, summary, ...row } = show;
+  return row;
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

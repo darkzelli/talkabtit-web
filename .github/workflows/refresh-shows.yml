@@ -1,7 +1,9 @@
-# Weekly refresh of data/tv/ (episode lists, next-episode dates) from TVmaze,
-# so the countdown pages and binge totals stay current without anyone touching
-# the repo. Commits the new JSON, then kicks the Pages deploy explicitly — a
-# push made with GITHUB_TOKEN doesn't trigger other workflows on its own.
+# Weekly refresh of data/tv/ (episode lists, next-episode dates) from TVmaze
+# and the most-watched-this-week chart from JustWatch, so the countdown pages,
+# binge totals, and the "this week" section stay current without anyone
+# touching the repo. Posters for newly charting shows are committed too.
+# Commits the new JSON, then kicks the Pages deploy explicitly — a push made
+# with GITHUB_TOKEN doesn't trigger other workflows on its own.
 name: Refresh show data
 
 on:
@@ -27,10 +29,12 @@ jobs:
           node-version: 20
       - name: Fetch from TVmaze
         run: node scripts/fetch-shows.mjs
+      - name: Fetch this week's chart from JustWatch
+        run: node scripts/fetch-trending.mjs
       - name: Commit if anything changed
         id: commit
         run: |
-          git add data/tv
+          git add data/tv public/posters
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0

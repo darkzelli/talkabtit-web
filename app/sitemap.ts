@@ -10,14 +10,15 @@ export const dynamic = "force-static";
 // URLs are the canonical ones search engines will crawl.
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = "2026-07-19";
-  // Tool pages (/binge-calculator/, /countdown/ and the
+  // Tool pages (/tools/, /tools/binge-calculator/, /tools/countdown/ and the
   // per-show pages under each) are generated from data/tv/, refreshed weekly
   // by the refresh-shows workflow, so their lastModified is the data date.
   const tv = loadIndex();
   const toolIndexes: MetadataRoute.Sitemap = [
-    "/binge-calculator/",
-    "/how-long-to-watch/",
-    "/countdown/",
+    "/tools/",
+    "/tools/binge-calculator/",
+    "/tools/how-long-to-watch/",
+    "/tools/countdown/",
   ].map((url) => ({
     url: `${SITE_URL}${url}`,
     lastModified: tv.fetchedAt,
@@ -25,8 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   const toolPages: MetadataRoute.Sitemap = tv.shows.flatMap((s) => [
-    { url: `${SITE_URL}/how-long-to-watch/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.6 },
-    { url: `${SITE_URL}/countdown/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.5 },
+    { url: `${SITE_URL}/tools/how-long-to-watch/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.6 },
+    { url: `${SITE_URL}/tools/countdown/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.5 },
   ]);
   return [
     {
