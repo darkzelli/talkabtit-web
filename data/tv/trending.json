@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-23",
+  "fetchedAt": "2026-09-28",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -17,9 +17,9 @@
     },
     {
       "rank": 3,
-      "slug": "furious",
-      "title": "Furious",
-      "url": "https://www.justwatch.com/us/tv-show/furious"
+      "slug": "ted-lasso",
+      "title": "Ted Lasso",
+      "url": "https://www.justwatch.com/us/tv-show/ted-lasso"
     },
     {
       "rank": 4,
@@ -29,51 +29,51 @@
     },
     {
       "rank": 5,
-      "slug": "ted-lasso",
-      "title": "Ted Lasso",
-      "url": "https://www.justwatch.com/us/tv-show/ted-lasso"
+      "slug": "furious",
+      "title": "Furious",
+      "url": "https://www.justwatch.com/us/tv-show/furious"
     },
     {
       "rank": 6,
-      "slug": "silo",
-      "title": "Silo",
-      "url": "https://www.justwatch.com/us/tv-show/silo"
-    },
-    {
-      "rank": 7,
-      "slug": "chad-powers",
-      "title": "Chad Powers",
-      "url": "https://www.justwatch.com/us/tv-show/chad-powers"
-    },
-    {
-      "rank": 8,
       "slug": "widow-s-bay",
       "title": "Widow's Bay",
       "url": "https://www.justwatch.com/us/tv-show/widows-bay"
     },
     {
-      "rank": 9,
-      "slug": "dark-matter",
-      "title": "Dark Matter",
-      "url": "https://www.justwatch.com/us/tv-show/dark-matter-2024"
+      "rank": 7,
+      "slug": "silo",
+      "title": "Silo",
+      "url": "https://www.justwatch.com/us/tv-show/silo"
     },
     {
-      "rank": 10,
+      "rank": 8,
+      "slug": "chad-powers",
+      "title": "Chad Powers",
+      "url": "https://www.justwatch.com/us/tv-show/chad-powers"
+    },
+    {
+      "rank": 9,
       "slug": "the-gentlemen",
       "title": "The Gentlemen",
       "url": "https://www.justwatch.com/us/tv-show/the-gentlemen"
     },
     {
+      "rank": 10,
+      "slug": "dark-matter",
+      "title": "Dark Matter",
+      "url": "https://www.justwatch.com/us/tv-show/dark-matter-2024"
+    },
+    {
       "rank": 11,
-      "slug": "adults",
-      "title": "Adults",
-      "url": "https://www.justwatch.com/us/tv-show/adults"
+      "slug": "slow-horses",
+      "title": "Slow Horses",
+      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
       "rank": 12,
-      "slug": "line-of-fire",
-      "title": "Line of Fire",
-      "url": "https://www.justwatch.com/us/tv-show/line-of-fire-2026"
+      "slug": "neagley",
+      "title": "Neagley",
+      "url": "https://www.justwatch.com/us/tv-show/neagley"
     }
   ]
 }
