@@ -1586,10 +1586,3 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
 .invite-limit { flex-basis: 100%; color: var(--text-dim); font-size: 14px; line-height: 1.5; margin: 0; }
 .invite-limit code { color: var(--text); }
 .invite-steps .install-step-copy p a { color: var(--gold); }
-
-/* /c/ and /creator/ — the creator pages share the invite layout; the camera
-   is drawn in the creator coral. */
-.invite-cam {
-  width: 0.9em; height: 0.9em; color: #E0457B;
-  vertical-align: -0.12em; margin-right: 0.12em;
-}
