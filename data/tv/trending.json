@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-28",
+  "fetchedAt": "2026-10-05",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -11,15 +11,15 @@
     },
     {
       "rank": 2,
-      "slug": "reacher",
-      "title": "Reacher",
-      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
-    },
-    {
-      "rank": 3,
       "slug": "ted-lasso",
       "title": "Ted Lasso",
       "url": "https://www.justwatch.com/us/tv-show/ted-lasso"
+    },
+    {
+      "rank": 3,
+      "slug": "reacher",
+      "title": "Reacher",
+      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
     },
     {
       "rank": 4,
@@ -29,9 +29,9 @@
     },
     {
       "rank": 5,
-      "slug": "furious",
-      "title": "Furious",
-      "url": "https://www.justwatch.com/us/tv-show/furious"
+      "slug": "slow-horses",
+      "title": "Slow Horses",
+      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
       "rank": 6,
@@ -41,39 +41,39 @@
     },
     {
       "rank": 7,
-      "slug": "silo",
-      "title": "Silo",
-      "url": "https://www.justwatch.com/us/tv-show/silo"
-    },
-    {
-      "rank": 8,
-      "slug": "chad-powers",
-      "title": "Chad Powers",
-      "url": "https://www.justwatch.com/us/tv-show/chad-powers"
-    },
-    {
-      "rank": 9,
       "slug": "the-gentlemen",
       "title": "The Gentlemen",
       "url": "https://www.justwatch.com/us/tv-show/the-gentlemen"
     },
     {
-      "rank": 10,
-      "slug": "dark-matter",
-      "title": "Dark Matter",
-      "url": "https://www.justwatch.com/us/tv-show/dark-matter-2024"
+      "rank": 8,
+      "slug": "furious",
+      "title": "Furious",
+      "url": "https://www.justwatch.com/us/tv-show/furious"
     },
     {
-      "rank": 11,
-      "slug": "slow-horses",
-      "title": "Slow Horses",
-      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
-    },
-    {
-      "rank": 12,
+      "rank": 9,
       "slug": "neagley",
       "title": "Neagley",
       "url": "https://www.justwatch.com/us/tv-show/neagley"
+    },
+    {
+      "rank": 10,
+      "slug": "silo",
+      "title": "Silo",
+      "url": "https://www.justwatch.com/us/tv-show/silo"
+    },
+    {
+      "rank": 11,
+      "slug": "mobland",
+      "title": "MobLand",
+      "url": "https://www.justwatch.com/us/tv-show/mobland"
+    },
+    {
+      "rank": 12,
+      "slug": "dark-matter",
+      "title": "Dark Matter",
+      "url": "https://www.justwatch.com/us/tv-show/dark-matter-2024"
     }
   ]
 }
