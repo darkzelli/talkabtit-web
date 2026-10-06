@@ -33,6 +33,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
             <div className="nav-dd-menu">
               <a href={`${base}#how`}>Overview</a>
               <a href="/demo/">Demo</a>
+              <a href="/watch-party/">Watch parties</a>
               <a href="/support/">FAQ</a>
             </div>
           </details>
@@ -74,6 +75,7 @@ export default function Nav({ sub = false }: { sub?: boolean }) {
               <span className="nav-menu-label">How it works</span>
               <a href={`${base}#how`}>Overview</a>
               <a href="/demo/">Demo</a>
+              <a href="/watch-party/">Watch parties</a>
               <a href="/support/">FAQ</a>
             </div>
             <div className="nav-menu-group">

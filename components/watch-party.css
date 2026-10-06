@@ -1,0 +1,395 @@
+/* Watch parties: the homepage section (WatchParties), the explainer at
+   /watch-party/ and the schedule at /watch-party/schedule/. Imported by each,
+   same pattern as tools.css. */
+
+/* --- the pulsing dot shared by the pill and the status badge --- */
+.wp-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--gold); box-shadow: 0 0 0 0 rgba(255, 185, 31, 0.55);
+}
+.wp-badge-live .wp-dot { background: var(--red); box-shadow: 0 0 0 0 rgba(237, 61, 35, 0.6); }
+.wp-badge-ended .wp-dot { background: var(--text-dim); box-shadow: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .wp-dot { animation: wp-pulse 2s ease-out infinite; }
+  @keyframes wp-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255, 185, 31, 0.55); }
+    70%  { box-shadow: 0 0 0 7px rgba(255, 185, 31, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 185, 31, 0); }
+  }
+  .wp-badge-live .wp-dot { animation-name: wp-pulse-live; animation-duration: 1.4s; }
+  @keyframes wp-pulse-live {
+    0%   { box-shadow: 0 0 0 0 rgba(237, 61, 35, 0.6); }
+    70%  { box-shadow: 0 0 0 8px rgba(237, 61, 35, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(237, 61, 35, 0); }
+  }
+  .wp-badge-ended .wp-dot { animation: none; }
+}
+
+/* --- LIVE tag: the extension's blinking live pill --- */
+.wp-live-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 9px 3px 7px; border-radius: 999px;
+  background: #ED3D23; color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.wp-live-tag .wp-dot { width: 6px; height: 6px; background: #fff; box-shadow: none; animation: wp-blink 1.4s ease-in-out infinite; }
+@keyframes wp-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* --- hero live pill: only while a party is running --- */
+.wp-livepill {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin: 0 auto 24px; padding: 8px 10px 8px 8px; border-radius: 999px;
+  text-decoration: none; color: #fff; font-size: 15px;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.34), rgba(122, 21, 12, 0.55)), #1A0806;
+  border: 1px solid rgba(237, 61, 35, 0.6);
+  box-shadow: 0 0 26px rgba(237, 61, 35, 0.4), 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  max-width: 100%;
+}
+.wp-livepill:hover { transform: translateY(-1px); box-shadow: 0 0 32px rgba(237, 61, 35, 0.55), 0 10px 30px rgba(0, 0, 0, 0.4); }
+.wp-livepill .wp-live-tag { font-size: 11.5px; padding: 5px 11px 5px 9px; }
+/* the popcorn is visually light and the wordmark heavy, so the lockup's optical
+   middle sits below its box middle — nudge it up to line up with the text */
+.wp-livepill-logo { height: 26px; width: auto; display: block; transform: translateY(-4px); }
+.wp-livepill-show { font-family: var(--font-display), 'Arial Black', 'Helvetica Neue', sans-serif; font-size: 17px; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wp-livepill-ep { color: #ED3D23; white-space: nowrap; }
+.wp-livepill-go-short { display: none; }
+@media (max-width: 600px) { .wp-livepill-go-long { display: none; } .wp-livepill-go-short { display: inline; } }
+.wp-livepill-go {
+  display: inline-flex; align-items: center; gap: 7px; padding: 8px 15px; border-radius: 999px;
+  background: linear-gradient(135deg, #FF5A3C, #ED3D23 55%, #C4301A);
+  border: 1px solid rgba(255, 255, 255, 0.22); font-size: 13.5px; font-weight: 900; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(237, 61, 35, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+@media (max-width: 600px) {
+  /* one slim bar, full width of the hero copy: LIVE tag, the show (ellipsized),
+     and a short Join button pinned right — nothing wraps */
+  .wp-livepill {
+    display: flex; width: 100%; gap: 10px; justify-content: space-between;
+    padding: 6px 6px 6px 7px; margin-bottom: 20px; font-size: 14px;
+  }
+  .wp-livepill .wp-live-tag { font-size: 10.5px; padding: 5px 9px 5px 8px; }
+  .wp-livepill-logo { display: none; }
+  .wp-livepill-show { flex: 1; min-width: 0; text-align: left; font-size: 15px; }
+  .wp-livepill-go { padding: 7px 12px; font-size: 13px; gap: 5px; }
+  .wp-livepill-go svg { width: 12px; height: 12px; }
+}
+@media (max-width: 360px) {
+  .wp-livepill { gap: 8px; }
+  .wp-livepill .wp-live-tag { font-size: 10px; padding: 5px 8px 5px 7px; letter-spacing: 0.08em; }
+  .wp-livepill-show { font-size: 14px; }
+  .wp-livepill-sep { display: none; } /* "S3E8" */
+  .wp-livepill-go { padding: 7px 10px; }
+}
+
+
+/* --- /watch-party/schedule/: the Pro-red room from the extension's party card --- */
+.wp-page-hero {
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.22), rgba(122, 21, 12, 0.42)), var(--bg);
+  border-bottom: 1px solid rgba(237, 61, 35, 0.45);
+}
+.wp-logo { display: block; width: auto; height: clamp(40px, 4vw, 52px); margin-bottom: 22px; }
+.wp-hero-copy h1 { color: #fff; }
+.wp-hero-copy h1 .wp-ep { color: #ED3D23; white-space: nowrap; }
+.wp-hero-copy h1 .wp-ep-sep { color: #FFB4A8; opacity: 0.7; }
+.wp-about { max-width: 780px; margin-bottom: 44px; }
+.wp-about h2 { font-size: 24px; margin: 0 0 10px; letter-spacing: -0.01em; }
+.wp-about p { color: var(--text-dim); font-size: 17px; line-height: 1.6; margin: 0; }
+.wp-about .wp-svc { color: var(--gold); }
+.wp-about .kicker { margin-bottom: 10px; }
+.wp-about-notes { margin-top: 14px; }
+.wp-about-notes p { color: var(--text-dim); font-size: 16px; }
+.wp-about > p + p, .wp-about-notes + p { margin-top: 12px; }
+
+/* --- schedule row: one card per party, placeholders fill the empty slots;
+   scrolls sideways on narrow screens --- */
+.wp-sched-head { margin-top: 0; }
+.wp-sched {
+  list-style: none; margin: 18px 0 0; padding: 4px 0 12px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 1fr); gap: 16px;
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin;
+}
+.wp-scard {
+  scroll-snap-align: start; display: flex; flex-direction: column; gap: 6px;
+  padding: 14px; border-radius: 18px;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.18), rgba(122, 21, 12, 0.3)), #150806;
+  border: 1px solid rgba(237, 61, 35, 0.4);
+}
+.wp-scard-now { background: linear-gradient(135deg, rgba(237, 61, 35, 0.34), rgba(122, 21, 12, 0.55)), #1A0806; border-color: rgba(237, 61, 35, 0.6); }
+.wp-scard-live { box-shadow: 0 0 26px rgba(237, 61, 35, 0.35); }
+.wp-scard-poster {
+  position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden;
+  background: rgba(0, 0, 0, 0.35); margin-bottom: 8px;
+}
+.wp-scard-poster img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+.wp-scard-fallback { font-family: var(--font-display), 'Arial Black', sans-serif; font-size: 40px; color: #FFB4A8; }
+.wp-scard-tag { position: absolute; top: 10px; left: 10px; }
+.wp-scard-show { font-family: var(--font-display), 'Arial Black', 'Helvetica Neue', sans-serif; font-weight: 400; font-size: 18px; line-height: 1.15; color: #fff; }
+.wp-scard-ep { color: #ED3D23; white-space: nowrap; }
+.wp-scard-when { font-size: 13.5px; font-weight: 600; color: #F1D4CE; }
+.wp-scard-svc { font-size: 12.5px; color: #FFB4A8; }
+.wp-scard-go { margin-top: auto; padding-top: 10px; font-size: 13.5px; font-weight: 800; color: #fff; text-decoration: none; }
+.wp-scard-go:hover { color: #FFB4A8; }
+/* placeholder slot */
+.wp-scard-empty { background: transparent; border: 1px dashed rgba(237, 61, 35, 0.35); }
+.wp-scard-empty .wp-scard-poster { background: rgba(255, 255, 255, 0.03); }
+.wp-scard-empty .wp-scard-mark { width: 40px; height: 40px; opacity: 0.35; object-fit: contain; }
+.wp-scard-empty .wp-scard-show { color: var(--text-dim); font-size: 16px; }
+.wp-scard-empty .wp-scard-when { color: var(--text-dim); font-weight: 500; }
+@media (max-width: 860px) {
+  .wp-sched { grid-auto-columns: 72%; }
+}
+@media (max-width: 600px) {
+  .wp-sched { grid-auto-columns: 78%; gap: 12px; }
+}
+.wp-page-hero .lede { color: #F1D4CE; }
+.wp-page-hero .wp-svc { color: #FFB4A8; }
+.wp-page-hero .wp-badge { color: #FFB4A8; background: rgba(237, 61, 35, 0.14); border-color: rgba(237, 61, 35, 0.45); }
+.wp-page-hero .wp-badge .wp-dot { background: #FF8A7A; box-shadow: 0 0 0 0 rgba(255, 138, 122, 0.55); }
+.wp-page-hero .wp-badge-live { color: #fff; background: #ED3D23; border-color: #ED3D23; }
+.wp-page-hero .wp-badge-live .wp-dot { background: #fff; box-shadow: none; animation: wp-blink 1.4s ease-in-out infinite; }
+.wp-page-hero .wp-badge-ended { color: #F1D4CE; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.14); }
+.wp-page-hero .wp-when { color: #F1D4CE; }
+.wp-page-hero .wp-when strong { color: #fff; }
+.wp-page-hero .cd-unit { background: rgba(237, 61, 35, 0.12); border-color: rgba(237, 61, 35, 0.4); }
+.wp-page-hero .cd-num { color: #fff; text-shadow: none; }
+.wp-page-hero .cd-label { color: #FFB4A8; }
+.wp-page-hero .wp-live-copy { color: #fff; }
+.wp-page-hero .wp-cal { color: #FFB4A8; }
+.wp-page-hero .wp-cal:hover { color: #fff; }
+.wp-poster { border-color: rgba(237, 61, 35, 0.45); box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(237, 61, 35, 0.25); }
+/* the "Open the episode" button: the extension's Join CTA, page-sized */
+.wp-join {
+  display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+  padding: 14px 26px; border-radius: 999px;
+  background: linear-gradient(135deg, #FF5A3C, #ED3D23 55%, #C4301A);
+  border: 1px solid rgba(255, 255, 255, 0.22); color: #fff;
+  font-size: 16px; font-weight: 900; letter-spacing: 0.2px; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(237, 61, 35, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wp-join:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(237, 61, 35, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+.wp-join svg { flex-shrink: 0; }
+.wp-empty h1 .accent { color: #ED3D23; text-shadow: 0 0 34px rgba(237, 61, 35, 0.35); }
+
+/* --- /watch-party/ hero: copy left, poster right --- */
+.wp-hero { display: flex; align-items: center; gap: clamp(32px, 5vw, 64px); }
+.wp-hero-copy { flex: 1; max-width: 640px; min-width: 0; }
+.wp-hero .kicker { display: flex; align-items: center; gap: 12px; }
+.wp-hero .wp-status { margin-top: 18px; }
+.wp-hero .wp-ctas { margin-top: 24px; }
+.wp-poster {
+  flex: none; width: min(32%, 290px); aspect-ratio: 210 / 295; border-radius: 16px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--hairline);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55);
+  transform: rotate(-2.5deg);
+}
+.wp-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wp-poster-fallback {
+  display: grid; place-items: center; width: 100%; height: 100%;
+  font-family: var(--font-display), 'Arial Black', sans-serif; font-size: 72px; color: var(--text-dim);
+}
+.wp-svc { color: var(--gold); text-decoration: none; }
+.wp-svc:hover { text-decoration: underline; }
+
+/* status block (client component) */
+.wp-status { margin-top: 22px; }
+.wp-badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 7px 14px 7px 12px; border-radius: 999px;
+  color: var(--gold); background: rgba(255, 185, 31, 0.1); border: 1px solid rgba(255, 185, 31, 0.35);
+}
+.wp-badge-live { color: #fff; background: rgba(237, 61, 35, 0.16); border-color: rgba(237, 61, 35, 0.6); }
+.wp-badge-ended { color: var(--text-dim); background: rgba(255, 255, 255, 0.05); border-color: var(--hairline); }
+.wp-when { margin: 0; font-size: 16px; color: var(--text-dim); }
+.wp-badge + .wp-when { margin-top: 14px; }
+.wp-when strong { color: var(--text); font-weight: 600; }
+.wp-when-tz { font-size: 13px; }
+.wp-status .countdown { margin-bottom: 0; }
+.wp-live-copy { margin: 14px 0 0; font-size: 17px; color: var(--text); max-width: 520px; }
+
+.wp-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; margin-top: 26px; }
+.wp-ctas .btn-appstore { margin: 0; }
+.wp-cal { font-size: 14px; font-weight: 600; color: var(--text-dim); text-decoration: none; display: inline-flex; align-items: center; gap: 7px; }
+.wp-cal:hover { color: var(--gold); }
+
+/* --- explainer: "how it works" as three numbered cards --- */
+.wp-how-head { max-width: 640px; margin-bottom: 28px; }
+.wp-how-head .kicker { color: #FF8A7A; }
+.wp-how-head h2 { font-size: clamp(26px, 3.4vw, 36px); margin: 0; color: #fff; }
+.wp-how { list-style: none; margin: 0 0 64px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.wp-how-step {
+  position: relative; padding: 26px 24px 28px; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.16), rgba(122, 21, 12, 0.28)), #150806;
+  border: 1px solid rgba(237, 61, 35, 0.35);
+}
+.wp-how-num {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px;
+  font-family: var(--font-display), 'Arial Black', 'Helvetica Neue', sans-serif; font-size: 22px; color: #fff;
+  background: linear-gradient(135deg, #FF5A3C, #ED3D23 55%, #C4301A);
+  box-shadow: 0 4px 14px rgba(237, 61, 35, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.wp-how-step h3 { margin: 20px 0 10px; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; color: #fff; }
+.wp-how-step p { margin: 0; font-size: 16px; line-height: 1.6; color: #F1D4CE; }
+.wp-how-step p a { color: #fff; }
+@media (max-width: 860px) {
+  .wp-how { grid-template-columns: 1fr; gap: 12px; }
+  .wp-how-step { padding: 22px 20px 24px; }
+  .wp-how-step h3 { margin-top: 16px; }
+}
+.wp-notes { margin-top: 40px; }
+
+/* other scheduled parties */
+.wp-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; max-width: 780px; }
+.wp-row {
+  display: flex; align-items: center; gap: 16px; padding: 14px 18px;
+  border: 1px solid var(--hairline); border-radius: 14px; background: rgba(255, 255, 255, 0.03);
+}
+.wp-row-poster { flex: none; width: 44px; height: 62px; border-radius: 6px; overflow: hidden; background: rgba(255, 255, 255, 0.06); }
+.wp-row-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wp-row-copy { min-width: 0; flex: 1; }
+.wp-row-copy strong { display: block; font-size: 16px; }
+.wp-row-copy span { display: block; margin-top: 3px; font-size: 13.5px; color: var(--text-dim); }
+.wp-row-copy span a { color: var(--gold); text-decoration: none; }
+
+/* nothing scheduled */
+.wp-empty { max-width: 640px; }
+.wp-empty .lede { margin-top: 14px; }
+
+@media (max-width: 860px) {
+  .wp-hero { flex-direction: column; align-items: flex-start; gap: 28px; }
+  .wp-poster { width: min(44%, 200px); transform: none; }
+}
+/* phone: the countdown becomes a four-up grid that always fits, the actions
+   stack full width, and the time-zone note drops to its own line */
+@media (max-width: 600px) {
+  .wp-page-hero { padding: 48px 0 40px; }
+  .wp-poster { width: 150px; }
+  .wp-hero-copy h1 { font-size: clamp(28px, 9vw, 40px); }
+  .wp-logo { height: 40px; }
+  .wp-when { font-size: 15px; }
+  .wp-when-tz { display: block; margin-top: 2px; }
+  .wp-when-sep { display: none; }
+  .wp-status .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 18px; }
+  .wp-status .cd-unit { min-width: 0; padding: 12px 4px; border-radius: 12px; }
+  .wp-status .cd-num { font-size: clamp(22px, 7.5vw, 30px); }
+  .wp-status .cd-label { font-size: 9.5px; letter-spacing: 0.08em; margin-top: 6px; }
+  .wp-ctas { flex-direction: column; align-items: stretch; gap: 14px; margin-top: 22px; }
+  .wp-join { justify-content: center; white-space: normal; text-align: center; padding: 13px 18px; font-size: 15px; }
+  .wp-cal { justify-content: center; }
+  .wp-crumb { margin-bottom: 14px; }
+}
+
+/* --- breadcrumb back to the explainer, on the schedule page --- */
+.wp-crumb { display: inline-block; margin-bottom: 18px; font-size: 13.5px; font-weight: 600; color: #FFB4A8; text-decoration: none; }
+.wp-crumb:hover { color: #fff; }
+
+/* --- /watch-party/ explainer hero: copy left, "what's on" card right --- */
+.wp-explain-hero { display: flex; align-items: center; justify-content: space-between; gap: clamp(32px, 5vw, 72px); }
+.wp-explain-hero .wp-hero-copy { max-width: 600px; }
+.wp-explain-hero h1 { font-size: clamp(28px, 3.8vw, 42px); }
+.wp-explain-hero h1 .wp-ep { white-space: normal; }
+.wp-explain-hero .wp-cal { font-size: 15px; }
+.wp-now {
+  flex: none; width: min(34%, 300px); display: flex; flex-direction: column; gap: 10px;
+  padding: 18px; border-radius: 18px; text-decoration: none; color: #fff;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.34), rgba(122, 21, 12, 0.55));
+  border: 1px solid rgba(237, 61, 35, 0.55);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.wp-now:hover { transform: translateY(-2px); background: linear-gradient(135deg, rgba(237, 61, 35, 0.46), rgba(122, 21, 12, 0.7)); }
+.wp-now-live { box-shadow: 0 0 26px rgba(237, 61, 35, 0.4), 0 14px 40px rgba(0, 0, 0, 0.45); }
+.wp-now-label { font-size: 12px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: #FFB4A8; display: flex; }
+.wp-now-poster { display: block; width: 100%; aspect-ratio: 210 / 295; border-radius: 12px; overflow: hidden; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
+.wp-now-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wp-now-show { font-family: var(--font-display), 'Arial Black', 'Helvetica Neue', sans-serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; }
+.wp-now-ep { color: #ED3D23; white-space: nowrap; }
+.wp-now-when { font-size: 13.5px; font-weight: 600; color: #F1D4CE; }
+.wp-now-go { margin-top: 4px; display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 800; color: #fff; }
+.wp-now-go svg { color: #FF8A7A; }
+@media (max-width: 860px) {
+  .wp-explain-hero { flex-direction: column; align-items: stretch; }
+  .wp-now { width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .wp-now-poster { width: 56px; aspect-ratio: 210 / 295; }
+  .wp-now-label, .wp-now-go { flex-basis: 100%; }
+  .wp-now-show, .wp-now-when { flex: 1 1 60%; }
+}
+
+/* --- homepage section: copy left, the live/next card right --- */
+.wp-band {
+  background: linear-gradient(180deg, #1C0907 0%, #130806 55%, var(--bg) 100%);
+  border-top: 1px solid rgba(237, 61, 35, 0.35);
+}
+.wp-band-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; gap: clamp(32px, 5vw, 72px); }
+.wp-band-copy { min-width: 0; }
+.wp-band-sub { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.5; letter-spacing: 0; color: #F1D4CE; max-width: 440px; }
+.wp-band-accent { color: #ED3D23; text-shadow: 0 0 34px rgba(237, 61, 35, 0.35); }
+.wp-band .wp-logo { height: clamp(52px, 5.4vw, 70px); margin-bottom: 22px; }
+.wp-band .btn { margin-top: 26px; }
+/* the card: poster left, details right, in the extension's party wash */
+.wp-up {
+  position: relative; display: flex; align-items: stretch; gap: 0;
+  border-radius: 22px; overflow: hidden; text-decoration: none; color: #fff;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.34), rgba(122, 21, 12, 0.55)), #1A0806;
+  border: 1px solid rgba(237, 61, 35, 0.55);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wp-up:hover { transform: translateY(-2px); box-shadow: 0 28px 64px rgba(0, 0, 0, 0.55), 0 0 30px rgba(237, 61, 35, 0.25); }
+.wp-up-live { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(237, 61, 35, 0.4); }
+.wp-up-poster { flex: none; width: 38%; display: grid; place-items: center; background: rgba(0, 0, 0, 0.35); }
+.wp-up-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wp-up-poster .wp-up-poster-mark { width: 64px; height: 64px; opacity: 0.5; object-fit: contain; }
+.wp-up-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 28px 28px 28px 26px; }
+.wp-up-label { display: flex; font-size: 12px; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: #FFB4A8; margin-bottom: 4px; }
+.wp-up-show {
+  font-family: var(--font-display), 'Arial Black', 'Helvetica Neue', sans-serif; font-weight: 400;
+  font-size: clamp(24px, 2.4vw, 32px); line-height: 1.08; letter-spacing: -0.01em;
+}
+.wp-up-ep { color: #ED3D23; white-space: nowrap; }
+.wp-up-when { font-size: 15px; font-weight: 600; color: #F1D4CE; line-height: 1.45; }
+.wp-up-go {
+  align-self: flex-start; margin-top: 12px; display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px; border-radius: 999px;
+  background: linear-gradient(135deg, #FF5A3C, #ED3D23 55%, #C4301A);
+  border: 1px solid rgba(255, 255, 255, 0.22); color: #fff;
+  font-size: 14.5px; font-weight: 900; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(237, 61, 35, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wp-up:hover .wp-up-go { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(237, 61, 35, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+/* tablet: one column; the poster crops to a fixed card height instead of
+   stretching the card to its full portrait */
+@media (max-width: 860px) {
+  .wp-band-row { grid-template-columns: 1fr; gap: 36px; }
+  .wp-band .wp-logo { height: 52px; }
+  .wp-band-sub { font-size: 18px; max-width: 520px; }
+  .wp-up { height: 232px; }
+  .wp-up-poster { width: 30%; }
+  .wp-up-poster img { object-position: center 18%; }
+  .wp-up-body { padding: 22px 24px; gap: 6px; }
+  .wp-up-show { font-size: 28px; }
+}
+/* phone: poster as a thumbnail beside the details, button full width below */
+@media (max-width: 600px) {
+  .wp-band { padding: 64px 0; }
+  .wp-band .wp-logo { height: 46px; margin-bottom: 18px; }
+  .wp-band-sub { font-size: 17px; }
+  .wp-band .btn { margin-top: 22px; }
+  /* the card becomes a grid: poster beside the three text lines, the button
+     across the full bottom row. The body wrapper is flattened (display:
+     contents) so its children can take grid cells of their own. */
+  .wp-up {
+    height: auto; display: grid; grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 16px; row-gap: 4px; align-items: center;
+    padding: 16px; border-radius: 18px;
+  }
+  .wp-up-poster { grid-column: 1; grid-row: 1 / span 3; width: 88px; aspect-ratio: 210 / 295; border-radius: 10px; overflow: hidden; background: rgba(0, 0, 0, 0.3); }
+  .wp-up-poster .wp-up-poster-mark { width: 40px; height: 40px; }
+  .wp-up-body { display: contents; }
+  .wp-up-label { grid-column: 2; grid-row: 1; margin-bottom: 0; font-size: 11px; align-self: end; }
+  .wp-up-show { grid-column: 2; grid-row: 2; font-size: 22px; }
+  .wp-up-when { grid-column: 2; grid-row: 3; font-size: 13.5px; align-self: start; }
+  .wp-up-go { grid-column: 1 / -1; grid-row: 4; justify-content: center; margin-top: 12px; align-self: stretch; }
+}

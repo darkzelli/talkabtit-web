@@ -47,7 +47,7 @@ export type BlogPost = {
 
 const DIR = path.join(process.cwd(), "content", "blog");
 
-function parseFrontMatter(raw: string): { meta: Record<string, string>; body: string } {
+export function parseFrontMatter(raw: string): { meta: Record<string, string>; body: string } {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!m) return { meta: {}, body: raw };
   const meta: Record<string, string> = {};

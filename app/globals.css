@@ -276,7 +276,7 @@ nav {
    is a hit-target across its whole box even where transparent, so pass pointer
    events through and re-enable them only on the actual content */
 .hero .wrap { position: relative; z-index: 1; pointer-events: none; }
-.hero .wrap :is(h1, p, a, .browser, .mobile-reminder) { pointer-events: auto; }
+.hero .wrap :is(h1, p, a, .browser, .mobile-reminder, .wp-livepill) { pointer-events: auto; }
 /* shrink the headline's hit-box to its text — as a full-width block its empty
    flanks would swallow hover meant for the marks riding at the same height */
 .hero h1 { width: fit-content; margin-left: auto; margin-right: auto; }

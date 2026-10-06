@@ -3,6 +3,7 @@ import { SITE_URL } from "@/lib/seo";
 import { loadIndex } from "@/lib/tv";
 import { loadPosts } from "@/lib/blog";
 import { AUTHORS } from "@/lib/authors";
+import { featuredParty, loadWatchParties } from "@/lib/watch-parties";
 
 // Required to emit a static file under output: "export".
 export const dynamic = "force-static";
@@ -54,7 +55,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.4,
     })),
   ];
+  // /watch-party/ is the evergreen explainer; /watch-party/schedule/ moves
+  // whenever a party is scheduled or ends, so it takes the featured party's
+  // start date (and the fixed date when nothing is on).
+  const party = featuredParty(loadWatchParties());
   return [
+    {
+      url: `${SITE_URL}/watch-party/`,
+      lastModified: "2026-10-05",
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/watch-party/schedule/`,
+      lastModified: party ? party.start.slice(0, 10) : "2026-10-05",
+      changeFrequency: "daily",
+      priority: party ? 0.9 : 0.5,
+    },
     {
       url: `${SITE_URL}/`,
       lastModified,

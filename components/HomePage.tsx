@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Customize from "@/components/Customize";
 import HowItWorks from "@/components/HowItWorks";
+import WatchParties from "@/components/WatchParties";
 import Tools from "@/components/Tools";
 import Closing from "@/components/Closing";
 import Footer from "@/components/Footer";
@@ -17,6 +18,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <Features />
+        <WatchParties />
         <Customize />
         <HowItWorks />
         <Tools />

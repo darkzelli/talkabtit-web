@@ -1,5 +1,6 @@
 import BrowserDemo from "./BrowserDemo";
 import MobileReminder from "./MobileReminder";
+import WatchPartyBanner from "./WatchPartyBanner";
 import { CHROME_STORE_URL } from "@/lib/seo";
 
 // Streaming wordmarks scattered across the hero as a ghosted background layer.
@@ -59,6 +60,8 @@ export default function Hero() {
         {/* one centered column: headline, the browser demo, then the tagline
             sitting beside the CTA */}
         <div className="hero-copy">
+          {/* live watch party flag — present only while a party is running */}
+          <WatchPartyBanner />
           <h1 className="display">
             A <span className="accent">comment section</span>
             <br />
