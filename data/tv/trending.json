@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-05",
+  "fetchedAt": "2026-10-12",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -17,9 +17,9 @@
     },
     {
       "rank": 3,
-      "slug": "reacher",
-      "title": "Reacher",
-      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
+      "slug": "slow-horses",
+      "title": "Slow Horses",
+      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
       "rank": 4,
@@ -29,27 +29,27 @@
     },
     {
       "rank": 5,
-      "slug": "slow-horses",
-      "title": "Slow Horses",
-      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
+      "slug": "east-of-eden",
+      "title": "East of Eden",
+      "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
     },
     {
       "rank": 6,
+      "slug": "reacher",
+      "title": "Reacher",
+      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
+    },
+    {
+      "rank": 7,
       "slug": "widow-s-bay",
       "title": "Widow's Bay",
       "url": "https://www.justwatch.com/us/tv-show/widows-bay"
     },
     {
-      "rank": 7,
-      "slug": "the-gentlemen",
-      "title": "The Gentlemen",
-      "url": "https://www.justwatch.com/us/tv-show/the-gentlemen"
-    },
-    {
       "rank": 8,
-      "slug": "furious",
-      "title": "Furious",
-      "url": "https://www.justwatch.com/us/tv-show/furious"
+      "slug": "mobland",
+      "title": "MobLand",
+      "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
       "rank": 9,
@@ -59,21 +59,21 @@
     },
     {
       "rank": 10,
-      "slug": "silo",
-      "title": "Silo",
-      "url": "https://www.justwatch.com/us/tv-show/silo"
+      "slug": "american-horror-story",
+      "title": "American Horror Story",
+      "url": "https://www.justwatch.com/us/tv-show/american-horror-story-freak-show"
     },
     {
       "rank": 11,
-      "slug": "mobland",
-      "title": "MobLand",
-      "url": "https://www.justwatch.com/us/tv-show/mobland"
+      "slug": "line-of-fire",
+      "title": "Line of Fire",
+      "url": "https://www.justwatch.com/us/tv-show/line-of-fire-2026"
     },
     {
       "rank": 12,
-      "slug": "dark-matter",
-      "title": "Dark Matter",
-      "url": "https://www.justwatch.com/us/tv-show/dark-matter-2024"
+      "slug": "the-gentlemen",
+      "title": "The Gentlemen",
+      "url": "https://www.justwatch.com/us/tv-show/the-gentlemen"
     }
   ]
 }
