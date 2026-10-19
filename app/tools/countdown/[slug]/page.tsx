@@ -6,7 +6,7 @@ import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { PosterGrid } from "@/components/PosterCard";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
 import { SITE_URL } from "@/lib/seo";
-import { endedOn, formatDate, formatHours, hasAired, isUpcoming, loadIndex, loadShow, relatedShows, seasonLabel, seasonShort } from "@/lib/tv";
+import { endedOn, formatDate, formatHours, hasAired, isUpcoming, loadIndex, loadShow, relatedShows, releaseTime, seasonLabel, seasonShort, statusLabel } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const dynamicParams = false;
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? `Is ${show.name} Coming Back? Release Countdown`
       : `${show.name} Next Season Release Date Countdown`;
   const description = up
-    ? `${nextLabel(show)} ${show.nextEpisode!.number === 1 ? "premieres" : "airs"} on ${formatDate(show.nextEpisode!.airdate)}. Live countdown to the release, plus the last episode that aired.`
+    ? `${nextLabel(show)} ${show.nextEpisode!.number === 1 ? "premieres" : "airs"} on ${formatDate(show.nextEpisode!.airdate)}${releaseTime(show)}. Live countdown to the release, plus the last episode that aired.`
     : show.status === "Ended"
       ? `${show.name} ended${endedOn(show) ? ` on ${formatDate(endedOn(show))}` : ""} after ${show.seasonCount} season${show.seasonCount === 1 ? "" : "s"}. What's known about a return, and where things stand.`
       : `No release date has been announced for the next episode of ${show.name}. This page turns into a live countdown the moment a date is listed.`;
@@ -62,12 +62,12 @@ export default async function CountdownPage({ params }: Props) {
     {
       q: up ? `When does ${nextLabel(show)} come out?` : `When is the next episode of ${show.name}?`,
       a: up
-        ? <>{formatDate(next!.airdate)}. {next!.name ? `The episode is titled "${next!.name}".` : ""}</>
+        ? <>{formatDate(next!.airdate)}{releaseTime(show)}. {next!.name ? `The episode is titled "${next!.name}".` : ""}</>
         : ended
           ? <>{show.name} has ended, so no new episodes are scheduled. The finale{last ? `, "${last.name}",` : ""} aired{endedOn(show) ? ` on ${formatDate(endedOn(show))}` : ""}.</>
           : <>No date has been listed yet. TVmaze currently marks the show as &ldquo;{show.status}&rdquo;. This page updates automatically once a date is announced.</>,
       text: up
-        ? `${formatDate(next!.airdate)}. ${next!.name ? `The episode is titled "${next!.name}".` : ""}`.trim()
+        ? `${formatDate(next!.airdate)}${releaseTime(show)}. ${next!.name ? `The episode is titled "${next!.name}".` : ""}`.trim()
         : ended
           ? `${show.name} has ended, so no new episodes are scheduled. The finale${last ? `, "${last.name}",` : ""} aired${endedOn(show) ? ` on ${formatDate(endedOn(show))}` : ""}.`
           : `No date has been listed yet. TVmaze currently marks the show as "${show.status}". This page updates automatically once a date is announced.`,
@@ -91,8 +91,8 @@ export default async function CountdownPage({ params }: Props) {
         }
       : {
           q: `Has ${show.name} come out yet?`,
-          a: <>Not yet. {show.premiered ? `It premieres on ${formatDate(show.premiered)}. ` : ""}TVmaze lists {eps} so far.</>,
-          text: `Not yet. ${show.premiered ? `It premieres on ${formatDate(show.premiered)}. ` : ""}TVmaze lists ${eps} so far.`,
+          a: <>Not yet. {show.premiered ? `It premieres on ${formatDate(show.premiered)}${up && next!.airdate === show.premiered ? releaseTime(show) : ""}. ` : ""}TVmaze lists {eps} so far.</>,
+          text: `Not yet. ${show.premiered ? `It premieres on ${formatDate(show.premiered)}${up && next!.airdate === show.premiered ? releaseTime(show) : ""}. ` : ""}TVmaze lists ${eps} so far.`,
         },
   ];
 
@@ -113,7 +113,7 @@ export default async function CountdownPage({ params }: Props) {
                 <Countdown airstamp={next!.airstamp} label={nextLabel(show)} />
                 <p className="cd-when">
                   <strong>{next!.name ? `"${next!.name}"` : `${seasonLabel(next!.season)}, Episode ${next!.number}`}</strong>
-                  {" "}{next!.number === 1 ? "premieres" : "airs"} on <strong>{formatDate(next!.airdate)}</strong>
+                  {" "}{next!.number === 1 ? "premieres" : "airs"} on <strong>{formatDate(next!.airdate)}{releaseTime(show)}</strong>
                   {show.network ? ` on ${show.network}` : ""}. Times are converted to your local time zone.
                 </p>
               </>
@@ -127,7 +127,7 @@ export default async function CountdownPage({ params }: Props) {
               </p>
             )}
             <div className="tool-stats">
-              <div className="tool-stat"><span className="tool-stat-num">{show.status}</span><span className="tool-stat-label">Status</span></div>
+              <div className="tool-stat"><span className="tool-stat-num">{statusLabel(show)}</span><span className="tool-stat-label">Status</span></div>
               {aired || !show.premiered ? (
                 <>
                   <div className="tool-stat"><span className="tool-stat-num">{last ? `${seasonShort(last.season)} E${last.number}` : "—"}</span><span className="tool-stat-label">Last aired</span></div>
@@ -155,7 +155,7 @@ export default async function CountdownPage({ params }: Props) {
                   <h2>When is the next episode of {show.name}?</h2>
                   <p>
                     The next episode of {show.name} is {seasonLabel(next!.season)}, Episode {next!.number}
-                    {next!.name ? `, "${next!.name}"` : ""}, {next!.number === 1 ? "premiering" : "airing"} on {formatDate(next!.airdate)}
+                    {next!.name ? `, "${next!.name}"` : ""}, {next!.number === 1 ? "premiering" : "airing"} on {formatDate(next!.airdate)}{releaseTime(show)}
                     {show.network ? ` on ${show.network}` : ""}. The countdown at the top of this page is live and in your local time.
                     {next!.number === 1 && aired && show.seasonCount > 0 ? ` If you're not caught up, the ${show.seasonCount} completed ${plural} so far add up to about ${formatHours(show.totalMinutes)}.` : ""}
                   </p>

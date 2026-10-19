@@ -14,6 +14,8 @@ export type NextEpisode = {
   name: string | null;
   airdate: string;
   airstamp: string;
+  // "HH:MM" Eastern, present only when the release time is confirmed.
+  timeET?: string;
 };
 export type LastAired = { season: number; number: number; name: string; airdate: string };
 
@@ -122,6 +124,20 @@ export function seasonShort(n: number): string {
 // Not episodeCount: TVmaze lists announced episodes before they air.
 export function hasAired(show: ShowSummary): boolean {
   return show.lastAired !== null;
+}
+
+// " at 3:00 AM ET" when the next episode's release time is confirmed, else "".
+export function releaseTime(show: ShowSummary): string {
+  const t = show.nextEpisode?.timeET;
+  if (!t) return "";
+  const [h, m] = t.split(":").map(Number);
+  return ` at ${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"} ET`;
+}
+
+// The status shown on the countdown page. TVmaze keeps unpremiered shows at
+// "In Development" / "To Be Determined" even once a premiere date is set.
+export function statusLabel(show: ShowSummary, today = new Date()): string {
+  return !hasAired(show) && isUpcoming(show, today) ? "Upcoming" : show.status;
 }
 
 export function isUpcoming(show: ShowSummary, today = new Date()): boolean {

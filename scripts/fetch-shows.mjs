@@ -145,9 +145,13 @@ export async function fetchShow(id, displayName, releaseTimeET) {
       ? {
           season: next.season,
           number: next.number,
-          name: next.name || null,
+          // TVmaze fills unannounced titles with "TBA"; treat that as no title.
+          name: next.name && !/^tba$/i.test(next.name.trim()) ? next.name : null,
           airdate: next.airdate,
           airstamp: (releaseTimeET && next.airdate && easternToUtc(next.airdate, releaseTimeET)) || next.airstamp,
+          // Only set when the time is confirmed (releaseTimeET); TVmaze's own
+          // streaming times are often placeholders, so the page doesn't print them.
+          ...(releaseTimeET && next.airdate ? { timeET: releaseTimeET } : {}),
         }
       : null;
   const lastAired = [...regular]
