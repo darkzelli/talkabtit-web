@@ -6,7 +6,8 @@
 // Each entry is a TVmaze search query. `year` is the premiere year, needed
 // whenever the bare name is ambiguous (the 1999 One Piece anime vs. the 2023
 // live-action; the US Office vs. the UK one). Add `id` to pin a TVmaze show id
-// outright. `name` overrides TVmaze's title for the page heading and URL —
+// outright. `releaseTimeET: "HH:MM"` fixes the next episode's release time
+// (Eastern) when TVmaze's is a placeholder. `name` overrides TVmaze's title for the page heading and URL —
 // used where TVmaze lists the Japanese title and people search the English one. To add a show: append a line, run `node scripts/fetch-shows.mjs`,
 // and review the table it prints.
 export const SHOWS = [
@@ -243,4 +244,21 @@ export const SHOWS = [
   { q: "Cyberpunk: Edgerunners" },
   { q: "Castlevania" },
   { q: "Arcane", name: "Arcane" },
+  // --- coming soon (added 2026-10-19) ---
+  // Pinned by id: several are new or share a name with older shows. The ones
+  // that haven't aired yet only get a /tools/countdown/ page until their first
+  // episode airs (see hasAired in lib/tv-format.ts).
+  // Netflix drops at midnight Pacific; TVmaze lists 12:00 UTC.
+  { q: "Cyberpunk: Edgerunners 2", id: 88337, releaseTimeET: "03:00" },
+  { q: "Harry Potter", id: 68803 },
+  { q: "Pride and Prejudice", id: 84008 },
+  { q: "Phony", id: 63873 },
+  { q: "Sekiro: No Defeat", id: 86669 },
+  { q: "Yellowjackets", id: 36672 },
+  { q: "Dexter: Resurrection", id: 78665 },
+  { q: "Black Doves", id: 68407 },
+  { q: "Nobody Wants This", id: 77060 },
+  { q: "Lupin", id: 50701 },
+  { q: "The Gilded Age", id: 34685 },
+  { q: "Your Friendly Neighborhood Spider-Man", id: 58952 },
 ];

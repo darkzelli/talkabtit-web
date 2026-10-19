@@ -6,7 +6,7 @@ import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { PosterGrid } from "@/components/PosterCard";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
 import { SITE_URL } from "@/lib/seo";
-import { endedOn, formatDate, formatHours, isUpcoming, loadIndex, loadShow, relatedShows, seasonLabel, seasonShort } from "@/lib/tv";
+import { endedOn, formatDate, formatHours, hasAired, isUpcoming, loadIndex, loadShow, relatedShows, seasonLabel, seasonShort } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const dynamicParams = false;
@@ -54,6 +54,9 @@ export default async function CountdownPage({ params }: Props) {
   const plural = show.seasonCount === 1 ? "season" : "seasons";
   const related = relatedShows(show, shows);
   const ended = show.status === "Ended";
+  // Not premiered yet: no how-long-to-watch page exists, and there's nothing to catch up on.
+  const aired = hasAired(show);
+  const eps = `${show.episodeCount} announced episode${show.episodeCount === 1 ? "" : "s"}`;
 
   const FAQS: Faq[] = [
     {
@@ -80,11 +83,17 @@ export default async function CountdownPage({ params }: Props) {
           a: <>Episodes of {show.name} average {show.averageRuntime} minutes.</>,
           text: `Episodes of ${show.name} average ${show.averageRuntime} minutes.`,
         },
-    {
-      q: `How many seasons of ${show.name} are there?`,
-      a: <>{show.seasonCount} {plural} and {show.episodeCount} episodes so far, about {formatHours(show.totalMinutes)} in total. See <a href={`/tools/how-long-to-watch/${show.slug}/`}>how long it takes to watch {show.name}</a>.</>,
-      text: `${show.seasonCount} ${plural} and ${show.episodeCount} episodes so far, about ${formatHours(show.totalMinutes)} in total.`,
-    },
+    aired
+      ? {
+          q: `How many seasons of ${show.name} are there?`,
+          a: <>{show.seasonCount} {plural} and {show.episodeCount} episodes so far, about {formatHours(show.totalMinutes)} in total. See <a href={`/tools/how-long-to-watch/${show.slug}/`}>how long it takes to watch {show.name}</a>.</>,
+          text: `${show.seasonCount} ${plural} and ${show.episodeCount} episodes so far, about ${formatHours(show.totalMinutes)} in total.`,
+        }
+      : {
+          q: `Has ${show.name} come out yet?`,
+          a: <>Not yet. {show.premiered ? `It premieres on ${formatDate(show.premiered)}. ` : ""}TVmaze lists {eps} so far.</>,
+          text: `Not yet. ${show.premiered ? `It premieres on ${formatDate(show.premiered)}. ` : ""}TVmaze lists ${eps} so far.`,
+        },
   ];
 
   return (
@@ -119,12 +128,18 @@ export default async function CountdownPage({ params }: Props) {
             )}
             <div className="tool-stats">
               <div className="tool-stat"><span className="tool-stat-num">{show.status}</span><span className="tool-stat-label">Status</span></div>
-              <div className="tool-stat"><span className="tool-stat-num">{last ? `${seasonShort(last.season)} E${last.number}` : "—"}</span><span className="tool-stat-label">Last aired</span></div>
-              <div className="tool-stat"><span className="tool-stat-num">{last ? formatDate(last.airdate) : "—"}</span><span className="tool-stat-label">On</span></div>
+              {aired || !show.premiered ? (
+                <>
+                  <div className="tool-stat"><span className="tool-stat-num">{last ? `${seasonShort(last.season)} E${last.number}` : "—"}</span><span className="tool-stat-label">Last aired</span></div>
+                  <div className="tool-stat"><span className="tool-stat-num">{last ? formatDate(last.airdate) : "—"}</span><span className="tool-stat-label">On</span></div>
+                </>
+              ) : (
+                <div className="tool-stat"><span className="tool-stat-num">{formatDate(show.premiered)}</span><span className="tool-stat-label">Premieres</span></div>
+              )}
               <div className="tool-stat"><span className="tool-stat-num">{show.network || "—"}</span><span className="tool-stat-label">Network</span></div>
             </div>
             <div className="tool-xlinks">
-              <a href={`/tools/how-long-to-watch/${show.slug}/`}>How long does it take to watch {show.name}?</a>
+              {aired && <a href={`/tools/how-long-to-watch/${show.slug}/`}>How long does it take to watch {show.name}?</a>}
               <a href="/tools/countdown/">All countdowns</a>
             </div>
             </div>
@@ -142,14 +157,25 @@ export default async function CountdownPage({ params }: Props) {
                     The next episode of {show.name} is {seasonLabel(next!.season)}, Episode {next!.number}
                     {next!.name ? `, "${next!.name}"` : ""}, {next!.number === 1 ? "premiering" : "airing"} on {formatDate(next!.airdate)}
                     {show.network ? ` on ${show.network}` : ""}. The countdown at the top of this page is live and in your local time.
-                    {next!.number === 1 && show.seasonCount > 0 ? ` If you're not caught up, the ${show.seasonCount} completed ${plural} so far add up to about ${formatHours(show.totalMinutes)}.` : ""}
+                    {next!.number === 1 && aired && show.seasonCount > 0 ? ` If you're not caught up, the ${show.seasonCount} completed ${plural} so far add up to about ${formatHours(show.totalMinutes)}.` : ""}
                   </p>
-                  <h2>What was the last episode of {show.name}?</h2>
-                  <p>
-                    {last
-                      ? `The most recent episode to air was ${seasonLabel(last.season)}, Episode ${last.number}, "${last.name}", on ${formatDate(last.airdate)}.`
-                      : "No aired episodes are listed yet."}
-                  </p>
+                  {aired ? (
+                    <>
+                      <h2>What was the last episode of {show.name}?</h2>
+                      <p>
+                        {last
+                          ? `The most recent episode to air was ${seasonLabel(last.season)}, Episode ${last.number}, "${last.name}", on ${formatDate(last.airdate)}.`
+                          : "No aired episodes are listed yet."}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2>Is {show.name} out yet?</h2>
+                      <p>
+                        Not yet. Nothing has aired, and TVmaze lists {eps} so far. Once the premiere airs, a full watch-time breakdown for {show.name} is added to the binge calculator.
+                      </p>
+                    </>
+                  )}
                 </>
               ) : ended ? (
                 <>

@@ -11,6 +11,7 @@ import {
   formatDate,
   formatDuration,
   formatHours,
+  hasAired,
   loadIndex,
   loadShow,
   relatedShows,
@@ -21,7 +22,7 @@ import "@/components/tools.css";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return loadIndex().shows.map((s) => ({ slug: s.slug }));
+  return loadIndex().shows.filter(hasAired).map((s) => ({ slug: s.slug }));
 }
 
 type Props = { params: Promise<{ slug: string }> };
@@ -57,7 +58,7 @@ export default async function HowLongToWatchPage({ params }: Props) {
   const span = yearSpan(show);
   const twoHourDays = daysAtPace(total, 120);
   const skipIntroSaved = Math.round(show.episodeCount * 1.25);
-  const related = relatedShows(show, shows);
+  const related = relatedShows(show, shows.filter(hasAired));
 
   const FAQS: Faq[] = [
     {

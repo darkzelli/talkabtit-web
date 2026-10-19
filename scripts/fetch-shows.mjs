@@ -97,7 +97,21 @@ async function downloadPoster(url, slug) {
   return `/posters/${slug}.jpg`;
 }
 
-export async function fetchShow(id, displayName) {
+// "03:00" Eastern on a given date -> UTC ISO string, picking EDT or EST for that date.
+function easternToUtc(date, hhmm) {
+  const fmt = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  for (const off of ["-04:00", "-05:00"]) {
+    const d = new Date(`${date}T${hhmm}:00${off}`);
+    if (fmt.format(d) === hhmm) return d.toISOString().replace(".000Z", "+00:00");
+  }
+  return null;
+}
+
+// releaseTimeET: optional "HH:MM" Eastern from show-list.mjs. TVmaze often
+// lists streaming drops at a placeholder hour (Netflix at 12:00 UTC), while
+// the real release is e.g. 3:00 AM ET (midnight Pacific). When set, the next
+// episode's airstamp is rebuilt from its airdate at that Eastern time.
+export async function fetchShow(id, displayName, releaseTimeET) {
   const show = await get(`${API}/shows/${id}?embed[]=episodes&embed[]=nextepisode`);
   if (!show) return null;
   const all = show._embedded?.episodes || [];
@@ -133,7 +147,7 @@ export async function fetchShow(id, displayName) {
           number: next.number,
           name: next.name || null,
           airdate: next.airdate,
-          airstamp: next.airstamp,
+          airstamp: (releaseTimeET && next.airdate && easternToUtc(next.airdate, releaseTimeET)) || next.airstamp,
         }
       : null;
   const lastAired = [...regular]
@@ -188,7 +202,7 @@ async function main() {
       }
       if (seen.has(id)) continue;
       seen.add(id);
-      const show = await fetchShow(id, entry.name);
+      const show = await fetchShow(id, entry.name, entry.releaseTimeET);
       await sleep(GAP_MS);
       if (!show || !show.episodeCount) {
         problems.push(`no episodes: ${entry.q} (id ${id})`);

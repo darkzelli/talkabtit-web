@@ -7,7 +7,7 @@ import { PosterGrid, type PosterItem } from "@/components/PosterCard";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
 import { SITE_URL } from "@/lib/seo";
-import { formatHours, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
+import { formatHours, hasAired, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const metadata: Metadata = {
@@ -41,7 +41,10 @@ const FAQS: Faq[] = [
 ];
 
 export default function BingeCalculatorPage() {
-  const { fetchedAt, shows } = loadIndex();
+  // Everything here links to /tools/how-long-to-watch/, which only has
+  // pages for shows that have started airing.
+  const { fetchedAt } = loadIndex();
+  const shows = loadIndex().shows.filter(hasAired);
   const trending = loadTrending();
   const toItem = (s: ShowSummary): PosterItem => ({
     slug: s.slug,

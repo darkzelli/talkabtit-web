@@ -1,9 +1,10 @@
-import { formatHours, isUpcoming, loadIndex, loadTrending, seasonShort, type ShowSummary } from "@/lib/tv";
+import { formatHours, hasAired, isUpcoming, loadIndex, loadTrending, seasonShort, type ShowSummary } from "@/lib/tv";
+import { featuredParty, loadWatchParties } from "@/lib/watch-parties";
 
 // Homepage teaser for the free tool pages (/tools/). Two cards, each built
 // around a real show from this week's JustWatch chart: the #1 show asks the
-// watch-time question, the trending show with the soonest new episode asks
-// the countdown question. Both link straight to that show's tool page, and a
+// watch-time question, and the countdown card follows the next watch party's
+// show (falling back to the trending show with the soonest new episode). Both link straight to that show's tool page, and a
 // line under them sends anyone else to the search. Data is read at build,
 // same as the tool pages, and the weekly refresh keeps it current.
 function Arrow() {
@@ -40,13 +41,19 @@ export default function Tools() {
     .filter((s): s is ShowSummary => Boolean(s));
 
   // #1 this week (falling back to the longest show in the index)
-  const top = trending[0] ?? [...shows].sort((a, b) => b.totalMinutes - a.totalMinutes)[0];
+  // (aired shows only: the card links to /tools/how-long-to-watch/)
+  const top =
+    trending.find(hasAired) ?? [...shows].filter(hasAired).sort((a, b) => b.totalMinutes - a.totalMinutes)[0];
   // soonest upcoming episode among the rest of the chart, then the whole index
   const soonest = (pool: ShowSummary[]) =>
     pool
       .filter((s) => s.slug !== top.slug && isUpcoming(s, today))
       .sort((a, b) => (a.nextEpisode!.airstamp < b.nextEpisode!.airstamp ? -1 : 1))[0];
-  const next = soonest(trending) ?? soonest(shows);
+  // The show the next watch party is for, when it has an upcoming episode,
+  // so the homepage countdown and the watch-party card point at the same thing.
+  const party = featuredParty(loadWatchParties());
+  const partyShow = party?.show ? shows.find((s) => s.slug === party.show && isUpcoming(s, today)) : undefined;
+  const next = partyShow ?? soonest(trending) ?? soonest(shows);
 
   return (
     <section id="tools" className="tools band band-gold">
@@ -69,7 +76,7 @@ export default function Tools() {
           <a className="tools-card" href={`/tools/how-long-to-watch/${top.slug}/`}>
             <Poster show={top} />
             <span className="tools-copy">
-              <span className="tools-card-stat">{trending[0] ? "#1 most watched this week" : "Binge time calculator"}</span>
+              <span className="tools-card-stat">{top === trending[0] ? "#1 most watched this week" : "Binge time calculator"}</span>
               <h3>How long does it take to watch {top.name}?</h3>
               <span className="tools-answer">
                 {formatHours(top.totalMinutes)}

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
-import { loadIndex } from "@/lib/tv";
+import { hasAired, loadIndex } from "@/lib/tv";
 import { loadPosts } from "@/lib/blog";
 import { AUTHORS } from "@/lib/authors";
 import { featuredParty, loadWatchParties } from "@/lib/watch-parties";
@@ -28,8 +28,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly",
     priority: 0.7,
   }));
+  // Shows that haven't premiered have a countdown page but no how-long-to-watch page yet.
   const toolPages: MetadataRoute.Sitemap = tv.shows.flatMap((s) => [
-    { url: `${SITE_URL}/tools/how-long-to-watch/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.6 },
+    ...(hasAired(s)
+      ? [{ url: `${SITE_URL}/tools/how-long-to-watch/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.6 }]
+      : []),
     { url: `${SITE_URL}/tools/countdown/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.5 },
   ]);
   // Blog: the index moves whenever a post lands, so it takes the newest

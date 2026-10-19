@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ShowFinder from "@/components/ShowFinder";
 import { PosterGrid, type PosterItem } from "@/components/PosterCard";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
-import { formatHours, loadIndex, yearSpan, type ShowSummary } from "@/lib/tv";
+import { formatHours, hasAired, loadIndex, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const metadata: Metadata = {
@@ -21,7 +21,8 @@ export const metadata: Metadata = {
 
 export default function HowLongToWatchIndexPage() {
   const { fetchedAt, shows } = loadIndex();
-  const items: PosterItem[] = [...shows]
+  const items: PosterItem[] = shows
+    .filter(hasAired)
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((s: ShowSummary) => ({
       slug: s.slug,

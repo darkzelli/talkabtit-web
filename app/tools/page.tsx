@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { PosterGrid, type PosterItem } from "@/components/PosterCard";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { SITE_URL } from "@/lib/seo";
-import { formatHours, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
+import { formatHours, hasAired, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const metadata: Metadata = {
@@ -44,7 +44,7 @@ export default function ToolsPage() {
   const trending = loadTrending();
   const thisWeek = (trending?.shows || [])
     .map((t) => shows.find((s) => s.slug === t.slug))
-    .filter((s): s is ShowSummary => Boolean(s));
+    .filter((s): s is ShowSummary => Boolean(s) && hasAired(s!));
   const toItem = (s: ShowSummary, i: number): PosterItem => ({
     slug: s.slug,
     name: s.name,
