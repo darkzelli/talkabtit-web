@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-12",
+  "fetchedAt": "2026-10-19",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -11,69 +11,69 @@
     },
     {
       "rank": 2,
-      "slug": "ted-lasso",
-      "title": "Ted Lasso",
-      "url": "https://www.justwatch.com/us/tv-show/ted-lasso"
-    },
-    {
-      "rank": 3,
       "slug": "slow-horses",
       "title": "Slow Horses",
       "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
-      "rank": 4,
-      "slug": "lioness",
-      "title": "Lioness",
-      "url": "https://www.justwatch.com/us/tv-show/special-ops-lioness"
+      "rank": 3,
+      "slug": "ted-lasso",
+      "title": "Ted Lasso",
+      "url": "https://www.justwatch.com/us/tv-show/ted-lasso"
     },
     {
-      "rank": 5,
+      "rank": 4,
       "slug": "east-of-eden",
       "title": "East of Eden",
       "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
     },
     {
+      "rank": 5,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
+    },
+    {
       "rank": 6,
-      "slug": "reacher",
-      "title": "Reacher",
-      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
-    },
-    {
-      "rank": 7,
-      "slug": "widow-s-bay",
-      "title": "Widow's Bay",
-      "url": "https://www.justwatch.com/us/tv-show/widows-bay"
-    },
-    {
-      "rank": 8,
       "slug": "mobland",
       "title": "MobLand",
       "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
-      "rank": 9,
-      "slug": "neagley",
-      "title": "Neagley",
-      "url": "https://www.justwatch.com/us/tv-show/neagley"
-    },
-    {
-      "rank": 10,
+      "rank": 7,
       "slug": "american-horror-story",
       "title": "American Horror Story",
       "url": "https://www.justwatch.com/us/tv-show/american-horror-story-freak-show"
     },
     {
+      "rank": 8,
+      "slug": "lioness",
+      "title": "Lioness",
+      "url": "https://www.justwatch.com/us/tv-show/special-ops-lioness"
+    },
+    {
+      "rank": 9,
+      "slug": "below",
+      "title": "Below",
+      "url": "https://www.justwatch.com/us/tv-show/below-2026"
+    },
+    {
+      "rank": 10,
+      "slug": "neagley",
+      "title": "Neagley",
+      "url": "https://www.justwatch.com/us/tv-show/neagley"
+    },
+    {
       "rank": 11,
-      "slug": "line-of-fire",
-      "title": "Line of Fire",
-      "url": "https://www.justwatch.com/us/tv-show/line-of-fire-2026"
+      "slug": "reacher",
+      "title": "Reacher",
+      "url": "https://www.justwatch.com/us/tv-show/jack-reacher"
     },
     {
       "rank": 12,
-      "slug": "the-gentlemen",
-      "title": "The Gentlemen",
-      "url": "https://www.justwatch.com/us/tv-show/the-gentlemen"
+      "slug": "widow-s-bay",
+      "title": "Widow's Bay",
+      "url": "https://www.justwatch.com/us/tv-show/widows-bay"
     }
   ]
 }
