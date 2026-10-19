@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Countdown from "@/components/Countdown";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { PosterGrid } from "@/components/PosterCard";
+import WatchPartyCallout from "@/components/WatchPartyCallout";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
 import { SITE_URL } from "@/lib/seo";
 import { endedOn, formatDate, formatHours, hasAired, isUpcoming, loadIndex, loadShow, relatedShows, releaseTime, seasonLabel, seasonShort, statusLabel } from "@/lib/tv";
@@ -116,6 +117,7 @@ export default async function CountdownPage({ params }: Props) {
                   {" "}{next!.number === 1 ? "premieres" : "airs"} on <strong>{formatDate(next!.airdate)}{releaseTime(show)}</strong>
                   {show.network ? ` on ${show.network}` : ""}. Times are converted to your local time zone.
                 </p>
+                <WatchPartyCallout show={show.slug} />
               </>
             ) : ended ? (
               <p className="lede">

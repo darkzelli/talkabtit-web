@@ -393,3 +393,32 @@
   .wp-up-when { grid-column: 2; grid-row: 3; font-size: 13.5px; align-self: start; }
   .wp-up-go { grid-column: 1 / -1; grid-row: 4; justify-content: center; margin-top: 12px; align-self: stretch; }
 }
+
+/* --- countdown-page callout: the show has a watch party on the calendar --- */
+.wp-callout {
+  display: flex; align-items: center; gap: 18px;
+  margin: 22px 0 0; max-width: 780px; padding: 14px 14px 14px 18px; border-radius: 18px;
+  text-decoration: none; color: #fff;
+  background: linear-gradient(135deg, rgba(237, 61, 35, 0.26), rgba(122, 21, 12, 0.45)), #1A0806;
+  border: 1px solid rgba(237, 61, 35, 0.55);
+  box-shadow: 0 0 26px rgba(237, 61, 35, 0.25), 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wp-callout:hover { transform: translateY(-1px); box-shadow: 0 0 32px rgba(237, 61, 35, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35); }
+.wp-callout-logo { height: 34px; width: auto; flex: none; display: block; transform: translateY(-4px); }
+.wp-callout-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.wp-callout-title { font-family: var(--font-display), 'Arial Black', 'Helvetica Neue', sans-serif; font-size: 18px; letter-spacing: -0.01em; line-height: 1.25; }
+.wp-callout-when { color: rgba(255, 255, 255, 0.72); font-size: 14px; line-height: 1.4; }
+.wp-callout-go {
+  flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 11px 18px; border-radius: 999px;
+  background: linear-gradient(135deg, #FF5A3C, #ED3D23 55%, #C4301A);
+  border: 1px solid rgba(255, 255, 255, 0.22); font-size: 14.5px; font-weight: 900; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(237, 61, 35, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+@media (max-width: 640px) {
+  .wp-callout { flex-wrap: wrap; gap: 12px; padding: 16px; }
+  .wp-callout-logo { height: 28px; }
+  .wp-callout-copy { flex-basis: 100%; }
+  .wp-callout-title { font-size: 16.5px; }
+  .wp-callout-go { width: 100%; justify-content: center; }
+}
