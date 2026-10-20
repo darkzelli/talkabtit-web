@@ -60,7 +60,7 @@ export default function Hero() {
         {/* one centered column: headline, the browser demo, then the tagline
             sitting beside the CTA */}
         <div className="hero-copy">
-          {/* live watch party flag — present only while a party is running */}
+          {/* watch party flag — the start time in the last 24h, LIVE while it runs */}
           <WatchPartyBanner />
           <h1 className="display">
             A <span className="accent">comment section</span>

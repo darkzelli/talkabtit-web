@@ -30,6 +30,11 @@ export function partyStatus(p: Pick<WatchParty, "start" | "end">, now = Date.now
   return "upcoming";
 }
 
+// Within 24 hours of the start: when the hero pill appears with the start time.
+export function isSoon(start: string, now = Date.now()): boolean {
+  return new Date(start).getTime() - now <= 24 * 60 * 60 * 1000;
+}
+
 // The one party the homepage advertises: live beats upcoming, soonest first.
 export function featuredParty<T extends Pick<WatchParty, "start" | "end">>(parties: T[], now = Date.now()): T | null {
   const open = parties.filter((p) => partyStatus(p, now) !== "ended");

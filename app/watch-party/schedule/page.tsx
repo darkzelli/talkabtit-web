@@ -139,6 +139,18 @@ export default function WatchPartyPage() {
                       Add to Google Calendar
                     </a>
                   </div>
+                  <div className="wp-ext-note">
+                    <span className="wp-ext-icon"><ExtensionIcon /></span>
+                    <span className="wp-ext-copy">
+                      <strong>Live chat needs the extension</strong>
+                      <span>Free on the Chrome Web Store.</span>
+                    </span>
+                    {party.url && (
+                      <a className="wp-ext-btn" href={CHROME_STORE_URL} target="_blank" rel="noopener" data-cta="watch-party-ext-note">
+                        Add to Chrome
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             ) : (
