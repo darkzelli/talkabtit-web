@@ -163,7 +163,8 @@ export default function RootLayout({
         {/* Nav dropdowns are exclusive via <details name="nav-dd">; this is
             the fallback for browsers that predate the name attribute (Chrome
             <120, Safari <17.2, Firefox <130). toggle doesn't bubble, so it's
-            caught in the capture phase. */}
+            caught in the capture phase. A click anywhere outside an open
+            dropdown (or the phone hamburger menu) closes it. */}
         <Script id="nav-dd-exclusive" strategy="afterInteractive">
           {`document.addEventListener('toggle', function (e) {
               var d = e.target;
@@ -171,7 +172,13 @@ export default function RootLayout({
               document.querySelectorAll('details.nav-dd[open]').forEach(function (o) {
                 if (o !== d) o.open = false;
               });
-            }, true);`}
+            }, true);
+            document.addEventListener('click', function (e) {
+              var el = e.target instanceof Element ? e.target : null;
+              document.querySelectorAll('details.nav-dd[open], details.nav-menu[open]').forEach(function (o) {
+                if (!el || !o.contains(el)) o.open = false;
+              });
+            });`}
         </Script>
       </body>
     </html>
