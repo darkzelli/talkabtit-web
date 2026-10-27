@@ -1586,3 +1586,35 @@ footer { border-top: 1px solid var(--hairline); padding: 52px 0 0; font-size: 14
 .invite-limit { flex-basis: 100%; color: var(--text-dim); font-size: 14px; line-height: 1.5; margin: 0; }
 .invite-limit code { color: var(--text); }
 .invite-steps .install-step-copy p a { color: var(--gold); }
+
+/* ---- /unsubscribe/ ---- */
+.unsub-card {
+  max-width: 560px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--hairline);
+  border-radius: 16px; padding: 28px 24px;
+}
+.unsub-form label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.unsub-row { display: flex; gap: 10px; }
+.unsub-row input {
+  flex: 1; min-width: 0; padding: 12px 16px; font-size: 16px;
+  font-family: inherit; color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--hairline); border-radius: 999px; outline: none;
+}
+.unsub-row input::placeholder { color: var(--text-dim); }
+.unsub-row input:focus { border-color: var(--gold); }
+.unsub-row button {
+  padding: 12px 22px; font-size: 15px; font-weight: 700;
+  font-family: inherit; color: #fff; background: var(--red); border: 0;
+  border-radius: 999px; cursor: pointer; white-space: nowrap;
+}
+.unsub-row button:disabled { opacity: 0.6; }
+.unsub-done { margin: 0; font-size: 16px; font-weight: 600; color: var(--gold); }
+.unsub-error { margin: 10px 0 0; font-size: 13.5px; color: var(--red); }
+.unsub-error a { color: var(--gold); }
+.unsub-note { margin: 18px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-dim); }
+.unsub-note a { color: var(--gold); }
+@media (max-width: 480px) {
+  .unsub-row { flex-direction: column; }
+  .unsub-row button { width: 100%; }
+}

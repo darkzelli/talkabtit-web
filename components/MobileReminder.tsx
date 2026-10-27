@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CHROME_STORE_URL } from "@/lib/seo";
+import { CHROME_STORE_URL, SITE_URL } from "@/lib/seo";
 
 // formsubmit.co relays the submission to the support inbox with no backend
 // and auto-replies to the visitor with the install link (_autoresponse).
@@ -42,7 +42,10 @@ export default function MobileReminder() {
           _autoresponse:
             "Here's TalkAbtIT, ready for when you're at your computer.\n\n" +
             `It's a Chrome extension, so open this link in Chrome on your computer to install — it's free:\n${CHROME_STORE_URL}\n\n` +
-            "Stop watching alone. Watch with everyone.",
+            "Stop watching alone. Watch with everyone.\n\n" +
+            "—\n" +
+            "You're getting this because you asked for a reminder at talkabtit.app. " +
+            `Don't want emails from us? ${SITE_URL}/unsubscribe/?email=${encodeURIComponent(email)}`,
         }),
       });
       // FormSubmit answers 200 even when it drops the submission (an
