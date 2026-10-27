@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ShowFinder from "@/components/ShowFinder";
@@ -7,20 +8,17 @@ import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { formatDate, isUpcoming, loadIndex, seasonShort, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
-export const metadata: Metadata = {
-  title: "TV Release Countdowns — next episode and new season dates",
+export const metadata: Metadata = pageMeta({
+  title: "TV Release Dates & Countdowns: Next Episodes, New Seasons",
   description:
     "Live countdowns to the next episode and next season of your shows: premiere dates, what's airing this week, and which shows have no return date yet.",
-  alternates: { canonical: "/tools/countdown/" },
-  openGraph: {
-    title: "TV Release Countdowns",
-    description: "Live countdowns to the next episode and next season of your shows.",
-    url: "/tools/countdown/",
-  },
-};
+  path: "/tools/countdown/",
+  absoluteTitle: true,
+  social: { description: "Live countdowns to the next episode and next season of your shows." },
+});
 
 // "3 days" / "Sep 30" for the poster badge — relative inside two weeks, a
-// short date after. Computed at build; the weekly refresh keeps it honest.
+// short date after. Computed at build; the daily refresh keeps it honest.
 function whenBadge(s: ShowSummary, today: Date): string {
   const t = new Date(s.nextEpisode!.airstamp).getTime();
   const days = Math.ceil((t - today.getTime()) / 86400000);

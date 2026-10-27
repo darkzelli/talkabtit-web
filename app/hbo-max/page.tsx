@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import ServicePage, { type ServiceConfig } from "@/components/ServicePage";
-import { OG_IMAGE } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "HBO Max Comment Section",
   description:
-    "Add a comment section to HBO Max with TalkAbtIT — a free Chrome extension that pins comments to the exact moment in every episode. Episode discussion, right on the player.",
-  alternates: { canonical: "/hbo-max/" },
-  openGraph: {
-    title: "HBO Max Comment Section — TalkAbtIT",
-    description:
-      "A free Chrome extension that adds a time-stamped comment section to every show and movie on HBO Max.",
-    url: "/hbo-max/",
-    images: [OG_IMAGE],
-  },
-};
+    "Add a comment section to HBO Max. TalkAbtIT is a free Chrome extension that pins comments to the exact moment in every episode, right on the player.",
+  path: "/hbo-max/",
+  social: { title: "HBO Max Comment Section — TalkAbtIT", description: "A free Chrome extension that adds a time-stamped comment section to every show and movie on HBO Max." },
+});
 
 const hboMax: ServiceConfig = {
   name: "HBO Max",

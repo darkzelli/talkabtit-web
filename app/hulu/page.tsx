@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import ServicePage, { type ServiceConfig } from "@/components/ServicePage";
-import { OG_IMAGE } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Hulu Comment Section",
   description:
-    "Add a comment section to Hulu with TalkAbtIT — a free Chrome extension that pins comments to the exact moment in every show. Talk about this week's episode right on the player.",
-  alternates: { canonical: "/hulu/" },
-  openGraph: {
-    title: "Hulu Comment Section — TalkAbtIT",
-    description:
-      "A free Chrome extension that adds a time-stamped comment section to every show on Hulu.",
-    url: "/hulu/",
-    images: [OG_IMAGE],
-  },
-};
+    "Add a comment section to Hulu. TalkAbtIT is a free Chrome extension that pins comments to the exact moment in every show. Talk about this week's episode.",
+  path: "/hulu/",
+  social: { title: "Hulu Comment Section — TalkAbtIT", description: "A free Chrome extension that adds a time-stamped comment section to every show on Hulu." },
+});
 
 const hulu: ServiceConfig = {
   name: "Hulu",

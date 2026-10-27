@@ -120,7 +120,7 @@ export function seasonShort(n: number): string {
 
 // Whether any episode has aired yet. Shows that haven't premiered only get a
 // /tools/countdown/ page; they join /tools/how-long-to-watch/ (and the lists
-// that link there) once the weekly refresh sees their first episode air.
+// that link there) once the daily refresh sees their first episode air.
 // Not episodeCount: TVmaze lists announced episodes before they air.
 export function hasAired(show: ShowSummary): boolean {
   return show.lastAired !== null;

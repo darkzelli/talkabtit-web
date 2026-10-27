@@ -3,7 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BlogCard, { AuthorBox, BlogPoster, PostMeta } from "@/components/BlogCard";
 import ToolCta from "@/components/ToolCta";
-import { SITE_URL, SITE_NAME, OG_IMAGE } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, pageMeta } from "@/lib/seo";
 import { episodeLabel, loadPost, loadPosts } from "@/lib/blog";
 import { loadIndex } from "@/lib/tv";
 import "@/components/tools.css";
@@ -20,21 +20,25 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = loadPost(slug);
-  return {
+  // Long post titles drop the " — TalkAbtIT" suffix so the title isn't cut.
+  const m = pageMeta({
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/blog/${slug}/` },
+    path: `/blog/${slug}/`,
+    type: "article",
+    absoluteTitle: post.title.length + SITE_NAME.length + 3 > 60,
+    // The poster is portrait, so the site card stays the share image; the
+    // poster rides along as a second option for platforms that pick.
+    image: post.poster ? { url: post.poster, alt: `${post.showName} poster` } : null,
+  });
+  return {
+    ...m,
     authors: [{ name: post.author.name, url: `${SITE_URL}/blog/author/${post.author.slug}/` }],
     openGraph: {
+      ...m.openGraph,
       type: "article",
-      title: post.title,
-      description: post.description,
-      url: `/blog/${slug}/`,
       publishedTime: post.date,
       authors: [`${SITE_URL}/blog/author/${post.author.slug}/`],
-      // The poster is portrait, so the site card stays the share image; the
-      // poster rides along as a second option for platforms that pick.
-      images: post.poster ? [OG_IMAGE, { url: post.poster, alt: `${post.showName} poster` }] : [OG_IMAGE],
     },
   };
 }

@@ -6,21 +6,18 @@ import ShowFinder from "@/components/ShowFinder";
 import { PosterGrid, type PosterItem } from "@/components/PosterCard";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, pageMeta } from "@/lib/seo";
 import { formatHours, hasAired, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
-export const metadata: Metadata = {
-  title: "Binge Time Calculator — how long to watch any show",
+export const metadata: Metadata = pageMeta({
+  title: "Binge Calculator: How Long to Watch Any TV Show",
   description:
-    "Find out exactly how long it takes to binge-watch any TV show. Total hours, days at your pace, and a per-season breakdown for hundreds of shows, or plug in your own numbers.",
-  alternates: { canonical: "/tools/binge-calculator/" },
-  openGraph: {
-    title: "Binge Time Calculator",
-    description: "How long does it take to watch every episode? Look up a show or plug in your own numbers.",
-    url: "/tools/binge-calculator/",
-  },
-};
+    "How long does it take to binge-watch a TV show? Total hours, days at your pace, and a per-season breakdown for hundreds of shows, or use your own numbers.",
+  path: "/tools/binge-calculator/",
+  absoluteTitle: true,
+  social: { description: "How long does it take to watch every episode? Look up a show or plug in your own numbers." },
+});
 
 const FAQS: Faq[] = [
   {
@@ -133,7 +130,7 @@ export default function BingeCalculatorPage() {
                   <div className="tool-sec">
                     <div>
                       <h2>Most watched this week</h2>
-                      <p>What everyone is streaming right now, by JustWatch&apos;s US popularity chart. Updated every Monday.</p>
+                      <p>What everyone is streaming right now, by JustWatch&apos;s US popularity chart. Updated daily.</p>
                     </div>
                   </div>
                   <PosterGrid

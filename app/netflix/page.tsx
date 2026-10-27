@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import ServicePage, { type ServiceConfig } from "@/components/ServicePage";
-import { OG_IMAGE } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Netflix Comment Section",
   description:
-    "Add a comment section to Netflix with TalkAbtIT — a free Chrome extension that pins comments to the exact moment in every show and movie. React to the twist the second it happens.",
-  alternates: { canonical: "/netflix/" },
-  openGraph: {
-    title: "Netflix Comment Section — TalkAbtIT",
-    description:
-      "A free Chrome extension that adds a time-stamped comment section to every show and movie on Netflix.",
-    url: "/netflix/",
-    images: [OG_IMAGE],
-  },
-};
+    "Add a comment section to Netflix. TalkAbtIT is a free Chrome extension that pins comments to the exact moment in every show and movie. React as it happens.",
+  path: "/netflix/",
+  social: { title: "Netflix Comment Section — TalkAbtIT", description: "A free Chrome extension that adds a time-stamped comment section to every show and movie on Netflix." },
+});
 
 const netflix: ServiceConfig = {
   name: "Netflix",

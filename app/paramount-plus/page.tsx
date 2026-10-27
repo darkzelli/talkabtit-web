@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import ServicePage, { type ServiceConfig } from "@/components/ServicePage";
-import { OG_IMAGE } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Paramount+ Comment Section",
   description:
-    "Add a comment section to Paramount+ with TalkAbtIT — a free Chrome extension that pins comments to the exact moment in every show and movie. Talk about the episode right on the player.",
-  alternates: { canonical: "/paramount-plus/" },
-  openGraph: {
-    title: "Paramount+ Comment Section — TalkAbtIT",
-    description:
-      "A free Chrome extension that adds a time-stamped comment section to every show and movie on Paramount+.",
-    url: "/paramount-plus/",
-    images: [OG_IMAGE],
-  },
-};
+    "Add a comment section to Paramount+. TalkAbtIT is a free Chrome extension that pins comments to the exact moment in every show and movie, on the player.",
+  path: "/paramount-plus/",
+  social: { title: "Paramount+ Comment Section — TalkAbtIT", description: "A free Chrome extension that adds a time-stamped comment section to every show and movie on Paramount+." },
+});
 
 const paramountPlus: ServiceConfig = {
   name: "Paramount+",

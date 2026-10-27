@@ -2,20 +2,16 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { SITE_URL, CHROME_STORE_URL } from "@/lib/seo";
+import { SITE_URL, CHROME_STORE_URL, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "TalkAbtIT vs Teleparty",
+export const metadata: Metadata = pageMeta({
+  title: "Teleparty Alternative for Watching Alone: TalkAbtIT",
   description:
-    "Looking for a Teleparty alternative? TalkAbtIT adds a time-stamped comment section to Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll — no scheduling, no synced session. See how the two compare.",
-  alternates: { canonical: "/teleparty-alternative/" },
-  openGraph: {
-    title: "TalkAbtIT vs Teleparty",
-    description:
-      "A Teleparty alternative that works on your schedule — comments pinned to the exact moment in the show, no synced session needed.",
-    url: "/teleparty-alternative/",
-  },
-};
+    "Looking for a Teleparty alternative? TalkAbtIT adds time-stamped comments to Netflix, Hulu, Disney+, HBO Max, and more. No scheduling, no synced session.",
+  path: "/teleparty-alternative/",
+  absoluteTitle: true,
+  social: { description: "A Teleparty alternative that works on your schedule — comments pinned to the exact moment in the show, no synced session needed." },
+});
 
 // Honest side-by-side: Teleparty is a live watch-party tool, TalkAbtIT is an
 // async comment section. Rows stay factual — this page ranks and converts on

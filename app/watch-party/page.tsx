@@ -3,7 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ToolCta from "@/components/ToolCta";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
-import { CHROME_STORE_URL, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { CHROME_STORE_URL, SITE_NAME, SITE_URL, pageMeta } from "@/lib/seo";
 import { featuredParty, formatPartyStart, loadWatchParties, partyStatus } from "@/lib/watch-parties";
 import "@/components/tools.css";
 import "@/components/watch-party.css";
@@ -11,17 +11,14 @@ import "@/components/watch-party.css";
 // The evergreen explainer: what a TalkAbtIT watch party is, how one runs,
 // and the questions people ask. Links through to /watch-party/schedule/ for
 // whatever is live or on the calendar right now.
-export const metadata: Metadata = {
-  title: "Watch parties — watch an episode live with everyone",
+export const metadata: Metadata = pageMeta({
+  title: "TalkAbtIT Watch Parties: Watch an Episode Live Together",
   description:
-    "A TalkAbtIT watch party is a scheduled episode the whole crowd watches at once: everyone presses play at the same time and the comment section rolls in live. How it works, how to join, and what's on the schedule.",
-  alternates: { canonical: "/watch-party/" },
-  openGraph: {
-    title: "TalkAbtIT watch parties",
-    description: "One episode, one start time, everyone's comments live beside the player. Free in Chrome.",
-    url: "/watch-party/",
-  },
-};
+    "A TalkAbtIT watch party is one episode the whole crowd watches at once: everyone presses play together and the comments roll in live. See what's on next.",
+  path: "/watch-party/",
+  absoluteTitle: true,
+  social: { description: "One episode, one start time, everyone's comments live beside the player. Free in Chrome." },
+});
 
 function Arrow() {
   return (

@@ -2,21 +2,16 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import FaqList, { type Faq, faqPageJsonLd } from "@/components/FaqList";
-import { SITE_URL, OG_IMAGE } from "@/lib/seo";
+import { SITE_URL, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "FAQ",
+export const metadata: Metadata = pageMeta({
+  title: "TalkAbtIT FAQ: Install, Privacy & Supported Services",
   description:
-    "Answers to common questions about TalkAbtIT — the browser extension that adds a time-stamped comment section to Netflix, Hulu, Disney+, HBO Max, and Crunchyroll.",
-  alternates: { canonical: "/support/" },
-  openGraph: {
-    title: "FAQ — TalkAbtIT",
-    description:
-      "Answers to common questions about TalkAbtIT — the comment section for streaming services.",
-    url: "/support/",
-    images: [OG_IMAGE],
-  },
-};
+    "How to install TalkAbtIT, what it costs, and how your data is handled. Comments for Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll.",
+  path: "/support/",
+  absoluteTitle: true,
+  social: { description: "Answers to common questions about TalkAbtIT — the comment section for streaming services." },
+});
 
 // Each FAQ carries both the rich JSX answer (`a`, rendered on the page) and a
 // plain-text `text` version — Google's FAQPage rich result requires plain text

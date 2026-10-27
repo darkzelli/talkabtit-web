@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import ServicePage, { type ServiceConfig } from "@/components/ServicePage";
-import { OG_IMAGE } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Disney+ Comment Section",
   description:
-    "Add a comment section to Disney+ with TalkAbtIT — a free Chrome extension that pins comments to the exact moment in every show and movie. React to every premiere with everyone else.",
-  alternates: { canonical: "/disney-plus/" },
-  openGraph: {
-    title: "Disney+ Comment Section — TalkAbtIT",
-    description:
-      "A free Chrome extension that adds a time-stamped comment section to every show and movie on Disney+.",
-    url: "/disney-plus/",
-    images: [OG_IMAGE],
-  },
-};
+    "Add a comment section to Disney+. TalkAbtIT is a free Chrome extension that pins comments to the exact moment in every show and movie. React with everyone.",
+  path: "/disney-plus/",
+  social: { title: "Disney+ Comment Section — TalkAbtIT", description: "A free Chrome extension that adds a time-stamped comment section to every show and movie on Disney+." },
+});
 
 const disneyPlus: ServiceConfig = {
   name: "Disney+",

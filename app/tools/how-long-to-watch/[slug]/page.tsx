@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { PosterGrid } from "@/components/PosterCard";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_NAME, SITE_URL, monthYear, pageMeta, withTail } from "@/lib/seo";
 import {
   daysAtPace,
   endedOn,
@@ -15,7 +15,9 @@ import {
   loadIndex,
   loadShow,
   relatedShows,
+  seasonLabel,
   yearSpan,
+  type Show,
 } from "@/lib/tv";
 import "@/components/tools.css";
 
@@ -27,17 +29,46 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Titles lead with the wording people search ("how long is X") and carry
+// both numbers they search for: the total and the episode length.
+function seoTitle(show: Show): string {
+  const total = `${titleHours(show.totalMinutes)}${show.status === "Ended" ? " Total" : " So Far"}`;
+  const q = `How Long Is ${show.name}?`;
+  const options = [
+    `${q} ${total}, ${show.averageRuntime}-Min Episodes`,
+    `${q} ${total}, ${show.averageRuntime}-Min Eps`,
+    `${q} ${total}`,
+    `${q} ${titleHours(show.totalMinutes)}`,
+  ];
+  return options.find((t) => t.length <= 60) ?? options[options.length - 1];
+}
+
+function titleHours(minutes: number): string {
+  return formatHours(minutes).replace("hour", "Hour");
+}
+
+function seoDescription(show: Show, fetchedAt: string): string {
+  const hours = formatHours(show.totalMinutes);
+  const eps = `${show.episodeCount.toLocaleString("en-US")} episode${show.episodeCount === 1 ? "" : "s"}`;
+  const tails = ["See days to finish at your pace and runtime by season.", "Days to finish at your pace, by season.", "Runtime by season."];
+  if (show.status === "Ended") {
+    const seasons = `${show.seasonCount} season${show.seasonCount === 1 ? "" : "s"}`;
+    return withTail(`${show.name} is ${hours} long: ${eps} over ${seasons}, about ${show.averageRuntime} min each.`, ...tails);
+  }
+  const through = show.lastAired ? ` through ${seasonLabel(show.lastAired.season)}` : "";
+  return withTail(`${show.name} is ${hours} long so far: ${eps}${through}, about ${show.averageRuntime} min each (updated ${monthYear(fetchedAt)}).`, ...tails);
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const show = loadShow(slug);
-  const title = `How Long to Watch ${show.name}? (${formatHours(show.totalMinutes)})`;
-  const description = `It takes ${formatDuration(show.totalMinutes)} to watch all ${show.episodeCount} episodes of ${show.name} across ${show.seasonCount} season${show.seasonCount === 1 ? "" : "s"}. See the per-season breakdown and how many days it takes at your pace.`;
-  return {
-    title,
-    description,
-    alternates: { canonical: `/tools/how-long-to-watch/${slug}/` },
-    openGraph: { title, description, url: `/tools/how-long-to-watch/${slug}/` },
-  };
+  return pageMeta({
+    title: seoTitle(show),
+    description: seoDescription(show, loadIndex().fetchedAt),
+    path: `/tools/how-long-to-watch/${slug}/`,
+    absoluteTitle: true,
+    image: show.poster ? { url: show.poster, alt: `${show.name} poster` } : null,
+  });
 }
 
 const PACES: { label: string; minutesPerDay: (avg: number) => number }[] = [
@@ -59,12 +90,14 @@ export default async function HowLongToWatchPage({ params }: Props) {
   const twoHourDays = daysAtPace(total, 120);
   const skipIntroSaved = Math.round(show.episodeCount * 1.25);
   const related = relatedShows(show, shows.filter(hasAired));
+  const ended = show.status === "Ended";
+  const url = `${SITE_URL}/tools/how-long-to-watch/${show.slug}/`;
 
   const FAQS: Faq[] = [
     {
       q: `How long does it take to watch all of ${show.name}?`,
-      a: <>{formatDuration(total)} of screen time. That&apos;s {show.episodeCount} episodes at about {show.averageRuntime} minutes each. At two hours a night it takes {twoHourDays} days.</>,
-      text: `${formatDuration(total)} of screen time. That's ${show.episodeCount} episodes at about ${show.averageRuntime} minutes each. At two hours a night it takes ${twoHourDays} days.`,
+      a: <>{formatHours(total)} ({formatDuration(total)}) of screen time. That&apos;s {show.episodeCount} episodes at about {show.averageRuntime} minutes each. At two hours a night it takes {twoHourDays} days.</>,
+      text: `${formatHours(total)} (${formatDuration(total)}) of screen time. That's ${show.episodeCount} episodes at about ${show.averageRuntime} minutes each. At two hours a night it takes ${twoHourDays} days.`,
     },
     {
       q: `How many episodes of ${show.name} are there?`,
@@ -96,13 +129,13 @@ export default async function HowLongToWatchPage({ params }: Props) {
           <div className="wrap tool-hero">
             <div className="tool-hero-copy">
             <span className="kicker">Binge time calculator</span>
-            <h1 className="display">How long does it take to watch {show.name}?</h1>
+            <h1 className="display">How long is {show.name}?</h1>
             <p className="tool-big">
               {formatDuration(total)}
               <small>{show.episodeCount.toLocaleString("en-US")} episodes · {formatHours(total)}</small>
             </p>
             <p className="tool-sub">
-              All {show.seasonCount} {plural} of {show.name}{span ? ` (${span})` : ""}, back to back. At two hours a night, you&apos;ll finish in <strong style={{ color: "var(--text)" }}>{twoHourDays} days</strong>.
+              {show.name} episodes are about {show.averageRuntime} minutes long. All {show.episodeCount.toLocaleString("en-US")} episodes{ended ? "" : " so far"} add up to {formatHours(total)}{span ? ` (${span})` : ""}. At two hours a night, you&apos;ll finish in <strong style={{ color: "var(--text)" }}>{twoHourDays} days</strong>.
             </p>
             <div className="tool-stats">
               <div className="tool-stat"><span className="tool-stat-num">{show.episodeCount.toLocaleString("en-US")}</span><span className="tool-stat-label">Episodes</span></div>
@@ -229,7 +262,39 @@ export default async function HowLongToWatchPage({ params }: Props) {
       <Footer sub />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/tools/how-long-to-watch/${show.slug}/#faq`)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "TVSeries",
+                "@id": `${url}#series`,
+                name: show.name,
+                url,
+                ...(show.poster ? { image: `${SITE_URL}${show.poster}` } : {}),
+                ...(show.premiered ? { startDate: show.premiered } : {}),
+                ...(ended && endedOn(show) ? { endDate: endedOn(show) } : {}),
+                numberOfSeasons: show.seasonCount,
+                numberOfEpisodes: show.episodeCount,
+                ...(show.genres.length ? { genre: show.genres } : {}),
+                sameAs: show.tvmazeUrl,
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
+                  { "@type": "ListItem", position: 2, name: "Tools", item: `${SITE_URL}/tools/` },
+                  { "@type": "ListItem", position: 3, name: "How long to watch", item: `${SITE_URL}/tools/how-long-to-watch/` },
+                  { "@type": "ListItem", position: 4, name: show.name, item: url },
+                ],
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${url}#faq`)) }}
       />
     </>
   );

@@ -5,21 +5,15 @@ import FaqList, { type Faq, faqPageJsonLd } from "@/components/FaqList";
 import MobileReminder from "@/components/MobileReminder";
 import InstallSteps from "@/components/InstallSteps";
 import { INSTALL_STEPS as STEPS } from "@/lib/install-steps";
-import { CHROME_STORE_URL, OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { CHROME_STORE_URL, SITE_NAME, SITE_URL, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "How to Install",
   description:
-    "Install TalkAbtIT in about a minute: add the extension from the Chrome Web Store, sign in, open Netflix, Hulu, Disney+, HBO Max, Paramount+, or Crunchyroll, press play, and click the popcorn bucket.",
-  alternates: { canonical: "/how-to-install/" },
-  openGraph: {
-    title: `How to Install — ${SITE_NAME}`,
-    description:
-      "Step-by-step: add TalkAbtIT to Chrome, sign in, and open the comment section on your first episode.",
-    url: "/how-to-install/",
-    images: [OG_IMAGE],
-  },
-};
+    "Install TalkAbtIT in a minute: add it from the Chrome Web Store, sign in, open Netflix, Hulu, Disney+, HBO Max, Paramount+, or Crunchyroll, and press play.",
+  path: "/how-to-install/",
+  social: { title: `How to Install — ${SITE_NAME}`, description: "Step-by-step: add TalkAbtIT to Chrome, sign in, and open the comment section on your first episode." },
+});
 
 const FAQS: Faq[] = [
   {

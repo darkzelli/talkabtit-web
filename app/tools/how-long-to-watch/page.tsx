@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ShowFinder from "@/components/ShowFinder";
@@ -7,17 +8,14 @@ import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { formatHours, hasAired, loadIndex, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
-export const metadata: Metadata = {
-  title: "How Long to Watch — binge times for every show",
+export const metadata: Metadata = pageMeta({
+  title: "How Long to Watch Every TV Show: Total Binge Times",
   description:
     "Total watch time for hundreds of TV shows: how many hours, how many days at your pace, and a season-by-season breakdown.",
-  alternates: { canonical: "/tools/how-long-to-watch/" },
-  openGraph: {
-    title: "How Long to Watch",
-    description: "Total watch time for hundreds of TV shows.",
-    url: "/tools/how-long-to-watch/",
-  },
-};
+  path: "/tools/how-long-to-watch/",
+  absoluteTitle: true,
+  social: { description: "Total watch time for hundreds of TV shows." },
+});
 
 export default function HowLongToWatchIndexPage() {
   const { fetchedAt, shows } = loadIndex();

@@ -6,8 +6,8 @@ import ToolCta, { ToolAttribution } from "@/components/ToolCta";
 import { PosterGrid } from "@/components/PosterCard";
 import WatchPartyCallout from "@/components/WatchPartyCallout";
 import FaqList, { faqPageJsonLd, type Faq } from "@/components/FaqList";
-import { SITE_URL } from "@/lib/seo";
-import { endedOn, formatDate, formatHours, hasAired, isUpcoming, loadIndex, loadShow, relatedShows, releaseTime, seasonLabel, seasonShort, statusLabel } from "@/lib/tv";
+import { SITE_NAME, SITE_URL, monthYear, pageMeta, withTail } from "@/lib/seo";
+import { endedOn, formatDate, formatHours, hasAired, isUpcoming, loadIndex, loadShow, relatedShows, releaseTime, seasonLabel, seasonShort, statusLabel, type Show } from "@/lib/tv";
 import "@/components/tools.css";
 
 export const dynamicParams = false;
@@ -23,26 +23,105 @@ function nextLabel(show: ReturnType<typeof loadShow>) {
   return n.number === 1 ? `${show.name} ${seasonLabel(n.season)}` : `${show.name} ${seasonLabel(n.season)}, Episode ${n.number}`;
 }
 
+// "Oct 29" / "Oct 29, 2026" for titles, where every character counts.
+function shortDate(iso: string, year = false): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    ...(year ? { year: "numeric" } : {}),
+    timeZone: "UTC",
+  });
+}
+
+function weekday(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" });
+}
+
+// Running shows with more episodes announced in the latest season are
+// mid-season, so the next thing is an episode, not a new season.
+function nextSeason(show: Show): number | null {
+  const last = show.lastAired;
+  if (!last || last.season >= 1900) return null;
+  const season = show.seasons.find((s) => s.number === last.season);
+  return season?.episodes.some((e) => e.n > last.number) ? null : last.season + 1;
+}
+
+function fit(options: string[]): string {
+  return options.find((t) => t.length <= 60) ?? options[options.length - 1];
+}
+
+// Titles answer the question in the result itself: the date when there is
+// one, and an honest "as of" status when there isn't. The year/date markers
+// come from the data refresh, so they move forward on their own.
+function seoMeta(show: Show, fetchedAt: string): { title: string; description: string } {
+  const year = fetchedAt.slice(0, 4);
+  const asOf = formatDate(fetchedAt);
+  const aired = hasAired(show);
+  const seasons = `${show.seasonCount} season${show.seasonCount === 1 ? "" : "s"}`;
+  if (isUpcoming(show)) {
+    const n = show.nextEpisode!;
+    const when = `${weekday(n.airdate)}, ${formatDate(n.airdate)}${releaseTime(show)}${show.network ? ` on ${show.network}` : ""}`;
+    const title = !aired
+      ? fit([`${show.name} Release Date: ${shortDate(n.airdate, true)}`, `${show.name}: ${shortDate(n.airdate, true)}`])
+      : n.number === 1 && n.season < 1900
+        ? fit([`${show.name} Season ${n.season} Release Date: ${shortDate(n.airdate, true)}`, `${show.name} Season ${n.season}: ${shortDate(n.airdate, true)}`])
+        : n.season < 1900
+          ? fit([`${show.name} S${n.season}E${n.number} Release Date: ${shortDate(n.airdate)}`, `${show.name} S${n.season}E${n.number}: ${shortDate(n.airdate)}`])
+          : fit([`${show.name} Episode ${n.number} Release Date: ${shortDate(n.airdate)}`, `${show.name} Episode ${n.number}: ${shortDate(n.airdate)}`]);
+    return {
+      title,
+      description: withTail(
+        `${nextLabel(show)} ${n.number === 1 ? "premieres" : "airs"} ${when}.`,
+        ...(aired ? ["Live countdown in your time zone, plus how to catch up."] : []),
+        "Live countdown in your time zone.",
+      ),
+    };
+  }
+  if (show.status === "Ended") {
+    const next = show.lastAired && show.lastAired.season < 1900 ? `Season ${show.lastAired.season + 1}` : null;
+    const ended = endedOn(show);
+    return {
+      title: fit([
+        `Is ${show.name} Coming Back? ${next ?? "Revival"} Status (${year})`,
+        `Is ${show.name} Coming Back? (${year})`,
+        `Is ${show.name} Coming Back?`,
+      ]),
+      description: `${show.name} ended${ended ? ` in ${monthYear(ended)}` : ""} after ${seasons}. As of ${monthYear(fetchedAt)}, no ${next ? `${next} or ` : ""}revival is scheduled.${aired ? ` Catch up: ${formatHours(show.totalMinutes)} total.` : ""}`,
+    };
+  }
+  const season = nextSeason(show);
+  const last = show.lastAired;
+  return {
+    title: fit(
+      season
+        ? [`${show.name} Season ${season} Release Date (${year} Update)`, `${show.name} Season ${season} Release Date`, `${show.name} Season ${season}`]
+        : aired
+          ? [`${show.name} Next Episode Release Date (${year} Update)`, `${show.name} Next Episode Release Date`, `${show.name} Next Episode`]
+          : [`${show.name} Release Date (${year} Update)`, `${show.name} Release Date`],
+    ),
+    description: !aired
+      ? `No premiere date yet for ${show.name} as of ${asOf}. This page becomes a live countdown when one is announced.`
+      : withTail(
+          `No ${season ? `Season ${season}` : "next episode"} date yet as of ${asOf}. The latest episode, ${seasonShort(last!.season)}E${last!.number}, aired ${formatDate(last!.airdate)}.`,
+          "This page becomes a live countdown when a date is announced.",
+          "A live countdown appears here once it's dated.",
+        ),
+  };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const show = loadShow(slug);
-  const up = isUpcoming(show);
-  const title = up
-    ? `${nextLabel(show)} Countdown — ${formatDate(show.nextEpisode!.airdate)}`
-    : show.status === "Ended"
-      ? `Is ${show.name} Coming Back? Release Countdown`
-      : `${show.name} Next Season Release Date Countdown`;
-  const description = up
-    ? `${nextLabel(show)} ${show.nextEpisode!.number === 1 ? "premieres" : "airs"} on ${formatDate(show.nextEpisode!.airdate)}${releaseTime(show)}. Live countdown to the release, plus the last episode that aired.`
-    : show.status === "Ended"
-      ? `${show.name} ended${endedOn(show) ? ` on ${formatDate(endedOn(show))}` : ""} after ${show.seasonCount} season${show.seasonCount === 1 ? "" : "s"}. What's known about a return, and where things stand.`
-      : `No release date has been announced for the next episode of ${show.name}. This page turns into a live countdown the moment a date is listed.`;
-  return {
+  const { title, description } = seoMeta(show, loadIndex().fetchedAt);
+  return pageMeta({
     title,
     description,
-    alternates: { canonical: `/tools/countdown/${slug}/` },
-    openGraph: { title, description, url: `/tools/countdown/${slug}/` },
-  };
+    path: `/tools/countdown/${slug}/`,
+    absoluteTitle: true,
+    image: show.poster ? { url: show.poster, alt: `${show.name} poster` } : null,
+  });
 }
 
 export default async function CountdownPage({ params }: Props) {
@@ -202,7 +281,7 @@ export default async function CountdownPage({ params }: Props) {
                   <p>
                     No release date has been announced yet. TVmaze lists {show.name} as &ldquo;{show.status}&rdquo;
                     {show.status === "Running" ? ", which means it hasn't been cancelled, but the next episode hasn't been scheduled" : ""}.
-                    This page checks for a date every week and becomes a live countdown the moment one is listed.
+                    This page checks for a date every day and becomes a live countdown the moment one is listed.
                   </p>
                   <h2>What is the most recent episode of {show.name}?</h2>
                   <p>
@@ -242,6 +321,21 @@ export default async function CountdownPage({ params }: Props) {
         </section>
       </main>
       <Footer sub />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
+              { "@type": "ListItem", position: 2, name: "Tools", item: `${SITE_URL}/tools/` },
+              { "@type": "ListItem", position: 3, name: "Countdowns", item: `${SITE_URL}/tools/countdown/` },
+              { "@type": "ListItem", position: 4, name: show.name, item: `${SITE_URL}/tools/countdown/${show.slug}/` },
+            ],
+          }),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(FAQS, `${SITE_URL}/tools/countdown/${show.slug}/#faq`)) }}

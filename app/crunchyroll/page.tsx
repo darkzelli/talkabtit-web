@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import ServicePage, { type ServiceConfig } from "@/components/ServicePage";
-import { OG_IMAGE } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Crunchyroll Comment Section",
   description:
-    "Add a comment section to Crunchyroll with TalkAbtIT — a free Chrome extension that pins comments to the exact moment in every anime episode. React to every hype moment with other fans.",
-  alternates: { canonical: "/crunchyroll/" },
-  openGraph: {
-    title: "Crunchyroll Comment Section — TalkAbtIT",
-    description:
-      "A free Chrome extension that adds a time-stamped comment section to every anime episode on Crunchyroll.",
-    url: "/crunchyroll/",
-    images: [OG_IMAGE],
-  },
-};
+    "Add a comment section to Crunchyroll. TalkAbtIT is a free Chrome extension that pins comments to the exact moment in every anime episode, on the player.",
+  path: "/crunchyroll/",
+  social: { title: "Crunchyroll Comment Section — TalkAbtIT", description: "A free Chrome extension that adds a time-stamped comment section to every anime episode on Crunchyroll." },
+});
 
 const crunchyroll: ServiceConfig = {
   name: "Crunchyroll",

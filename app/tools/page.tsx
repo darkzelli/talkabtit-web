@@ -3,21 +3,18 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { PosterGrid, type PosterItem } from "@/components/PosterCard";
 import ToolCta, { ToolAttribution } from "@/components/ToolCta";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, pageMeta } from "@/lib/seo";
 import { formatHours, hasAired, loadIndex, loadTrending, yearSpan, type ShowSummary } from "@/lib/tv";
 import "@/components/tools.css";
 
-export const metadata: Metadata = {
-  title: "Free TV Tools — binge calculator, watch times, release countdowns",
+export const metadata: Metadata = pageMeta({
+  title: "Free TV Tools: Binge Calculator & Release Countdowns",
   description:
-    "Free tools for TV fans: work out how long it takes to binge any show, look up total watch times for hundreds of series, and count down to the next episode or season.",
-  alternates: { canonical: "/tools/" },
-  openGraph: {
-    title: "Free TV Tools",
-    description: "Binge time calculator, watch times for hundreds of shows, and release countdowns.",
-    url: "/tools/",
-  },
-};
+    "Free tools for TV fans: how long it takes to binge any show, total watch times for hundreds of series, and countdowns to the next episode or season.",
+  path: "/tools/",
+  absoluteTitle: true,
+  social: { description: "Binge time calculator, watch times for hundreds of shows, and release countdowns." },
+});
 
 // The hub every tool hangs off. Each card is a plain link so the tool pages
 // get crawled from here as well as from the nav and footer.
@@ -76,7 +73,7 @@ export default function ToolsPage() {
             </h1>
             <p className="lede">
               Binge math, total watch times, and release countdowns for
-              hundreds of shows. Free, no sign-up, refreshed every week.
+              hundreds of shows. Free, no sign-up, refreshed every day.
             </p>
           </div>
         </header>

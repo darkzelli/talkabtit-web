@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import WatchPartyStatus from "@/components/WatchPartyStatus";
-import { CHROME_STORE_URL, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { CHROME_STORE_URL, SITE_NAME, SITE_URL, pageMeta, withTail } from "@/lib/seo";
 import { calendarUrl, episodeTag, featuredParty, formatPartyStart, loadWatchParties, partyStatus, type WatchParty } from "@/lib/watch-parties";
 import { loadPosts } from "@/lib/blog";
 import "@/components/tools.css";
@@ -16,14 +16,14 @@ export function generateMetadata(): Metadata {
   const party = featuredParty(loadWatchParties());
   const title = party ? `${party.title} — live watch party` : "Watch party schedule";
   const description = party
-    ? `${party.description} ${formatPartyStart(party.start)} on ${party.service?.label ?? "your streaming service"}. Free with the TalkAbtIT Chrome extension.`
-    : "Every live and upcoming TalkAbtIT watch party: everyone presses play at the same time and the comment section rolls in live. Nothing is scheduled right now — check back soon.";
-  return {
+    ? withTail(`${party.description} ${formatPartyStart(party.start)} on ${party.service?.label ?? "your streaming service"}.`, "Free with the TalkAbtIT Chrome extension.")
+    : "Every live and upcoming TalkAbtIT watch party: everyone presses play at once and the comments roll in live. Nothing is scheduled right now, so check back soon.";
+  return pageMeta({
     title,
     description,
-    alternates: { canonical: "/watch-party/schedule/" },
-    openGraph: { title, description, url: "/watch-party/schedule/", ...(party?.poster ? { images: [{ url: party.poster }] } : {}) },
-  };
+    path: "/watch-party/schedule/",
+    image: party?.poster ? { url: party.poster, alt: `${party.title} poster` } : null,
+  });
 }
 
 function ExtensionIcon() {

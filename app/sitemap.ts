@@ -14,7 +14,7 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = "2026-09-23"; // homepage: tools section added
   // Tool pages (/tools/, /tools/binge-calculator/, /tools/countdown/ and the
-  // per-show pages under each) are generated from data/tv/, refreshed weekly
+  // per-show pages under each) are generated from data/tv/, refreshed daily
   // by the refresh-shows workflow, so their lastModified is the data date.
   const tv = loadIndex();
   const toolIndexes: MetadataRoute.Sitemap = [
@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(hasAired(s)
       ? [{ url: `${SITE_URL}/tools/how-long-to-watch/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.6 }]
       : []),
-    { url: `${SITE_URL}/tools/countdown/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "weekly" as const, priority: 0.5 },
+    { url: `${SITE_URL}/tools/countdown/${s.slug}/`, lastModified: tv.fetchedAt, changeFrequency: "daily" as const, priority: 0.5 },
   ]);
   // Blog: the index moves whenever a post lands, so it takes the newest
   // post's date; each post takes its own.

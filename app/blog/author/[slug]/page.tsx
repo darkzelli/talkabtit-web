@@ -3,7 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { BlogRow } from "@/components/BlogCard";
 import ToolCta from "@/components/ToolCta";
-import { SITE_URL, SITE_NAME } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, pageMeta } from "@/lib/seo";
 import { AUTHORS, getAuthor } from "@/lib/authors";
 import { loadPosts } from "@/lib/blog";
 import "@/components/tools.css";
@@ -20,12 +20,8 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const a = getAuthor(slug);
-  return {
-    title: `${a.name}, ${a.title}`,
-    description: a.short,
-    alternates: { canonical: `/blog/author/${slug}/` },
-    openGraph: { type: "profile", title: a.name, description: a.short, url: `/blog/author/${slug}/` },
-  };
+  const m = pageMeta({ title: `${a.name}, ${a.title}`, description: a.short, path: `/blog/author/${slug}/`, social: { title: a.name } });
+  return { ...m, openGraph: { ...m.openGraph, type: "profile" } };
 }
 
 export default async function AuthorPage({ params }: Props) {

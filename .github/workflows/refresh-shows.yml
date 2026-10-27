@@ -1,4 +1,4 @@
-# Weekly refresh of data/tv/ (episode lists, next-episode dates) from TVmaze
+# Daily refresh of data/tv/ (episode lists, next-episode dates) from TVmaze
 # and the most-watched-this-week chart from JustWatch, so the countdown pages,
 # binge totals, and the "this week" section stay current without anyone
 # touching the repo. Posters for newly charting shows are committed too.
@@ -8,7 +8,7 @@ name: Refresh show data
 
 on:
   schedule:
-    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+    - cron: "0 9 * * *" # daily 09:00 UTC, so dates in page titles never go stale
   workflow_dispatch:
 
 permissions:

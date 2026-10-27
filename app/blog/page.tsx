@@ -3,22 +3,19 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { BlogPoster, BlogRow, PostMeta } from "@/components/BlogCard";
 import ToolCta from "@/components/ToolCta";
-import { SITE_URL, SITE_NAME } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, pageMeta } from "@/lib/seo";
 import { loadPosts } from "@/lib/blog";
 import "@/components/tools.css";
 import "@/components/blog.css";
 
-export const metadata: Metadata = {
-  title: "Blog — episode breakdowns, finales, and what to watch next",
+export const metadata: Metadata = pageMeta({
+  title: "TalkAbtIT Blog: Episode Breakdowns, Finales & What to Watch",
   description:
-    "The TalkAbtIT blog: episode breakdowns, season finales, catch-up guides, and what to watch next on Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll.",
-  alternates: { canonical: "/blog/" },
-  openGraph: {
-    title: "The TalkAbtIT Blog",
-    description: "Episode breakdowns, season finales, catch-up guides, and what to watch next.",
-    url: "/blog/",
-  },
-};
+    "Episode breakdowns, season finales, catch-up guides, and what to watch next on Netflix, Hulu, Disney+, HBO Max, Paramount+, and Crunchyroll.",
+  path: "/blog/",
+  absoluteTitle: true,
+  social: { description: "Episode breakdowns, season finales, catch-up guides, and what to watch next." },
+});
 
 export default function BlogIndex() {
   const posts = loadPosts();

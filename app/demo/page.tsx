@@ -2,21 +2,15 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import DemoStage from "@/components/DemoStage";
-import { OG_IMAGE, SITE_URL, SITE_NAME, CHROME_STORE_URL } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, CHROME_STORE_URL, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Live Demo",
   description:
-    "Try TalkAbtIT without installing it. A working player with the real comment overlay: open the sidebar, sort the thread, post a comment pinned to the moment, and watch time-stamped pop-ups land over the video.",
-  alternates: { canonical: "/demo/" },
-  openGraph: {
-    title: `Live Demo — ${SITE_NAME}`,
-    description:
-      "A playable copy of the extension: the comment sidebar, timed pop-ups, spoiler blur and all — running right on the page.",
-    url: "/demo/",
-    images: [OG_IMAGE],
-  },
-};
+    "Try TalkAbtIT without installing it: a working player with the real comment overlay. Open the sidebar, post a comment, and watch time-stamped pop-ups land.",
+  path: "/demo/",
+  social: { title: `Live Demo — ${SITE_NAME}`, description: "A playable copy of the extension: the comment sidebar, timed pop-ups, spoiler blur and all — running right on the page." },
+});
 
 // Marks the page as an interactive demo of the extension, linked back to the
 // Organization node the root layout publishes.
