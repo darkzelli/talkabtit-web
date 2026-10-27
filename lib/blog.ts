@@ -21,7 +21,8 @@
 //     :::highlights … :::                                  boxed callout with a label
 //     ![caption](/blog/show/still.jpg "Paramount+")     image with a credit line
 //     > @handle: what they posted                        social-post card: the quote,
-//     > https://x.com/handle/status/123                  the handle linked to the post,
+//     > https://x.com/handle/status/123                  the handle linked to the post (X, Reddit,
+//                                                        Threads, TikTok, or a MyAnimeList thread),
 //     > likes: 1815                                      and the like count (both lines
 //                                                        optional)
 import fs from "node:fs";
@@ -116,12 +117,12 @@ export function renderMarkdown(md: string): string {
       const t = q[0].match(/^@([A-Za-z0-9_.]+):?\s+(.*)$/);
       if (t) {
         const rest = q.slice(1).map((l) => l.trim());
-        const url = rest.find((l) => /^https?:\/\/(x\.com|twitter\.com|www\.reddit\.com|reddit\.com|old\.reddit\.com|www\.threads\.net|threads\.net|www\.tiktok\.com)\//.test(l));
+        const url = rest.find((l) => /^https?:\/\/(x\.com|twitter\.com|www\.reddit\.com|reddit\.com|old\.reddit\.com|www\.threads\.net|threads\.net|www\.tiktok\.com|myanimelist\.net)\//.test(l));
         const likesLine = rest.find((l) => /^likes:\s*[\d,]+$/i.test(l));
         const likes = likesLine ? Number(likesLine.replace(/\D/g, "")) : null;
         const text = inline(escapeHtml([t[2], ...rest.filter((l) => l !== url && l !== likesLine)].join(" ").trim()));
         const handle = escapeHtml(t[1]);
-        const site = !url ? "" : /reddit\.com/.test(url) ? "Reddit" : /threads\.net/.test(url) ? "Threads" : /tiktok\.com/.test(url) ? "TikTok" : "X";
+        const site = !url ? "" : /reddit\.com/.test(url) ? "Reddit" : /threads\.net/.test(url) ? "Threads" : /tiktok\.com/.test(url) ? "TikTok" : /myanimelist\.net/.test(url) ? "MyAnimeList" : "X";
         const name = url ? `<a href="${url}" target="_blank" rel="noopener">@${handle}</a>` : `<span>@${handle}</span>`;
         const meta = [
           likes != null ? `<span class="post-social-likes"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>${likes.toLocaleString("en-US")}</span>` : "",

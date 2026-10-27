@@ -1,0 +1,21 @@
+// usage: node shot-section.mjs <url> <css selector> <out.png> [width]
+import fs from "node:fs";
+const [url, selector, out, widthArg] = process.argv.slice(2);
+const width = Number(widthArg || 1440);
+const list = await (await fetch("http://localhost:9333/json")).json();
+const ws = new WebSocket(list.find((t) => t.type === "page").webSocketDebuggerUrl);
+await new Promise((r) => (ws.onopen = r));
+let id = 0; const pending = new Map();
+ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); } if (m.method === "Page.loadEventFired") loaded?.(); };
+const send = (method, params = {}) => new Promise((res) => { const i = ++id; pending.set(i, res); ws.send(JSON.stringify({ id: i, method, params })); });
+let loaded; const loadP = new Promise((r) => (loaded = r));
+await send("Page.enable");
+await send("Emulation.setDeviceMetricsOverride", { width, height: 1000, deviceScaleFactor: 1, mobile: width < 700 });
+await send("Page.navigate", { url });
+await loadP; await new Promise((r) => setTimeout(r, 2500));
+const { result } = await send("Runtime.evaluate", { returnByValue: true, expression: `(() => { const el = document.querySelector(${JSON.stringify(selector)}); const r = el.getBoundingClientRect(); return { x: 0, y: r.top + window.scrollY, width: document.documentElement.clientWidth, height: Math.ceil(r.height) }; })()` });
+const clip = result.result.value;
+const shot = await send("Page.captureScreenshot", { format: "png", captureBeyondViewport: true, clip: { ...clip, scale: 1 } });
+fs.writeFileSync(out, Buffer.from(shot.result.data, "base64"));
+console.log("wrote", out, clip);
+ws.close();
