@@ -17,7 +17,7 @@ export function generateMetadata(): Metadata {
   const title = party ? `${party.title} — live watch party` : "Watch party schedule";
   const description = party
     ? withTail(`${party.description} ${formatPartyStart(party.start)} on ${party.service?.label ?? "your streaming service"}.`, "Free with the TalkAbtIT Chrome extension.")
-    : "Every live and upcoming TalkAbtIT watch party: everyone presses play at once and the comments roll in live. Nothing is scheduled right now, so check back soon.";
+    : "Every live and upcoming TalkAbtIT watch party: everyone presses play at once and the comments roll in live. Nothing is scheduled yet. Check back soon.";
   return pageMeta({
     title,
     description,

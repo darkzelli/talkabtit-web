@@ -29,22 +29,18 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
-// Titles lead with the wording people search ("how long is X") and carry
-// both numbers they search for: the total and the episode length.
+// Titles lead with the wording people search ("how long is X") and name
+// what the page has, but leave the numbers for the page: titles that
+// carried the hours got almost no clicks.
 function seoTitle(show: Show): string {
-  const total = `${titleHours(show.totalMinutes)}${show.status === "Ended" ? " Total" : " So Far"}`;
   const q = `How Long Is ${show.name}?`;
   const options = [
-    `${q} ${total}, ${show.averageRuntime}-Min Episodes`,
-    `${q} ${total}, ${show.averageRuntime}-Min Eps`,
-    `${q} ${total}`,
-    `${q} ${titleHours(show.totalMinutes)}`,
+    `${q} Total Runtime & Episode Length`,
+    `${q} Runtime & Episode Length`,
+    `${q} Total Runtime`,
+    q,
   ];
   return options.find((t) => t.length <= 60) ?? options[options.length - 1];
-}
-
-function titleHours(minutes: number): string {
-  return formatHours(minutes).replace("hour", "Hour");
 }
 
 function seoDescription(show: Show, fetchedAt: string): string {

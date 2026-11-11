@@ -23,17 +23,6 @@ function nextLabel(show: ReturnType<typeof loadShow>) {
   return n.number === 1 ? `${show.name} ${seasonLabel(n.season)}` : `${show.name} ${seasonLabel(n.season)}, Episode ${n.number}`;
 }
 
-// "Oct 29" / "Oct 29, 2026" for titles, where every character counts.
-function shortDate(iso: string, year = false): string {
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    ...(year ? { year: "numeric" } : {}),
-    timeZone: "UTC",
-  });
-}
-
 function weekday(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" });
@@ -52,9 +41,10 @@ function fit(options: string[]): string {
   return options.find((t) => t.length <= 60) ?? options[options.length - 1];
 }
 
-// Titles answer the question in the result itself: the date when there is
-// one, and an honest "as of" status when there isn't. The year/date markers
-// come from the data refresh, so they move forward on their own.
+// Titles name the question and leave the date for the page; the
+// description carries it, or an honest "as of" status when there isn't one.
+// The year/date markers come from the data refresh, so they move forward on
+// their own.
 function seoMeta(show: Show, fetchedAt: string): { title: string; description: string } {
   const year = fetchedAt.slice(0, 4);
   const asOf = formatDate(fetchedAt);
@@ -63,13 +53,14 @@ function seoMeta(show: Show, fetchedAt: string): { title: string; description: s
   if (isUpcoming(show)) {
     const n = show.nextEpisode!;
     const when = `${weekday(n.airdate)}, ${formatDate(n.airdate)}${releaseTime(show)}${show.network ? ` on ${show.network}` : ""}`;
-    const title = !aired
-      ? fit([`${show.name} Release Date: ${shortDate(n.airdate, true)}`, `${show.name}: ${shortDate(n.airdate, true)}`])
+    const what = !aired
+      ? show.name
       : n.number === 1 && n.season < 1900
-        ? fit([`${show.name} Season ${n.season} Release Date: ${shortDate(n.airdate, true)}`, `${show.name} Season ${n.season}: ${shortDate(n.airdate, true)}`])
+        ? `${show.name} Season ${n.season}`
         : n.season < 1900
-          ? fit([`${show.name} S${n.season}E${n.number} Release Date: ${shortDate(n.airdate)}`, `${show.name} S${n.season}E${n.number}: ${shortDate(n.airdate)}`])
-          : fit([`${show.name} Episode ${n.number} Release Date: ${shortDate(n.airdate)}`, `${show.name} Episode ${n.number}: ${shortDate(n.airdate)}`]);
+          ? `${show.name} S${n.season}E${n.number}`
+          : `${show.name} Episode ${n.number}`;
+    const title = fit([`${what} Release Date & Countdown`, `${what} Release Date`]);
     return {
       title,
       description: withTail(
