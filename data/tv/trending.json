@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-09",
+  "fetchedAt": "2026-11-12",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -23,21 +23,21 @@
     },
     {
       "rank": 4,
+      "slug": "from",
+      "title": "FROM",
+      "url": "https://www.justwatch.com/us/tv-show/from"
+    },
+    {
+      "rank": 5,
       "slug": "the-diplomat",
       "title": "The Diplomat",
       "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
     },
     {
-      "rank": 5,
+      "rank": 6,
       "slug": "phony",
       "title": "Phony",
       "url": "https://www.justwatch.com/us/tv-show/phony"
-    },
-    {
-      "rank": 6,
-      "slug": "from",
-      "title": "FROM",
-      "url": "https://www.justwatch.com/us/tv-show/from"
     },
     {
       "rank": 7,
@@ -47,33 +47,33 @@
     },
     {
       "rank": 8,
-      "slug": "below",
-      "title": "Below",
-      "url": "https://www.justwatch.com/us/tv-show/below-2026"
-    },
-    {
-      "rank": 9,
       "slug": "mobland",
       "title": "MobLand",
       "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
-      "rank": 10,
-      "slug": "east-of-eden",
-      "title": "East of Eden",
-      "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
-    },
-    {
-      "rank": 11,
+      "rank": 9,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
     },
     {
+      "rank": 10,
+      "slug": "below",
+      "title": "Below",
+      "url": "https://www.justwatch.com/us/tv-show/below-2026"
+    },
+    {
+      "rank": 11,
+      "slug": "east-of-eden",
+      "title": "East of Eden",
+      "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
+    },
+    {
       "rank": 12,
-      "slug": "cupertino",
-      "title": "Cupertino",
-      "url": "https://www.justwatch.com/us/tv-show/cupertino"
+      "slug": "nobody-wants-this",
+      "title": "Nobody Wants This",
+      "url": "https://www.justwatch.com/us/tv-show/nobody-wants-this"
     }
   ]
 }
