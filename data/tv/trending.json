@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-12",
+  "fetchedAt": "2026-11-13",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -11,21 +11,21 @@
     },
     {
       "rank": 2,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
-    },
-    {
-      "rank": 3,
       "slug": "visionquest",
       "title": "VisionQuest",
       "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
     },
     {
-      "rank": 4,
+      "rank": 3,
       "slug": "from",
       "title": "FROM",
       "url": "https://www.justwatch.com/us/tv-show/from"
+    },
+    {
+      "rank": 4,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
     },
     {
       "rank": 5,
@@ -65,15 +65,15 @@
     },
     {
       "rank": 11,
-      "slug": "east-of-eden",
-      "title": "East of Eden",
-      "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
-    },
-    {
-      "rank": 12,
       "slug": "nobody-wants-this",
       "title": "Nobody Wants This",
       "url": "https://www.justwatch.com/us/tv-show/nobody-wants-this"
+    },
+    {
+      "rank": 12,
+      "slug": "east-of-eden",
+      "title": "East of Eden",
+      "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
     }
   ]
 }
