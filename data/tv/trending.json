@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-13",
+  "fetchedAt": "2026-11-14",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -11,27 +11,27 @@
     },
     {
       "rank": 2,
-      "slug": "visionquest",
-      "title": "VisionQuest",
-      "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
-    },
-    {
-      "rank": 3,
       "slug": "from",
       "title": "FROM",
       "url": "https://www.justwatch.com/us/tv-show/from"
     },
     {
-      "rank": 4,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
+      "rank": 3,
+      "slug": "visionquest",
+      "title": "VisionQuest",
+      "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
     },
     {
-      "rank": 5,
+      "rank": 4,
       "slug": "the-diplomat",
       "title": "The Diplomat",
       "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
+    },
+    {
+      "rank": 5,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
     },
     {
       "rank": 6,
@@ -59,21 +59,21 @@
     },
     {
       "rank": 10,
-      "slug": "below",
-      "title": "Below",
-      "url": "https://www.justwatch.com/us/tv-show/below-2026"
-    },
-    {
-      "rank": 11,
       "slug": "nobody-wants-this",
       "title": "Nobody Wants This",
       "url": "https://www.justwatch.com/us/tv-show/nobody-wants-this"
     },
     {
+      "rank": 11,
+      "slug": "black-doves",
+      "title": "Black Doves",
+      "url": "https://www.justwatch.com/us/tv-show/black-doves"
+    },
+    {
       "rank": 12,
-      "slug": "east-of-eden",
-      "title": "East of Eden",
-      "url": "https://www.justwatch.com/us/tv-show/east-of-eden-0"
+      "slug": "cupertino",
+      "title": "Cupertino",
+      "url": "https://www.justwatch.com/us/tv-show/cupertino"
     }
   ]
 }
