@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-15",
+  "fetchedAt": "2026-11-16",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -29,33 +29,33 @@
     },
     {
       "rank": 5,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
-    },
-    {
-      "rank": 6,
       "slug": "phony",
       "title": "Phony",
       "url": "https://www.justwatch.com/us/tv-show/phony"
     },
     {
-      "rank": 7,
-      "slug": "slow-horses",
-      "title": "Slow Horses",
-      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
+      "rank": 6,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
     },
     {
-      "rank": 8,
+      "rank": 7,
       "slug": "mobland",
       "title": "MobLand",
       "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
-      "rank": 9,
+      "rank": 8,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
+    },
+    {
+      "rank": 9,
+      "slug": "slow-horses",
+      "title": "Slow Horses",
+      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
       "rank": 10,
