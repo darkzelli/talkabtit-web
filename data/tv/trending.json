@@ -1,19 +1,19 @@
 {
-  "fetchedAt": "2026-11-16",
+  "fetchedAt": "2026-11-17",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
     {
       "rank": 1,
-      "slug": "crystal-lake",
-      "title": "Crystal Lake",
-      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
-    },
-    {
-      "rank": 2,
       "slug": "from",
       "title": "FROM",
       "url": "https://www.justwatch.com/us/tv-show/from"
+    },
+    {
+      "rank": 2,
+      "slug": "crystal-lake",
+      "title": "Crystal Lake",
+      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
     },
     {
       "rank": 3,
@@ -41,15 +41,15 @@
     },
     {
       "rank": 7,
-      "slug": "mobland",
-      "title": "MobLand",
-      "url": "https://www.justwatch.com/us/tv-show/mobland"
-    },
-    {
-      "rank": 8,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
+    },
+    {
+      "rank": 8,
+      "slug": "mobland",
+      "title": "MobLand",
+      "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
       "rank": 9,
