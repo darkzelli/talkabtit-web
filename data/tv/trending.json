@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-17",
+  "fetchedAt": "2026-11-18",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -23,27 +23,27 @@
     },
     {
       "rank": 4,
-      "slug": "the-diplomat",
-      "title": "The Diplomat",
-      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
-    },
-    {
-      "rank": 5,
       "slug": "phony",
       "title": "Phony",
       "url": "https://www.justwatch.com/us/tv-show/phony"
     },
     {
-      "rank": 6,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
+      "rank": 5,
+      "slug": "the-diplomat",
+      "title": "The Diplomat",
+      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
     },
     {
-      "rank": 7,
+      "rank": 6,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
+    },
+    {
+      "rank": 7,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
     },
     {
       "rank": 8,
