@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-18",
+  "fetchedAt": "2026-11-19",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -11,15 +11,15 @@
     },
     {
       "rank": 2,
-      "slug": "crystal-lake",
-      "title": "Crystal Lake",
-      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
-    },
-    {
-      "rank": 3,
       "slug": "visionquest",
       "title": "VisionQuest",
       "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
+    },
+    {
+      "rank": 3,
+      "slug": "crystal-lake",
+      "title": "Crystal Lake",
+      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
     },
     {
       "rank": 4,
@@ -41,15 +41,15 @@
     },
     {
       "rank": 7,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
-    },
-    {
-      "rank": 8,
       "slug": "mobland",
       "title": "MobLand",
       "url": "https://www.justwatch.com/us/tv-show/mobland"
+    },
+    {
+      "rank": 8,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
     },
     {
       "rank": 9,
