@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-19",
+  "fetchedAt": "2026-11-20",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -29,15 +29,15 @@
     },
     {
       "rank": 5,
-      "slug": "the-diplomat",
-      "title": "The Diplomat",
-      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
-    },
-    {
-      "rank": 6,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
+    },
+    {
+      "rank": 6,
+      "slug": "the-diplomat",
+      "title": "The Diplomat",
+      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
     },
     {
       "rank": 7,
@@ -53,15 +53,15 @@
     },
     {
       "rank": 9,
-      "slug": "slow-horses",
-      "title": "Slow Horses",
-      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
-    },
-    {
-      "rank": 10,
       "slug": "black-doves",
       "title": "Black Doves",
       "url": "https://www.justwatch.com/us/tv-show/black-doves"
+    },
+    {
+      "rank": 10,
+      "slug": "slow-horses",
+      "title": "Slow Horses",
+      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
       "rank": 11,
