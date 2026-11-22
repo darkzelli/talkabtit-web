@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-21",
+  "fetchedAt": "2026-11-22",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -17,39 +17,39 @@
     },
     {
       "rank": 3,
-      "slug": "crystal-lake",
-      "title": "Crystal Lake",
-      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
-    },
-    {
-      "rank": 4,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
     },
     {
-      "rank": 5,
+      "rank": 4,
       "slug": "mobland",
       "title": "MobLand",
       "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
-      "rank": 6,
-      "slug": "phony",
-      "title": "Phony",
-      "url": "https://www.justwatch.com/us/tv-show/phony"
+      "rank": 5,
+      "slug": "crystal-lake",
+      "title": "Crystal Lake",
+      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
     },
     {
-      "rank": 7,
+      "rank": 6,
       "slug": "the-diplomat",
       "title": "The Diplomat",
       "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
     },
     {
-      "rank": 8,
+      "rank": 7,
       "slug": "black-doves",
       "title": "Black Doves",
       "url": "https://www.justwatch.com/us/tv-show/black-doves"
+    },
+    {
+      "rank": 8,
+      "slug": "phony",
+      "title": "Phony",
+      "url": "https://www.justwatch.com/us/tv-show/phony"
     },
     {
       "rank": 9,
@@ -59,21 +59,21 @@
     },
     {
       "rank": 10,
+      "slug": "the-body",
+      "title": "The Body",
+      "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
+    },
+    {
+      "rank": 11,
       "slug": "slow-horses",
       "title": "Slow Horses",
       "url": "https://www.justwatch.com/us/tv-show/slow-horses"
     },
     {
-      "rank": 11,
+      "rank": 12,
       "slug": "nobody-wants-this",
       "title": "Nobody Wants This",
       "url": "https://www.justwatch.com/us/tv-show/nobody-wants-this"
-    },
-    {
-      "rank": 12,
-      "slug": "the-body",
-      "title": "The Body",
-      "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
     }
   ]
 }
