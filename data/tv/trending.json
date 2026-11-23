@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-22",
+  "fetchedAt": "2026-11-23",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -35,33 +35,33 @@
     },
     {
       "rank": 6,
-      "slug": "the-diplomat",
-      "title": "The Diplomat",
-      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
-    },
-    {
-      "rank": 7,
       "slug": "black-doves",
       "title": "Black Doves",
       "url": "https://www.justwatch.com/us/tv-show/black-doves"
     },
     {
+      "rank": 7,
+      "slug": "the-diplomat",
+      "title": "The Diplomat",
+      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
+    },
+    {
       "rank": 8,
+      "slug": "the-body",
+      "title": "The Body",
+      "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
+    },
+    {
+      "rank": 9,
       "slug": "phony",
       "title": "Phony",
       "url": "https://www.justwatch.com/us/tv-show/phony"
     },
     {
-      "rank": 9,
+      "rank": 10,
       "slug": "carrie",
       "title": "Carrie",
       "url": "https://www.justwatch.com/us/tv-show/carrie"
-    },
-    {
-      "rank": 10,
-      "slug": "the-body",
-      "title": "The Body",
-      "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
     },
     {
       "rank": 11,
