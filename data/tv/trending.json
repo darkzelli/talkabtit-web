@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-23",
+  "fetchedAt": "2026-11-24",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -29,9 +29,9 @@
     },
     {
       "rank": 5,
-      "slug": "crystal-lake",
-      "title": "Crystal Lake",
-      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
+      "slug": "the-body",
+      "title": "The Body",
+      "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
     },
     {
       "rank": 6,
@@ -41,15 +41,15 @@
     },
     {
       "rank": 7,
-      "slug": "the-diplomat",
-      "title": "The Diplomat",
-      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
+      "slug": "crystal-lake",
+      "title": "Crystal Lake",
+      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
     },
     {
       "rank": 8,
-      "slug": "the-body",
-      "title": "The Body",
-      "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
+      "slug": "the-diplomat",
+      "title": "The Diplomat",
+      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
     },
     {
       "rank": 9,
@@ -65,15 +65,15 @@
     },
     {
       "rank": 11,
-      "slug": "slow-horses",
-      "title": "Slow Horses",
-      "url": "https://www.justwatch.com/us/tv-show/slow-horses"
+      "slug": "the-gilded-age",
+      "title": "The Gilded Age",
+      "url": "https://www.justwatch.com/us/tv-show/the-gilded-age"
     },
     {
       "rank": 12,
-      "slug": "nobody-wants-this",
-      "title": "Nobody Wants This",
-      "url": "https://www.justwatch.com/us/tv-show/nobody-wants-this"
+      "slug": "cupertino",
+      "title": "Cupertino",
+      "url": "https://www.justwatch.com/us/tv-show/cupertino"
     }
   ]
 }
