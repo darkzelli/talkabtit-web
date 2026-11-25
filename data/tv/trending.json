@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-24",
+  "fetchedAt": "2026-11-25",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -11,15 +11,15 @@
     },
     {
       "rank": 2,
-      "slug": "visionquest",
-      "title": "VisionQuest",
-      "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
-    },
-    {
-      "rank": 3,
       "slug": "nocturne",
       "title": "Nocturne",
       "url": "https://www.justwatch.com/us/tv-show/nocturne"
+    },
+    {
+      "rank": 3,
+      "slug": "visionquest",
+      "title": "VisionQuest",
+      "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
     },
     {
       "rank": 4,
@@ -59,21 +59,21 @@
     },
     {
       "rank": 10,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
-    },
-    {
-      "rank": 11,
       "slug": "the-gilded-age",
       "title": "The Gilded Age",
       "url": "https://www.justwatch.com/us/tv-show/the-gilded-age"
     },
     {
-      "rank": 12,
+      "rank": 11,
       "slug": "cupertino",
       "title": "Cupertino",
       "url": "https://www.justwatch.com/us/tv-show/cupertino"
+    },
+    {
+      "rank": 12,
+      "slug": "carrie",
+      "title": "Carrie",
+      "url": "https://www.justwatch.com/us/tv-show/carrie"
     }
   ]
 }
