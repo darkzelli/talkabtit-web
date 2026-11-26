@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-25",
+  "fetchedAt": "2026-11-26",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -41,15 +41,15 @@
     },
     {
       "rank": 7,
-      "slug": "crystal-lake",
-      "title": "Crystal Lake",
-      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
-    },
-    {
-      "rank": 8,
       "slug": "the-diplomat",
       "title": "The Diplomat",
       "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
+    },
+    {
+      "rank": 8,
+      "slug": "the-gilded-age",
+      "title": "The Gilded Age",
+      "url": "https://www.justwatch.com/us/tv-show/the-gilded-age"
     },
     {
       "rank": 9,
@@ -59,9 +59,9 @@
     },
     {
       "rank": 10,
-      "slug": "the-gilded-age",
-      "title": "The Gilded Age",
-      "url": "https://www.justwatch.com/us/tv-show/the-gilded-age"
+      "slug": "crystal-lake",
+      "title": "Crystal Lake",
+      "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
     },
     {
       "rank": 11,
