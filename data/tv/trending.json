@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-26",
+  "fetchedAt": "2026-11-27",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -23,15 +23,15 @@
     },
     {
       "rank": 4,
-      "slug": "mobland",
-      "title": "MobLand",
-      "url": "https://www.justwatch.com/us/tv-show/mobland"
-    },
-    {
-      "rank": 5,
       "slug": "the-body",
       "title": "The Body",
       "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
+    },
+    {
+      "rank": 5,
+      "slug": "mobland",
+      "title": "MobLand",
+      "url": "https://www.justwatch.com/us/tv-show/mobland"
     },
     {
       "rank": 6,
@@ -41,21 +41,21 @@
     },
     {
       "rank": 7,
-      "slug": "the-diplomat",
-      "title": "The Diplomat",
-      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
-    },
-    {
-      "rank": 8,
       "slug": "the-gilded-age",
       "title": "The Gilded Age",
       "url": "https://www.justwatch.com/us/tv-show/the-gilded-age"
     },
     {
+      "rank": 8,
+      "slug": "the-diplomat",
+      "title": "The Diplomat",
+      "url": "https://www.justwatch.com/us/tv-show/the-diplomat"
+    },
+    {
       "rank": 9,
-      "slug": "phony",
-      "title": "Phony",
-      "url": "https://www.justwatch.com/us/tv-show/phony"
+      "slug": "cupertino",
+      "title": "Cupertino",
+      "url": "https://www.justwatch.com/us/tv-show/cupertino"
     },
     {
       "rank": 10,
@@ -65,15 +65,15 @@
     },
     {
       "rank": 11,
-      "slug": "cupertino",
-      "title": "Cupertino",
-      "url": "https://www.justwatch.com/us/tv-show/cupertino"
+      "slug": "phony",
+      "title": "Phony",
+      "url": "https://www.justwatch.com/us/tv-show/phony"
     },
     {
       "rank": 12,
-      "slug": "carrie",
-      "title": "Carrie",
-      "url": "https://www.justwatch.com/us/tv-show/carrie"
+      "slug": "the-lord-of-the-rings-the-rings-of-power",
+      "title": "The Lord of the Rings: The Rings of Power",
+      "url": "https://www.justwatch.com/us/tv-show/the-lord-of-the-rings-the-rings-of-power"
     }
   ]
 }
