@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-27",
+  "fetchedAt": "2026-11-28",
   "source": "JustWatch",
   "sourceUrl": "https://www.justwatch.com/us",
   "shows": [
@@ -17,15 +17,15 @@
     },
     {
       "rank": 3,
-      "slug": "visionquest",
-      "title": "VisionQuest",
-      "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
-    },
-    {
-      "rank": 4,
       "slug": "the-body",
       "title": "The Body",
       "url": "https://www.justwatch.com/us/tv-show/the-body-2026"
+    },
+    {
+      "rank": 4,
+      "slug": "visionquest",
+      "title": "VisionQuest",
+      "url": "https://www.justwatch.com/us/tv-show/visionquest-1"
     },
     {
       "rank": 5,
@@ -59,21 +59,21 @@
     },
     {
       "rank": 10,
+      "slug": "the-lord-of-the-rings-the-rings-of-power",
+      "title": "The Lord of the Rings: The Rings of Power",
+      "url": "https://www.justwatch.com/us/tv-show/the-lord-of-the-rings-the-rings-of-power"
+    },
+    {
+      "rank": 11,
       "slug": "crystal-lake",
       "title": "Crystal Lake",
       "url": "https://www.justwatch.com/us/tv-show/crystal-lake"
     },
     {
-      "rank": 11,
-      "slug": "phony",
-      "title": "Phony",
-      "url": "https://www.justwatch.com/us/tv-show/phony"
-    },
-    {
       "rank": 12,
-      "slug": "the-lord-of-the-rings-the-rings-of-power",
-      "title": "The Lord of the Rings: The Rings of Power",
-      "url": "https://www.justwatch.com/us/tv-show/the-lord-of-the-rings-the-rings-of-power"
+      "slug": "dexter-resurrection",
+      "title": "Dexter: Resurrection",
+      "url": "https://www.justwatch.com/us/tv-show/dexter-resurrection"
     }
   ]
 }
